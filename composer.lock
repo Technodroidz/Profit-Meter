@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b885d1f1808361b235cc62b2069e72b",
+    "content-hash": "6a3b58c1e39316e9cb0faff415878695",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -768,6 +768,47 @@
                 "source": "https://github.com/egulias/EmailValidator/tree/2.1.25"
             },
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "facebook/php-business-sdk",
+            "version": "10.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/facebook-php-business-sdk.git",
+                "reference": "a4b73f96770c28012a84736c75bc87e52d6948b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/a4b73f96770c28012a84736c75bc87e52d6948b9",
+                "reference": "a4b73f96770c28012a84736c75bc87e52d6948b9",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5 || ^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.3.3",
+                "phpunit/phpunit": "~8",
+                "symfony/finder": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FacebookAds\\": "src/FacebookAds/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PHP SDK for Facebook Business",
+            "homepage": "https://developers.facebook.com/",
+            "keywords": [
+                "ads",
+                "business",
+                "facebook",
+                "instagram",
+                "page",
+                "sdk"
+            ],
+            "time": "2021-04-28T21:23:27+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -2808,6 +2849,133 @@
                 "source": "https://github.com/ramsey/uuid"
             },
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "scottybo/facebook-graph-sdk",
+            "version": "5.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scottybo/facebook-graph-sdk.git",
+                "reference": "9ce1df22f81733ceb3873ce013ace2914442931e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scottybo/facebook-graph-sdk/zipball/9ce1df22f81733ceb3873ce013ace2914442931e",
+                "reference": "9ce1df22f81733ceb3873ce013ace2914442931e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4|^7.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "~5.0",
+                "mockery/mockery": "~0.8",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Facebook\\": "src/Facebook/"
+                },
+                "files": [
+                    "src/Facebook/polyfills.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Facebook Platform"
+            ],
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/scottybo/facebook-graph-sdk/contributors"
+                }
+            ],
+            "description": "Facebook SDK for PHP",
+            "homepage": "https://github.com/scottybo/facebook-graph-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ],
+            "time": "2021-01-05T11:23:34+00:00"
+        },
+        {
+            "name": "scottybo/laravel-facebook-sdk",
+            "version": "5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scottybo/laravel-facebook-sdk.git",
+                "reference": "36fa8bb039451da7425e9773dd533d14404e1eff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scottybo/laravel-facebook-sdk/zipball/36fa8bb039451da7425e9773dd533d14404e1eff",
+                "reference": "36fa8bb039451da7425e9773dd533d14404e1eff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "~7",
+                "illuminate/config": "~7",
+                "illuminate/database": "~7",
+                "illuminate/routing": "~7",
+                "illuminate/session": "~7",
+                "illuminate/support": "~7",
+                "php": ">=7.3",
+                "scottybo/facebook-graph-sdk": "^5.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0|~5.0|~6.0|~7.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Scottybo\\LaravelFacebookSdk\\LaravelFacebookSdkServiceProvider"
+                    ],
+                    "aliases": {
+                        "Facebook": "Scottybo\\LaravelFacebookSdk\\FacebookFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Scottybo\\LaravelFacebookSdk\\": "src/LaravelFacebookSdk"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Bowler",
+                    "email": "scott@dcsdigital.co.uk",
+                    "homepage": "https://www.dcsdigital.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fully unit tested Facebook SDK v5 integration for Laravel 7.x",
+            "homepage": "https://github.com/scottybo/laravel-facebook-sdk",
+            "keywords": [
+                "facebook",
+                "facebook sdk v4",
+                "facebook sdk v5",
+                "laravel",
+                "lumen",
+                "sdk"
+            ],
+            "time": "2021-01-05T11:25:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
