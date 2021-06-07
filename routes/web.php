@@ -101,4 +101,12 @@ Route::get('/login', function () {
 })->name('login');
 
 
+// Generate a login URL
+Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
+
+
+// Endpoint that is redirected to after an authentication attempt
+Route::get('/facebook/callback','ShopifyApp\FacebookController@facebookCallback');
+
+
 
