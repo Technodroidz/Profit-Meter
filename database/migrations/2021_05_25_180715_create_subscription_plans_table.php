@@ -21,6 +21,8 @@ class CreateSubscriptionPlansTable extends Migration
             $table->text('short_decription')->nullable();
             $table->text('pachage_log_description')->nullable();
             $table->integer('staus')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
