@@ -18,7 +18,16 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email',100)->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->integer('status')->default(1);
             $table->string('password');
+            $table->string('last_name')->nullable();
+            $table->string('shopify_url')->nullable();
+            $table->string('number')->nullable();
+            $table->string('bussiness_name')->nullable();
+            $table->string('shopify_namespace')->nullable();
+            $table->string('short_token')->nullable();
+            $table->string('long_token')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
