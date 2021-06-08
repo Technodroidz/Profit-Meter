@@ -19,6 +19,20 @@
                                                     <div class="card-header">
                                                         <h5>User List</h5>
                                                     </div>
+                                                    @if ($errors->any())
+                                                        <div class="alert alert-danger hiddenError">
+                                                            <ul>
+                                                                @foreach ($errors->all() as $error)
+                                                                    <li>{{ $error }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                    @if(session()->has('success'))
+                                                        <div class="alert alert-success">
+                                                            {{ session()->get('success') }}
+                                                        </div>
+                                                    @endif
                                                     <hr/>
                                                     <div class="card-block">
                                                         <div class="myDatatable">
@@ -40,8 +54,8 @@
                                                                 @foreach($getdata as $key=>$list)
                                                                     <tr>
                                                                         <td>{{++$key}}</td>
-                                                                        <td>{{$list['name']}}</td>'
-                                                                        <td>{{$list['last_name']}}</td>'
+                                                                        <td>{{$list['name']}}</td>
+                                                                        <td>{{$list['last_name']}}</td>
                                                                         <td>{{$list['bussiness_name']}}</td>
                                                                         <td>{{$list['email']}}</td>
                                                                         <td>{{$list['number']}}</td>
