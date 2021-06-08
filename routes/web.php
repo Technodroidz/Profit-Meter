@@ -98,17 +98,6 @@ Route::get('business/account', function () {
 })->name('account_profile');
 
 
-//This will redirect user to login page.
-// Route::get('/login', function () {
-//     if (Auth::user()) {
-//         return redirect()->route('home');
-//     }
-//     return view('login');
-// })->name('login');
-
-
-
-
 // Generate a login URL
 Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
 
