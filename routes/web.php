@@ -88,22 +88,31 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	
 });
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['auth.shopify'])->name('home');
+Route::get('/','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
+Route::get('business','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
+
+Route::get('business/login','ShopifyApp\AuthController@login')->name('login');
+Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword');
+Route::get('business/register','ShopifyApp\AuthController@forgotPassword');
+
+Route::get('business/account', function () {
+    return view('business_app/content_template/account_profile');
+})->name('account_profile');
+
 
 //This will redirect user to login page.
-Route::get('/login', function () {
-    if (Auth::user()) {
-        return redirect()->route('home');
-    }
-    return view('login');
-})->name('login');
+// Route::get('/login', function () {
+//     if (Auth::user()) {
+//         return redirect()->route('home');
+//     }
+//     return view('login');
+// })->name('login');
+
+
 
 
 // Generate a login URL
 Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
-
 
 // Endpoint that is redirected to after an authentication attempt
 Route::get('/facebook/callback','ShopifyApp\FacebookController@facebookCallback');
