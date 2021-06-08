@@ -72,12 +72,6 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::post('submit-update-company','admin\ProfileController@CompanyUpdateData');
 	/** end  company */
 		
-});
-
-Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function(){
-  	
-	// Route::get('/admin-panel','admin\HomeController@adminPanel');
-
 	Route::get('user-register','front\HomeController@resisterUser');
 
 	Route::post('submit-user-register','front\HomeController@SubmitUserForm');
@@ -85,11 +79,10 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'front\PaypalController@payWithPaypal',));
 	Route::post('paypal', array('as' => 'paypal','uses' => 'front\PaypalController@postPaymentWithpaypal',));
 	Route::get('paypal', array('as' => 'status','uses' => 'front\PaypalController@getPaymentStatus',));
-	
+
 });
 
 Route::get('/','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
-// Route::get('business','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
 
 Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
 Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');

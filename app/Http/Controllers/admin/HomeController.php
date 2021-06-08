@@ -134,13 +134,12 @@ class homeController extends Controller
     
     }
 
-
-public function deleteContract($id){
-   
-    $productid=ContractModel::findOrFail($id);
-    $productid->delete();
-    return back()
-        ->with('success', 'Record deleted successfully');
-  
-}
+    public function deleteContract($id){
+       
+        $productid=ContractModel::findOrFail($id);
+        $productid->delete();
+        return back()
+            ->with('success', 'Record deleted successfully');
+      
+    }
 }

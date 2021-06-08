@@ -62,16 +62,32 @@
                                         <h5 class="modal-title text_white">Profit Meter</h5>
                                     </div>
                                     <div class="modal-body">
+
+                                        @if(session()->has('error'))
+                                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                              <strong>{{ session()->get('error') }}</strong>
+                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                        @endif
+                                        @if(session()->has('success'))
+                                            <div class="alert alert-danger alert-dismissable hiddenError">
+                                                {{ session()->get('success') }}
+                                            </div>
+                                        @endif
+
                                         <form method="post" action=" {{route('login')}} ">
+                                            @csrf
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Enter your email">
+                                                <input type="text" name="email" class="form-control" placeholder="Enter your email">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control" placeholder="Password">
+                                                <input type="password" name="password" class="form-control" placeholder="Password">
                                             </div>
 
                                             <button type="submit" class="btn_1 full_width text-center" >Log in</button>
-                                            <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal"  href="{{ url('business/register')  }}"> Sign Up</a></p>
+                                            <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal"  href="{{ route('business_register')  }}"> Sign Up</a></p>
                                             <div class="text-center">
                                                 <a href="{{ url('business/forgot-password')  }}" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
                                             </div>
