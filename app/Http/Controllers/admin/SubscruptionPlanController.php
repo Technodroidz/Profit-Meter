@@ -51,7 +51,7 @@ public function subscribepage(){
             "package_log_description" => $request['long_description']
         ]);
 
-        return redirect('subscruption')->with('success', 'Contract added  successfully'); 
+        return redirect('subscription')->with('success', 'Contract added  successfully'); 
     
     
     }
