@@ -52,4 +52,10 @@ class AuthController extends Controller
     {
         return view('business_app/auth_template/register');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }
