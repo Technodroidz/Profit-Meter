@@ -118,7 +118,7 @@
                                                                                                         <th scope="row">
                                                                                                             Mobile
                                                                                                             Number</th>
-                                                                                                        <td>{{@$getUserData['number']}}</td>
+                                                                                                        <td>{{@$getUserData['mobile_number']}}</td>
                                                                                                     </tr>
                                                                                                  
                                                                                                 </tbody>
@@ -159,7 +159,7 @@
                                                                                                     <td>
                                                                                                         <div class="input-group">
                                                                                                             <span class="input-group-addon"><i class="icofont icofont-user"></i></span>
-                                                                                                            <input type="text" class="form-control" name="name" value="{{@$getUserData['name']}}" placeholder="Firs Name">
+                                                                                                            <input type="text" class="form-control" name="name" value="{{@$getUserData['name']}}" placeholder="First Name">
                                                                                                         </div>
                                                                                                     </td>
                                                                                                 </tr>
@@ -192,7 +192,7 @@
                                                                                                     <td>
                                                                                                     <div class="input-group">
                                                                                                             <span class="input-group-addon"><i class="icofont icofont-mobile-phone"></i></span>
-                                                                                                            <input type="text" class="form-control" name="number" value="{{@$getUserData['number']}}" placeholder="Mobile Number">
+                                                                                                            <input type="text" class="form-control" name="mobile_number" value="{{@$getUserData['mobile_number']}}" placeholder="Mobile Number">
                                                                                                         </div>
                                                                                                     </td>
                                                                                                 </tr>

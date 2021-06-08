@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/citrixcrm/public_html/
-    - /bin/cp * $DEPLOYPATH

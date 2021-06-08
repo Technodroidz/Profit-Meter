@@ -15,7 +15,6 @@ class CreateShopsTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('shopify_grandfathered')->default(false);
-            $table->string('shopify_namespace')->nullable(true)->default(null);
             $table->boolean('shopify_freemium')->default(false);
             $table->integer('plan_id')->unsigned()->nullable();
 

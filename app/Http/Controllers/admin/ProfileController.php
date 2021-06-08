@@ -38,6 +38,8 @@ public function updateProfile(Request $request){
      $request->validate([
         "name" =>['required'],
         'email' => 'required|email',
+        'last_name' => 'required',
+        'mobile_number' => 'required',
         'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
      ]);
      
@@ -57,6 +59,8 @@ public function updateProfile(Request $request){
     $getInsertedData = Admin::updateOrCreate(['id'=>$request['id']],[
         "name" => $request['name'],
         'profile_picture'=>$imageName,
+        'last_name' => $request['last_name'],
+        'mobile_number' => $request['mobile_number']
     ]);
     
     return back()->with('status', 'Update  successfully'); 
@@ -69,6 +73,8 @@ public function updateProfile(Request $request){
         $getInsertedData = Admin::updateOrCreate(['id'=>$request['id']],[
             "name" => $request['name'],
             'email'=>$request['email'],
+            'last_name' => $request['last_name'],
+            'mobile_number' => $request['mobile_number']
         ]);
         return back()->with('status', 'Update  successfully'); 
     }
