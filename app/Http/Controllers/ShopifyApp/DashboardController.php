@@ -12,13 +12,14 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        // pp(Auth::User());
+        _print_r($_SESSION);
+        _print_r(Auth::User());
         $shop       = Auth::user();
         $domain     = $shop->getDomain()->toNative();
         // pp($domain);
         // $shopApi    = $shop->api()->rest('GET', '/admin/shop.json')['body']['shop'];
-        $shopApi    = $shop->api()->rest('GET', '/admin/shop.json');
-        dd($shopApi);
+        $shopApi    = $shop->api()->rest('GET', '/admin/shop.json')['body'];
+        pp($shopApi);
         Log::info("Shop {$domain}'s object:" . json_encode($shop));
         Log::info("Shop {$domain}'s API objct:" . json_encode($shopApi));
         return;
