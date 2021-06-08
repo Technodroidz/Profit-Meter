@@ -5,11 +5,15 @@ namespace App\Http\Controllers\ShopifyApp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Scottybo\LaravelFacebookSdk\LaravelFacebookSdk;
+use Illuminate\Support\Facades\Session;
 
 class FacebookController extends Controller
 {
     public function facebookLogin(Request $request,LaravelFacebookSdk $fb)
     {
+        if (!session_id()) {
+            session_start();
+        }
         // $fb = new LaravelFacebookSdk();
         // Send an array of permissions to request
         $login_url = $fb->getLoginUrl(['email']);
@@ -20,7 +24,11 @@ class FacebookController extends Controller
 
     public function facebookCallback(Request $request,LaravelFacebookSdk $fb)
     {
+        if (!session_id()) {
+            session_start();
+        }
         // Obtain an access token.
+        
         try {
             $token = $fb->getAccessTokenFromRedirect();
         } catch (Facebook\Exceptions\FacebookSDKException $e) {
@@ -30,8 +38,15 @@ class FacebookController extends Controller
         // Access token will be null if the user denied the request
         // or if someone just hit this URL outside of the OAuth flow.
         if (! $token) {
+
             // Get the redirect helper
             $helper = $fb->getRedirectLoginHelper();
+
+            $_SESSION['FBRLH_state']=$_GET['state'];
+
+            if (isset($_GET['state'])) {
+                $helper->getPersistentDataHandler()->set('state', $_GET['state']);
+            }
 
             if (! $helper->getError()) {
                 abort(403, 'Unauthorized action.');
