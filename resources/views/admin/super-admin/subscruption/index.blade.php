@@ -70,7 +70,7 @@
                                                                     <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any">
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Package duration (In Months)</label>
+                                                                    <label class="col-form-label">Package duration (In Days)</label>
                                                                     <input type="text" class="form-control" name="duration" id="duration" value="{{@$getSubscribeData['0']['pachage_duration']}}" placeholder="Enter package duration">
                                                                 </div>
                                                                 <!-- <div class="col-sm-3 col-xs-12 form-group">
