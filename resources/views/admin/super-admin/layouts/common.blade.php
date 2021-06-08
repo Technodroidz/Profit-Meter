@@ -78,13 +78,14 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>  
-                        <a href="{{asset('company-details')}}">
-                              @if(isset($getbasic['getcompany']['0']['logo']) && !empty($getbasic['getcompany']['0']['logo']))
+                        <a href="{{asset('admin-panel')}}">
+                            <span>Profit Meter</span>
+                             <!--  @if(isset($getbasic['getcompany']['0']['logo']) && !empty($getbasic['getcompany']['0']['logo']))
                             <img src="{{asset('images/'.$getbasic['getcompany']['0']['logo'])}}" class="img-circle" height="150" width="50" alt="User Image" style="height:auto;">
                             @else
                            
                             <img src="{{asset('')}}admin/dist/img/user2-160x160.jpg" class="img-circle " height="150" width="50" style="height:auto;" alt="User Image">
-                            @endif
+                            @endif -->
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>
@@ -260,12 +261,12 @@
                                     </a>
                                 </li>
 
-                                 <li class="">
+                                 <!-- <li class="">
                                     <a href="{{asset('company-details')}}">
                                         <span class="pcoded-micon"><i class="feather icon-command"></i></span>
                                         <span class="pcoded-mtext">Company Details</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="">
                                     <a href="{{asset('subscription')}}">
                                         <span class="pcoded-micon"><i class="feather icon-package"></i></span>
