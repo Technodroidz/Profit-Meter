@@ -11,7 +11,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        Auth::logout();
+        if($_POST){
+            echo 'aya';
+            pp($request->method());
+        }
+
         return view('business_app/auth_template/login');
     }
     

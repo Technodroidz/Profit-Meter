@@ -89,11 +89,11 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 });
 
 Route::get('/','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
-Route::get('business','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
+// Route::get('business','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
 
-Route::get('business/login','ShopifyApp\AuthController@login')->name('login');
-Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword');
-Route::get('business/register','ShopifyApp\AuthController@forgotPassword');
+Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
+Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
+Route::get('business/register','ShopifyApp\AuthController@forgotPassword')->name('business_register');
 
 Route::get('business/account', function () {
     return view('business_app/content_template/account_profile');

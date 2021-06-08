@@ -62,14 +62,15 @@
                                         <h5 class="modal-title text_white">Profit Meter</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form method="post" action=" {{route('login')}} ">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" placeholder="Enter your email">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control" placeholder="Password">
                                             </div>
-                                            <a href="#" class="btn_1 full_width text-center">Log in</a>
+
+                                            <button type="submit" class="btn_1 full_width text-center" >Log in</button>
                                             <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal"  href="{{ url('business/register')  }}"> Sign Up</a></p>
                                             <div class="text-center">
                                                 <a href="{{ url('business/forgot-password')  }}" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
