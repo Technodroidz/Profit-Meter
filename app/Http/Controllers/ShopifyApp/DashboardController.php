@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        _print_r($_SESSION);
+        // pp(session());
         _print_r(Auth::User());
         $shop       = Auth::user();
         $domain     = $shop->getDomain()->toNative();
