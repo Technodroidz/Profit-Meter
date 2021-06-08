@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('status')->default(1);
             $table->string('password');
-            $table->integer('status')->default(1);
             $table->string('last_name')->nullable();
             $table->string('shopify_url')->nullable();
             $table->string('number')->nullable();
