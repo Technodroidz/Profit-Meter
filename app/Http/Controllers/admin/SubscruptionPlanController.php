@@ -46,13 +46,12 @@ public function subscribepage(){
         $getInsertedData = SubscriptionPlan::updateOrCreate(['id'=>$request['table_id']],[
             "package_name" => $request['name'],
             "package_amount" => $request['amount'],
-            "pachage_duration" => $request['duration'],
+            "package_duration" => $request['duration'],
             "short_decription" => $request['sort_description'],
-            "pachage_log_description" => $request['long_description'],
-            "status" => $request['status'],
+            "package_log_description" => $request['long_description']
         ]);
 
-        return redirect('subscribtion')->with('success', 'Contract added  successfully'); 
+        return redirect('subscruption')->with('success', 'Contract added  successfully'); 
     
     
     }
