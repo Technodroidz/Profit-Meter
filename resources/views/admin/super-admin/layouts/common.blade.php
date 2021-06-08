@@ -83,7 +83,7 @@
                             <img src="{{asset('images/'.$getbasic['getcompany']['0']['logo'])}}" class="img-circle" height="150" width="50" alt="User Image" style="height:auto;">
                             @else
                            
-                            <img src="{{asset('')}}admin/dist/img/user2-160x160.jpg" class="img-circle " alt="User Image">
+                            <img src="{{asset('')}}admin/dist/img/user2-160x160.jpg" class="img-circle " height="150" width="50" style="height:auto;" alt="User Image">
                             @endif
                         </a>
                         <a class="mobile-options">
