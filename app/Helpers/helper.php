@@ -107,52 +107,18 @@ function getuserName($id){
     return $name['0']['name'];
 }
 
-/** Get Admistrater name */
-function getAdminstraterName($id){
-    $name = AdministrativeModel::select('name')->where('id',$id)->get();
-    return @$name['0']['name'];
+
+function generateStringLogToken()
+{
+    $number =(Str::random(15));
+    return $number.mt_rand(10000, 99999);
 }
 
-/** Get Admistrater name */
-function getSecrentiantValueName($id){
-    $name = SecretiantModel::select('name')->where('id',$id)->get();
-    return @$name['0']['name'];
+function generateStringSortToken()
+{
+    $var = Str::random(5);
+    return $var;
 }
-
-
-/** Get Admistrater name */
-function getSecretientName($id){
-
-    $name = InvoiceModel::select('name')->where('id',$id)->get();
-    return @$name['0']['name'];
-}
-
-
-
-/** Get Admistrater name */
-function getUnderSecretintName($id){
-    $name = UnderSecretiantModel::select('name')->where('id',$id)->get();
-    return @$name['0']['name'];
-}
-
-/** Get Genrate id  */
-
-function autogenrateID($id){
-
-    $maxID = InvoiceModel::max('id');
-    return $id.$maxID;
-}
-
-
-/** Get Auto genrate series   id  */
-
-function autogenrateSeriesID($id){
-    $maxID = DeviceModel::max('id');
-    $number = mt_rand(10000, 99999); 
-    return $id.$number.$maxID;
-}
-
-
 
 
 ?>

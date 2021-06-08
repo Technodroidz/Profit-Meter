@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\front;
 
 use Illuminate\Http\Request;
@@ -7,7 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Model\User;
 use Carbon\Carbon;
 use Session;
-
+use Dirape\Token\Token;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Schema;
 class HomeController extends Controller
 {
 
@@ -18,6 +24,10 @@ class HomeController extends Controller
 
        /** submit product url */
 public function SubmitUserForm(Request $request){
+
+    $long_token=generateStringLogToken();
+    $short_token=generateStringSortToken();
+    $dbName=Str::slug($request['name'], '_');
    
     $request->validate([
         'email' => 'required|email|unique:users',
@@ -31,24 +41,50 @@ public function SubmitUserForm(Request $request){
         'ur' => 'required',
        
     ]);
+    
 
     $getInsertedData = User::updateOrCreate(['id'=>$request['id']],[
         
         "name" => $request['name'],
-        "username" => $request['name'],
         "email" => $request['email'],
         "bussiness_name" => $request['bussiness_name'],
         "number" => $request['number'],
-        "role_id" => 2,
+        "role" => 2,
         'users'=>'user',
         "last_name" => $request['last_name'],
-        "shofiy_store_url" => $request['ur'],
+        "shopify_url" => $request['ur'],
         "password" =>bcrypt($request['password']),
+        'short_token'=>$short_token,
+        'long_token'=>$long_token,
         "status" => 1,
 
     ]);
   
+    $userName = 'dummy_'.$short_token;  // Your Database name to be created
+
+    DB::statement("CREATE DATABASE $userName");
+
+
+    $conn = mysqli_connect('localhost', 'root', '' , $userName);
+    $query = '';
+    $sqlScript = file('db/dummy.sql');
    
+    foreach ($sqlScript as $line)	{
+        
+        $startWith = substr(trim($line), 0 ,2);
+        $endWith = substr(trim($line), -1 ,1);
+        
+        if (empty($line) || $startWith == '--' || $startWith == '/*' || $startWith == '//') {
+            continue;
+        }
+            
+        $query = $query . $line;
+        if ($endWith == ';') {
+            mysqli_query($conn,$query);
+            $query= '';		
+        }
+    }
+
     return back()->with('message', 'Added  successfully'); 
 
 }
