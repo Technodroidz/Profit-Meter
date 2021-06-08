@@ -17,10 +17,10 @@ class CreateSubscriptionPlansTable extends Migration
             $table->bigIncrements('id');
             $table->string('package_name')->nullable();
             $table->string('package_amount')->nullable();
-            $table->string('pachage_duration')->nullable();
+            $table->string('package_duration')->nullable();
             $table->text('short_decription')->nullable();
-            $table->text('pachage_log_description')->nullable();
-            $table->integer('staus')->nullable();
+            $table->text('package_log_description')->nullable();
+            $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

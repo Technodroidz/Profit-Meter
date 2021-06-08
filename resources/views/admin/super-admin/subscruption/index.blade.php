@@ -70,8 +70,8 @@
                                                                     <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any">
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Package duration (In Months)</label>
-                                                                    <input type="text" class="form-control" name="duration" id="duration" value="{{@$getSubscribeData['0']['pachage_duration']}}" placeholder="Enter package duration">
+                                                                    <label class="col-form-label">Package duration (In Days)</label>
+                                                                    <input type="text" class="form-control" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
                                                                 </div>
                                                                 <!-- <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Status</label>
@@ -82,13 +82,13 @@
                                                                     </select>
                                                                 </div> -->
                                                                 <div class="col-md-6 col-xs-12">
-                                                                    <label class="col-form-label">Package sort description</label>
-                                                                    <textarea class="form-control" name="sort_description" id="sort_description" placeholder="Type here...">{!!@$getSubscribeData['0']['pachage_duration']!!}</textarea>
+                                                                    <label class="col-form-label">Package short description</label>
+                                                                    <textarea class="form-control" name="sort_description" id="sort_description" placeholder="Type here...">{!!@$getSubscribeData['0']['short_decription']!!}</textarea>
                                                                 </div>
                                                                 
                                                                 <div class="col-md-6 col-xs-12">
                                                                     <label class="col-form-label">Package long description</label>
-                                                                    <textarea class="form-control" name="long_description" id="long_description" placeholder="Type here...">{!!@$getSubscribeData['0']['pachage_log_description']!!}</textarea>
+                                                                    <textarea class="form-control" name="long_description" id="long_description" placeholder="Type here...">{!!@$getSubscribeData['0']['package_log_description']!!}</textarea>
                                                                 </div>
                                                             </div>
                                                             <hr/>
@@ -137,9 +137,9 @@
                                                                         <td>{{++$key}}</td>
                                                                         <td>{{$list['package_name']}}</td>
                                                                         <td>{{$list['package_amount']}}</td>
-                                                                        <td>{{$list['pachage_duration']}}</td>
+                                                                        <td>{{$list['package_duration']}}</td>
                                                                         <td>{{$list['short_decription']}}</td>
-                                                                        <td>{{$list['pachage_log_description']}}</td>
+                                                                        <td>{{$list['package_log_description']}}</td>
                                                                         <td><?php echo ($list['short_decription']==1 ?'Active': 'Deactive') ?></td>
                                                                         <td class="d-flex">
                                                                       
