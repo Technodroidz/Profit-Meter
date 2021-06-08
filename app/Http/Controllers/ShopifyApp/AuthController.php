@@ -39,7 +39,7 @@ class AuthController extends Controller
                 }
             }
         }
-
+        // Auth::logout();
         return view('business_app/auth_template/login',$data);
     }
     

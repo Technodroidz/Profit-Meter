@@ -61,13 +61,13 @@ class Handler extends ExceptionHandler
 
         switch ($guard) {
             case 'webadmin':
-                $login = 'admin-panel';
+                $login = 'admin_panel';
                 break;
             default:
                 $login = 'login';
                 break;
         }
 
-        return redirect()->guest($login);
+        return redirect()->route($login);
     }
 }
