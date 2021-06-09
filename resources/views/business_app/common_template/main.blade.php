@@ -215,7 +215,7 @@
                     <div class="sidebar_icon d-lg-none">
                         <i class="ti-menu"></i>
                     </div>
-                    <div class="line_icon open_miniSide d-none d-lg-block">
+                    <div class="line_icon open_miniSide d-none d-lg-block" style="cursor:pointer;">
                         <img src="{{asset('business_app')}}/img/line_img.png" alt="">
                     </div>
                     <div class="header_right d-flex justify-content-between align-items-center">
@@ -592,6 +592,8 @@ $(function() {
   });
 });
 </script>
+
+@yield('script')
 
 </body>
 

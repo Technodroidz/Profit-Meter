@@ -23,6 +23,6 @@ class DashboardController extends Controller
         // Log::info("Shop {$domain}'s object:" . json_encode($shop));
         // Log::info("Shop {$domain}'s API objct:" . json_encode($shopApi));
         // return;
-        return view('business_app/content_template/dashboard');
+        return view('business_app/content_template/dashboard',$data);
     }
 }

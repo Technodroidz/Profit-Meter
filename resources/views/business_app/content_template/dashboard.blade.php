@@ -1,4 +1,4 @@
-@extends('business_app/common_template/main')
+@extends('business_app/common_template/main',['current_link' => isset($current_link) ? $current_link : ''])
 
 @section('content')
 
@@ -432,5 +432,56 @@
             </div>
         </div>
     </div>
+
+    @section('script')
+        <script>
+            $(function() {
+                $('input[name="daterange"]').daterangepicker({
+                    opens: 'left'
+                }, function(start, end, label) {
+                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+            });
+        </script>
+
+
+        <script>
+            $(function() {
+
+                var start = moment().subtract(29, 'days');
+                var end = moment();
+
+                function cb(start, end) {
+                    $('#reportrange span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+                }
+
+                $('#reportrange').daterangepicker({
+                    startDate: start,
+                    endDate: end,
+                    ranges: {
+                       'Today': [moment(), moment()],
+                       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                       'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                       'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                       'This Month': [moment().startOf('month'), moment().endOf('month')],
+                       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    }
+                }, cb);
+
+                cb(start, end);
+                
+            });
+        </script>
+
+        <script>
+            $('a.white_btn.mb_10').click(function(){
+                $('.popover1').show();
+            });
+            $('.topHd i').click(function(){
+                $('.popover1').hide();
+            });
+        </script>
+
+    @endsection
 
 @endsection
