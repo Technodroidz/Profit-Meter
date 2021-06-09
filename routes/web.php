@@ -90,6 +90,24 @@ Route::group(['middleware' => ['auth:web']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->middleware(['auth.shopify'])->name('home');
 
 	Route::get('business/logout','ShopifyApp\AuthController@logout')->name('business_logout');
+	Route::get('business/simulator','ShopifyApp\SimulatorController@simulator')->name('business_simulator');
+	Route::get('business/lifetime-value','ShopifyApp\LifetimeValueController@lifetimeValue')->name('business_lifetime_value');
+
+	Route::get('business/reports/products','ShopifyApp\ReportController@products')->name('business_report_products');
+	Route::get('business/reports/orders','ShopifyApp\ReportController@orders')->name('business_report_orders');
+	Route::get('business/reports/map','ShopifyApp\ReportController@map')->name('business_report_map');
+	Route::get('business/reports/disputes','ShopifyApp\ReportController@disputes')->name('business_report_disputes');
+
+	Route::get('business/expenses/product-cost','ShopifyApp\ExpenseController@productCost')->name('business_expenses_product_cost');
+	Route::get('business/expenses/shipping-cost','ShopifyApp\ExpenseController@shippingCost')->name('business_expenses_shipping_cost');
+	Route::get('business/expenses/handling-cost','ShopifyApp\ExpenseController@handlingCost')->name('business_expenses_handling_cost');
+	Route::get('business/expenses/transaction-cost','ShopifyApp\ExpenseController@transactionCost')->name('business_expenses_transaction_cost');
+	Route::get('business/expenses/custom-cost','ShopifyApp\ExpenseController@customCost')->name('business_expenses_custom_cost');
+
+	Route::get('business/integration','ShopifyApp\IntegrationController@integration')->name('business_integration');
+	Route::get('business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
+	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
+	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
 });
 
 

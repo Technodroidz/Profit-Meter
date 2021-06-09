@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
        
-        $data['getcompany'] = CompanyDetail::get();
+        // $data['getcompany'] = CompanyDetail::get();
      
-        View::share('getbasic', $data);
+        // View::share('getbasic', $data);
     }
 }

@@ -49,20 +49,8 @@
     <link rel="stylesheet" href="{{asset('business_app')}}/css/style.css" />
     <link rel="stylesheet" href="{{asset('business_app')}}/css/colors/default.css" id="colorSkinCSS">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-      <link rel="stylesheet" href="{{asset('business_app')}}/css/bootstrap.min.css" />
-    <!-- themefy CSS -->
-    <link rel="stylesheet" href="{{asset('business_app')}}/vendors/themefy_icon/themify-icons.css" />
-    <!-- font awesome CSS -->
-    <link rel="stylesheet" href="{{asset('business_app')}}/vendors/font_awesome/css/all.min.css" />
-    <!-- morris css -->
-    <link rel="stylesheet" href="{{asset('business_app')}}/vendors/morris/morris.css">
-     <!-- scrollabe  -->
-     <link rel="stylesheet" href="{{asset('business_app')}}/vendors/scroll/scrollable.css" />
-    <!-- menu css  -->
-    <link rel="stylesheet" href="{{asset('business_app')}}/css/metisMenu.css">
-    <!-- style CSS -->
-    <link rel="stylesheet" href="{{asset('business_app')}}/css/style.css" />
-    <link rel="stylesheet" href="{{asset('business_app')}}/css/colors/default.css" id="colorSkinCSS">
+    
+
 </head>
 <body class="crm_body_bg">
     
@@ -71,7 +59,7 @@
 <!-- main content part here -->
  
 <!-- sidebar  -->
-<nav class="sidebar dark_sidebar">
+<nav class="sidebar dark_sidebar" data-current_link="{{isset($current_link) ? $current_link : ''}}" >
     <div class="logo d-flex justify-content-between">
         <a class="large_logo" href="{{asset('business_app')}}/index-2.html"><img src="" alt="Profit Meter"></a>
         <a class="small_logo" href="{{asset('business_app')}}/index-2.html"><img src="" alt="Profit Meter"></a>
@@ -81,7 +69,7 @@
     </div>
     <ul id="sidebar_menu">
         <li class="">
-            <a href="#" aria-expanded="false">
+            <a href="{{route('home')}}" aria-expanded="false" data-link="home">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/1.svg" alt="">
                 </div>
@@ -96,7 +84,7 @@
             </ul> -->
         </li>
         <li class="">
-            <a  href="simulator.html" aria-expanded="false">
+            <a  href="{{route('business_simulator')}}" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/2.svg" alt="">
                 </div>
@@ -106,7 +94,7 @@
             </a>
         </li>
         <li class="">
-            <a  href="lifetime.html" aria-expanded="false">
+            <a  href="{{route('business_lifetime_value')}}" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/3.svg" alt="">
                 </div>
@@ -116,7 +104,7 @@
             </a>
         </li> 
         <li class="">
-            <a class="has-arrow" href="#" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/4.svg" alt="">
                 </div>
@@ -126,14 +114,14 @@
             </a>
 
             <ul>
-                <li><a href="productss.html">Products</a></li>
-                <li><a href="orders.html">Orders</a></li>
-                <li><a href="map.html">Map</a></li>
-                <li><a href="#">Disputes</a></li>
+                <li><a href="{{route('business_report_products')}}">Products</a></li>
+                <li><a href="{{route('business_report_orders')}}">Orders</a></li>
+                <li><a href="{{route('business_report_map')}}">Map</a></li>
+                <li><a href="{{route('business_report_disputes')}}">Disputes</a></li>
             </ul>
         </li>
         <li class="">
-            <a class="has-arrow" href="#" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/5.svg" alt="">
                 </div>
@@ -143,11 +131,11 @@
             </a>
 
             <ul>
-                <li><a href="productCost.html">Product Costs</a></li>
-                <li><a href="#">Shipping Costs</a></li>
-                <li><a href="#">Handling Costs</a></li>
-                <li><a href="#">Transaction Costs</a></li>
-                <li><a href="#">Custom Costs</a></li>
+                <li><a href="{{route('business_expenses_product_cost')}}">Product Costs</a></li>
+                <li><a href="{{route('business_expenses_shipping_cost')}}">Shipping Costs</a></li>
+                <li><a href="{{route('business_expenses_handling_cost')}}">Handling Costs</a></li>
+                <li><a href="{{route('business_expenses_transaction_cost')}}">Transaction Costs</a></li>
+                <li><a href="{{route('business_expenses_custom_cost')}}">Custom Costs</a></li>
           
             </ul>
         </li>
@@ -163,7 +151,7 @@
             
         </li> -->
         <li class="">
-            <a href="integration.html" aria-expanded="false">
+            <a href="{{route('business_integration')}}" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/7.svg" alt="">
                 </div>
@@ -184,7 +172,7 @@
             </a>
         </li> -->
         <li class="">
-            <a class="has-arrow" href="#" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/6.svg" alt="">
                 </div>
@@ -193,9 +181,9 @@
                 </div>
             </a>
             <ul>
-              <li><a href="#">Rules</a></li>
-              <li><a href="#">Sync Status</a></li>
-              <li><a href="#">Account</a></li>
+              <li><a href="{{route('business_setting_rules')}}">Rules</a></li>
+              <li><a href="{{route('business_setting_sync_status')}}">Sync Status</a></li>
+              <li><a href="{{route('business_setting_account')}}">Account</a></li>
           
             </ul>
         </li>
@@ -547,24 +535,9 @@
 
 <!-- <script src="{{asset('business_app')}}/vendors/echart/echarts.min.js"></script> -->
 
-<script src="{{asset('business_app')}}/js/jquery-3.4.1.min.js"></script>
-<!-- popper js -->
-<script src="{{asset('business_app')}}/js/popper.min.js"></script>
-<!-- bootstarp js -->
-<script src="{{asset('business_app')}}/js/bootstrap.min.js"></script>
-<!-- sidebar menu  -->
-<script src="{{asset('business_app')}}/js/metisMenu.js"></script>
-<!-- waypoints js -->
-<script src="{{asset('business_app')}}/vendors/chartlist/Chart.min.js"></script>
 <!-- responsive table -->
 
-<script src="{{asset('business_app')}}/js/chart.min.js"></script>
-
-  <!-- scrollabe  -->
-  <script src="{{asset('business_app')}}/vendors/scroll/perfect-scrollbar.min.js"></script>
-  <script src="{{asset('business_app')}}/vendors/scroll/scrollable-custom.js"></script>
 <!-- custom js -->
-<script src="{{asset('business_app')}}/js/custom.js"></script>
 
 <script src="{{asset('business_app')}}/vendors/chartjs/chartjs_init.js"></script>
 
@@ -579,13 +552,13 @@
 <script src="{{asset('business_app')}}/js/custom.js"></script>
 
 <script>
-// $(function() {
-//   $('input[name="daterange"]').daterangepicker({
-//     opens: 'left'
-//   }, function(start, end, label) {
-//     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-//   });
-// });
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
+});
 </script>
 
 </body>

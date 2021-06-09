@@ -14,6 +14,7 @@ class DashboardController extends Controller
     {
         
         $shop       = Auth::user();
+        $data       = ['current_link' => 'home'];
         // $domain     = $shop->getDomain()->toNative();
         
         // $shopApi    = $shop->api()->rest('GET', '/admin/shop.json')['body']['shop'];
