@@ -61,8 +61,8 @@
 <!-- sidebar  -->
 <nav class="sidebar dark_sidebar" data-current_link="{{isset($current_link) ? $current_link : ''}}" >
     <div class="logo d-flex justify-content-between">
-        <a class="large_logo" href="{{asset('business_app')}}/index-2.html"><img src="" alt="Profit Meter"></a>
-        <a class="small_logo" href="{{asset('business_app')}}/index-2.html"><img src="" alt="Profit Meter"></a>
+        <a class="large_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini_logo.png" alt="Profit Meter"></a>
+        <a class="small_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini_logo.png" alt="Profit Meter"></a>
         <div class="sidebar_close_icon d-lg-none">
             <i class="ti-close"></i>
         </div>
@@ -468,6 +468,38 @@
     <a title="Go to Top" href="#">
         <i class="ti-angle-up"></i>
     </a>
+</div>
+
+<div id="confirm-mail" class="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="login-card card-block login-card-modal">
+            <form class="md-float-material">
+                <div class="text-center">
+                    <img src="img\logo.png" alt="logo.png">
+                </div>
+                <div class="card m-t-15">
+                    <div class="auth-box card-block">
+                        <div class="row m-b-20">
+                            <div class="col-md-12 confirm">
+                                <h3 class="text-center txt-primary"><i class="icofont icofont-check-circled text-primary"></i>
+                                    Confirmation</h3>
+                            </div>
+                        </div>
+                        <p class="text-inverse text-left m-t-15 f-16"><b>Dear
+                                Username</p>
+                        <p class="text-inverse text-left m-b-0">Welcome to our
+                            website. Really Exciting to have you here!</p>
+                        <p class="text-inverse text-left m-b-20">Please click the
+                            link below to verify that this is your email address.
+                        </p>
+                        <p class="text-inverse text-left m-b-30">Thank you and enjoy
+                            our website.</p>
+                    </div>
+                </div>
+            </form>
+            <!-- end of form -->
+        </div>
+    </div>
 </div>
 
 <!-- footer  -->

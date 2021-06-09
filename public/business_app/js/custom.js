@@ -34,12 +34,10 @@ $( "#sidebar_menu" ).find( "a" ).removeClass("active");
 $( "#sidebar_menu" ).find( "li" ).removeClass("mm-active");
 $( "#sidebar_menu" ).find( "li ul" ).removeClass("mm-show");
 
-var current = $('nav').attr("data-current_link");
-// var current = window.location.pathname
+var current = window.location.pathname
 $("#sidebar_menu >li a").filter(function() {
 
-    var link = $(this).attr("data-link");
-    // var link = $(this).attr("href");
+    var link = $(this).attr("href");
     if(link){
         if (current.indexOf(link) != -1) {
             $(this).parents().parents().children('ul.mm-collapse').addClass('mm-show').closest('li').addClass('mm-active');

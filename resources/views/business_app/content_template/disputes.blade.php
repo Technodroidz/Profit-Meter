@@ -81,140 +81,106 @@
 
 
 
-<div class="container-fluid p-0 ">
-               <!-- page title  -->
-               <div class="row">
-                  <div class="col-12">
-                     <p>Time Period</p>
-                     <div id="reportrange"  class="pull-left">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                        <span></span> <b class="caret"></b>
-                     </div>
-                     <span class="help">
-                     <a class="help" data-toggle="modal" data-target="#confirm-mail"><i class="fas fa-info-circle"></i> Help </a>
-                     </span>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="white_card mb_30 mt_30 pad-16 br-16">
-                        <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
-                           <div class="page_title_left">
-                              <h3 class="mb-0" >Dispute Report</h3>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-6 form-group">
-                              <select class="form-control">
-                                 <option>All gateways</option>
-                                 <option>Gateways 1</option>
-                                 <option>Gateways 2</option>
-                                 <option>Gateways 3</option>
-                                 <option>Gateways 4</option>
-                              </select>
-                           </div>
-                           <div class="col-md-6 form-group">
-                              <select class="form-control">
-                                 <option>All products</option>
-                                 <option>Products 1</option>
-                                 <option>Products 2</option>
-                                 <option>Products 3</option>
-                                 <option>Products 4</option>
-                              </select>
-                           </div>
-                           <div class="col-md-12">
-                                <h4>Disputes state</h4>
-                                <div class="row">
-                                    <div class="col-md-3 col-xs-4">
-                                        <label class="switch">
-                                          <input type="checkbox">
-                                          <span class="slider round"></span>
-                                        </label>
-                                        <span class="tTxt">Won</span>
-                                    </div>
-                                    <div class="col-md-3 col-xs-4">
-                                        <label class="switch">
-                                          <input type="checkbox">
-                                          <span class="slider round"></span>
-                                        </label>
-                                        <span class="tTxt">Lost</span>
-                                    </div>
-                                    <div class="col-md-3 col-xs-4">
-                                        <label class="switch">
-                                          <input type="checkbox">
-                                          <span class="slider round"></span>
-                                        </label>
-                                        <span class="tTxt">Open</span>
-                                    </div>
-                                    <div class="col-md-12 text-right">
-                                        <a href="#" class="apFilter"><i class="fas fa-sync-alt"></i> Apply filters</a>
-                                    </div>
-                                </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="white_card mb_30 mt_30 pad-16 br-16">
-                        <canvas id="highlights"></canvas>
-                    </div>
-                    <div class="white_card mb_30 mt_30 pad-16 br-16">
-                        <div class="row">
-                            <div class="col-md-3 col-xs-6 text-center">
-                                <h4>Dispute Count</h4>
-                                <h2 style="color:#3fd03f;">0</h2>
-                                <p class="cGray">Total number of disputes</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 text-center">
-                                <h4>Won/Lost Disputes</h4>
-                                <h2 style="color:#3fd03f;">0/0</h2>
-                                <p class="cGray">Won and lost disputes</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 text-center">
-                                <h4>Disputed Revenue</h4>
-                                <h2 style="color:#3fd03f;">0</h2>
-                                <p class="cGray">Total disputed revenue</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 text-center">
-                                <h4>Open Disputed Revenue</h4>
-                                <h2 style="color:#3fd03f;">0</h2>
-                                <p class="cGray">Revenue held by gateway</p>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                  
-               </div>
+    <div class="container-fluid p-0 ">
+       <!-- page title  -->
+       <div class="row">
+            <div class="col-12">
+             <p>Time Period</p>
+             <div id="reportrange"  class="pull-left">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+             </div>
+             <span class="help">
+             <a class="help" data-toggle="modal" data-target="#confirm-mail"><i class="fas fa-info-circle"></i> Help </a>
+             </span>
             </div>
-
-
-
-            <div id="confirm-mail" class="modal" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div class="login-card card-block login-card-modal">
-                                                <form class="md-float-material">
-                                                    <div class="text-center">
-                                                        <img src="img\logo.png" alt="logo.png">
-                                                    </div>
-                                                    <div class="card m-t-15">
-                                                        <div class="auth-box card-block">
-                                                            <div class="row m-b-20">
-                                                                <div class="col-md-12 confirm">
-                                                                    <h3 class="text-center txt-primary"><i class="icofont icofont-check-circled text-primary"></i>
-                                                                        Confirmation</h3>
-                                                                </div>
-                                                            </div>
-                                                            <p class="text-inverse text-left m-t-15 f-16"><b>Dear
-                                                                    Username</p>
-                                                            <p class="text-inverse text-left m-b-0">Welcome to our
-                                                                website. Really Exciting to have you here!</p>
-                                                            <p class="text-inverse text-left m-b-20">Please click the
-                                                                link below to verify that this is your email address.
-                                                            </p>
-                                                            <p class="text-inverse text-left m-b-30">Thank you and enjoy
-                                                                our website.</p>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <!-- end of form -->
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="col-md-12">
+             <div class="white_card mb_30 mt_30 pad-16 br-16">
+                <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                   <div class="page_title_left">
+                      <h3 class="mb-0" >Dispute Report</h3>
+                   </div>
+                </div>
+                <div class="row">
+                   <div class="col-md-6 form-group">
+                      <select class="form-control">
+                         <option>All gateways</option>
+                         <option>Gateways 1</option>
+                         <option>Gateways 2</option>
+                         <option>Gateways 3</option>
+                         <option>Gateways 4</option>
+                      </select>
+                   </div>
+                   <div class="col-md-6 form-group">
+                      <select class="form-control">
+                         <option>All products</option>
+                         <option>Products 1</option>
+                         <option>Products 2</option>
+                         <option>Products 3</option>
+                         <option>Products 4</option>
+                      </select>
+                   </div>
+                   <div class="col-md-12">
+                        <h4>Disputes state</h4>
+                        <div class="row">
+                            <div class="col-md-3 col-xs-4">
+                                <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                </label>
+                                <span class="tTxt">Won</span>
+                            </div>
+                            <div class="col-md-3 col-xs-4">
+                                <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                </label>
+                                <span class="tTxt">Lost</span>
+                            </div>
+                            <div class="col-md-3 col-xs-4">
+                                <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                </label>
+                                <span class="tTxt">Open</span>
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <a href="#" class="apFilter"><i class="fas fa-sync-alt"></i> Apply filters</a>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+             </div>
+             <div class="white_card mb_30 mt_30 pad-16 br-16">
+                <canvas id="highlights"></canvas>
+            </div>
+            <div class="white_card mb_30 mt_30 pad-16 br-16">
+                <div class="row">
+                    <div class="col-md-3 col-xs-6 text-center">
+                        <h4>Dispute Count</h4>
+                        <h2 style="color:#3fd03f;">0</h2>
+                        <p class="cGray">Total number of disputes</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6 text-center">
+                        <h4>Won/Lost Disputes</h4>
+                        <h2 style="color:#3fd03f;">0/0</h2>
+                        <p class="cGray">Won and lost disputes</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6 text-center">
+                        <h4>Disputed Revenue</h4>
+                        <h2 style="color:#3fd03f;">0</h2>
+                        <p class="cGray">Total disputed revenue</p>
+                    </div>
+                    <div class="col-md-3 col-xs-6 text-center">
+                        <h4>Open Disputed Revenue</h4>
+                        <h2 style="color:#3fd03f;">0</h2>
+                        <p class="cGray">Revenue held by gateway</p>
+                    </div>
+                </div>
+            </div>
+          </div>
+          
+       </div>
+    </div>
 
 @endsection
