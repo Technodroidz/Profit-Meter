@@ -121,10 +121,39 @@ class AuthController extends Controller
                 
                 ShopifySDK::config($config);
 
-                //your_authorize_url.php
-                // $scopes = 'read_products,write_products,read_script_tags,write_script_tags';
-                //This is also valid
-                $scopes = array('read_products','write_products','read_script_tags', 'write_script_tags'); 
+                // Scopes names to access the respective apis.
+                $scopes = [
+                    'read_content',
+                    'read_themes',
+                    'read_product_listings',
+                    'read_products',
+                    'read_customers',
+                    'read_orders',
+                    'read_all_orders',
+                    'read_draft_orders',
+                    'read_inventory',
+                    'read_locations',
+                    'read_script_tags',
+                    'read_fulfillments',
+                    'read_assigned_fulfillment_orders',
+                    'read_merchant_managed_fulfillment_orders',
+                    'read_third_party_fulfillment_orders',
+                    'read_shipping',
+                    'read_gift_cards',
+                    'read_users',
+                    'read_checkouts',
+                    'read_reports',
+                    'read_price_rules',
+                    'read_discounts',
+                    'read_marketing_events',
+                    'read_resource_feedbacks',
+                    'read_shopify_payments_payouts',
+                    'read_shopify_payments_disputes',
+                    'read_translations',
+                    'read_locales',
+                    'read_script_tags',
+                ]; 
+
                 $redirectUrl = route('authenticate');
 
                 $auth_url = \PHPShopify\AuthHelper::createAuthRequest($scopes, $redirectUrl, null, null, true);
@@ -150,8 +179,12 @@ class AuthController extends Controller
         );
         PHPShopify\ShopifySDK::config($config);
         $accessToken = \PHPShopify\AuthHelper::getAccessToken();
-        pp($accessToken);
+        
         //Now store it in database or somewhere else
+        $user = Auth::User();
+        $user->shopify_access_token = $accessToken;
+        $user->email = $request['email'];
+        $user->save();
     }
 
     public function logout(Request $request)
