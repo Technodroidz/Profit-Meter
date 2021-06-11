@@ -16,6 +16,7 @@
         "laravel/ui": "^2.2",
         "osiset/laravel-shopify": "^16.0",
         "paypal/rest-api-sdk-php": "^1.14",
+        "phpclassic/php-shopify": "^1.1",
         "scottybo/laravel-facebook-sdk": "^5.1"
     },
     "require-dev": {

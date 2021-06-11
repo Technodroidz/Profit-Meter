@@ -57,26 +57,47 @@
                                 <!-- sign_in  -->
                                 <div class="modal-content cs_modal">
                                     <div class="modal-header theme_bg_1 justify-content-center">
-                                        <h5 class="modal-title text_white">Register</h5>
+                                        <h5 class="modal-title text_white">Register with Email</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        @if(session()->has('error'))
+                                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                              <strong>{{ session()->get('error') }}</strong>
+                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                        @endif
+                                        @if(session()->has('success'))
+                                            <div class="alert alert-danger alert-dismissable hiddenError">
+                                                {{ session()->get('success') }}
+                                            </div>
+                                        @endif
+
+                                        <form method="POST" action="{{route('business_register')}}">
+                                            @csrf
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Full Name">
+                                                <input type="text" name="first_name" class="form-control" placeholder="First Name">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Enter your email">
+                                                <input type="text" name="last_name" class="form-control" placeholder="Last Name">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control" placeholder="Password">
+                                                <input type="text" name="email" class="form-control" placeholder="Enter your email">
                                             </div>
-                                            <div class="form-group cs_check_box">
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control" placeholder="Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+                                            </div>
+                                            <!-- <div class="form-group cs_check_box">
                                                 <input type="checkbox" id="check_box" class="common_checkbox">
                                                 <label for="check_box">
                                                     Keep me up to date
                                                 </label>
-                                            </div>
-                                            <a href="#" class="btn_1 full_width text-center"> Sign Up</a>
+                                            </div> -->
+                                            <button type="submit" class="btn_1 full_width text-center"> Sign Up</button>
                                             <p>Need an account? <a data-toggle="modal" data-target="#sing_up" data-dismiss="modal"  href="#">Log in</a></p>
                                             <div class="text-center">
                                                 <a href="#" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>

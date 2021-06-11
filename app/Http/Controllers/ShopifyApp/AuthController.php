@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PHPShopify\ShopifySDK;
+use App\Model\User;
+use Redirect;
 
 class AuthController extends Controller
 {
@@ -50,7 +53,106 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $data = [];
+        if($request->isMethod('post')){
+            $validation_array = [
+                'first_name'    => 'required',
+                'last_name'     => 'required',
+                'email'         => 'required|email|unique:users',
+                'password'      => 'required|min:6',
+                'confirm_password' => 'same:password'
+            ];
+
+            $validation_attributes = [
+                'first_name'    => 'First Name',
+                'last_name'     => 'Last Name',
+                'email'         => 'Email',
+                'password'      => 'Password'
+            ];
+
+            $validator = Validator::make($request->all(), $validation_array,[],$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                return back()->with('error', $validation_message);       
+            }else{
+                $data = [
+                    'name'      => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email'     => $request->email,
+                    'password'  => bcrypt($request->password)
+                ];
+
+                User::insert($data);
+                $credentials = $request->only('email', 'password');
+                if(Auth::attempt($credentials)){
+                    return redirect()->route('connect_shopify_account');
+                }else{
+                    return back()->with('error', 'Invalid Login Credentials.');       
+                }
+            }
+        }
         return view('business_app/auth_template/register');
+    }
+
+    public function loginWithShopify(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'shop_url'      => 'required',
+            ];
+
+            $validation_attributes = [
+                'shop_url'      => 'Shop Url',
+            ];
+
+            $validator = Validator::make($request->all(), $validation_array,[],$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                return back()->with('error', $validation_message);       
+            }else{
+                $config = array(
+                    // 'ShopUrl'   => 'profitmeter3152021.myshopify.com',
+                    'ShopUrl'   => $request->shop_url,
+                    'ApiKey'    => env('SHOPIFY_API_KEY'),
+                    'Password'  => env('SHOPIFY_API_SECRET'),
+                );
+                
+                ShopifySDK::config($config);
+
+                //your_authorize_url.php
+                // $scopes = 'read_products,write_products,read_script_tags,write_script_tags';
+                //This is also valid
+                $scopes = array('read_products','write_products','read_script_tags', 'write_script_tags'); 
+                $redirectUrl = route('authenticate');
+
+                $auth_url = \PHPShopify\AuthHelper::createAuthRequest($scopes, $redirectUrl, null, null, true);
+
+                if(!empty($auth_url)){
+                    header('Location: '.$auth_url);
+                    die;
+                }else{
+                    return back()->with('error', 'Invalid Shop Url.');
+                }
+            }
+        }
+        return view('business_app/auth_template/connect_with_shopify');
+    }
+
+    public function authenticate(Request $request)
+    {
+        pp($request->all());
+        $config = array(
+            // 'ShopUrl'   => 'profitmeter3152021.myshopify.com',
+            'ShopUrl'   => $request->shop_url,
+            'ApiKey'    => env('SHOPIFY_API_KEY'),
+            'Password'  => env('SHOPIFY_API_SECRET'),
+        );
+        PHPShopify\ShopifySDK::config($config);
+        $accessToken = \PHPShopify\AuthHelper::getAccessToken();
+        pp($accessToken);
+        //Now store it in database or somewhere else
     }
 
     public function logout(Request $request)

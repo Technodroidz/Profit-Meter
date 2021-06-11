@@ -25,4 +25,5 @@ class DashboardController extends Controller
         // return;
         return view('business_app/content_template/dashboard',$data);
     }
+
 }

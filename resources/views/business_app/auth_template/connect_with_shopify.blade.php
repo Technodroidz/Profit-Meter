@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Profit Meter Login</title>
+    <title>Connect Shopify</title>
 
     <!-- <link rel="icon" href="img/favicon.png" type="image/png"> -->
     <!-- Bootstrap CSS -->
@@ -50,19 +50,16 @@
                     </div>
                 </div>
                 </div> -->
-                
                 <div class="col-lg-12">
                     <div class="white_box mb_30">
                         <div class="row justify-content-center">
-                          
                             <div class="col-lg-6">
                                 <!-- sign_in  -->
                                 <div class="modal-content cs_modal">
-                                    <div class="modal-header justify-content-center theme_bg_1">
-                                        <h5 class="modal-title text_white">Profit Meter</h5>
+                                    <div class="modal-header theme_bg_1 justify-content-center">
+                                        <h5 class="modal-title text_white">Connect Your Shopify Account</h5>
                                     </div>
                                     <div class="modal-body">
-
                                         @if(session()->has('error'))
                                             <div class="alert alert-primary alert-dismissible fade show" role="alert">
                                               <strong>{{ session()->get('error') }}</strong>
@@ -76,44 +73,21 @@
                                                 {{ session()->get('success') }}
                                             </div>
                                         @endif
-
-                                        <form method="post" action=" {{route('login')}} ">
+                                        <form method="POST" action="connect-shopify-account" >
                                             @csrf
                                             <div class="form-group">
-                                                <input type="text" name="email" class="form-control" placeholder="Enter your email">
+                                                <input type="text" name="shop_url" class="form-control" placeholder="example.myshopify.com">
                                             </div>
-                                            <div class="form-group">
-                                                <input type="password" name="password" class="form-control" placeholder="Password">
-                                            </div>
-
-                                            <button type="submit" class="btn_1 full_width text-center" >Log in</button>
-                                            <p>Need an account? <a href="{{ route('business_register')  }}"> Sign Up</a></p>
-                                            <div class="text-center">
-                                                <a href="{{ url('business/forgot-password')  }}" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
-                                            </div>
-
+                                            <button class="btn_1 full_width text-center"> Connect</button>
                                         </form>
-
-
                                     </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('home') }}" accept-charset="UTF-8">
-                                            <div class="form-group">
-                                                <!-- <p class="subtitle"> -->
-                                                  <label for="shop">Enter your shop domain to log in or install this app.</label>
-                                                <!-- </p> -->
-                                                <input id="shop" name="shop" type="text" autofocus="autofocus" placeholder="example.myshopify.com" class="form-control">
-                                            </div>
-                                          
-                                            <button type="submit" class="btn_2 full_width text-center" style="border:2px dashed;">Login with Shopify</button>
-                                        </form>
-                                    </div> 
                                 </div>
                             </div>
                         </div>
                         
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
