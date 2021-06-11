@@ -18,7 +18,7 @@ class RestrictRegisterUser
         if(Auth::User()){
             if(empty(Auth::User()->shopify_url)){
 
-                // return redirect()->route('connect_shopify_account');
+                return redirect()->route('connect_shopify_account');
             }
         }
         return $next($request);
