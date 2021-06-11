@@ -116,10 +116,10 @@ class AuthController extends Controller
                     // 'ShopUrl'   => 'profitmeter3152021.myshopify.com',
                     'ShopUrl'   => $request->shop_url,
                     'ApiKey'    => env('SHOPIFY_API_KEY'),
-                    'Password'  => env('SHOPIFY_API_SECRET'),
+                    'SharedSecret'  => env('SHOPIFY_API_SECRET'),
                 );
                 
-                ShopifySDK::config($config);
+                \PHPShopify\ShopifySDK::config($config);
 
                 // Scopes names to access the respective apis.
                 $scopes = [
@@ -171,9 +171,10 @@ class AuthController extends Controller
         $config = array(
             'ShopUrl'   => $request->shop,
             'ApiKey'    => env('SHOPIFY_API_KEY'),
-            'Password'  => env('SHOPIFY_API_SECRET'),
+            'SharedSecret'  => env('SHOPIFY_API_SECRET'),
         );
-        ShopifySDK::config($config);
+
+        \PHPShopify\ShopifySDK::config($config);
         $accessToken = \PHPShopify\AuthHelper::getAccessToken();
         
         //Now store it in database or somewhere else
