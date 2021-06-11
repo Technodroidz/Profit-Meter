@@ -182,8 +182,10 @@ class AuthController extends Controller
         $user = Auth::User();
         if(!empty(Auth::User()->shopify_access_token)){
             $user->shopify_access_token = $accessToken;
+        }else{
+             $user->shopify_access_token = $user->shopify_access_token;
         }
-        
+
         $user->shopify_url = $request->shop;
         $user->save();
 
