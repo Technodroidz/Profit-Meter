@@ -173,7 +173,7 @@ class AuthController extends Controller
             'ApiKey'    => env('SHOPIFY_API_KEY'),
             'Password'  => env('SHOPIFY_API_SECRET'),
         );
-        PHPShopify\ShopifySDK::config($config);
+        ShopifySDK::config($config);
         $accessToken = \PHPShopify\AuthHelper::getAccessToken();
         
         //Now store it in database or somewhere else
