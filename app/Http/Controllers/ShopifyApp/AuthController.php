@@ -168,10 +168,8 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        pp($request->all());
         $config = array(
-            // 'ShopUrl'   => 'profitmeter3152021.myshopify.com',
-            'ShopUrl'   => $request->shop_url,
+            'ShopUrl'   => $request->shop,
             'ApiKey'    => env('SHOPIFY_API_KEY'),
             'Password'  => env('SHOPIFY_API_SECRET'),
         );
@@ -181,8 +179,13 @@ class AuthController extends Controller
         //Now store it in database or somewhere else
         $user = Auth::User();
         $user->shopify_access_token = $accessToken;
+        $user->shopify_url          = $request->shop;
         $user->email = $request['email'];
         $user->save();
+
+        pp(Auth::User());
+
+
     }
 
     public function logout(Request $request)
