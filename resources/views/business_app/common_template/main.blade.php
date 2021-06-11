@@ -306,7 +306,13 @@
                         </div>
                         <div class="profile_info d-flex align-items-center">
                             <div class="profile_thumb mr_20">
+                            
+                               
+                                @if(!empty(Auth::user()->profile_pick))
+                                <img src="{{asset('images/'.Auth::user()->profile_pick)}}" class="img-circle" height="200" width="200" alt="User Image" style="height:auto;">
+                                @else
                                 <img src="{{asset('business_app')}}/img/transfer/4.png" alt="#">
+                                @endif
                             </div>
                             <div class="author_name">
                                 <h4 class="f_s_15 f_w_500 mb-0">{{Auth::User()->name}}</h4>
@@ -592,7 +598,15 @@ $(function() {
   });
 });
 </script>
-
+<script type="text/javascript" src="{{asset('')}}files/assets/js/script.js"></script>
+    <script src="{{asset('')}}backend/js/demo/peity-demo.js"></script>
+    <script src="{{asset('')}}backend/js/plugins/validate/jquery.validate.min.js"></script>
+      <script src="{{ asset('admin_new/js/jquery.form.min.js') }}"></script>
+    <script src="{{ asset('admin_new/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('admin_new/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('admin_new/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin_new/js/dataTables.bootstrap.min.js') }}"></script>
+   
 @yield('script')
 
 </body>

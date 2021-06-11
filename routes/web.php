@@ -116,6 +116,8 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(
 	Route::get('business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
 	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
+	Route::post('user-profile-update','ShopifyApp\SettingController@updateUserProfile');
+	Route::post('user-password-update','ShopifyApp\SettingController@updateUserPassword');
 });
 
 

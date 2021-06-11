@@ -27,6 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('shopify_namespace')->nullable();
             $table->string('short_token')->nullable();
             $table->string('long_token')->nullable();
+            $table->string('profile_pick')->nullable();
+            $table->string('company')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
