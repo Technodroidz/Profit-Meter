@@ -181,7 +181,6 @@ class AuthController extends Controller
         $user = Auth::User();
         $user->shopify_access_token = $accessToken;
         $user->shopify_url          = $request->shop;
-        $user->email = $request['email'];
         $user->save();
 
         pp(Auth::User());
