@@ -178,10 +178,13 @@ class AuthController extends Controller
         $accessToken = \PHPShopify\AuthHelper::getAccessToken();
         
         //Now store it in database or somewhere else
-        pp($accessToken);
+
         $user = Auth::User();
-        $user->shopify_access_token = $accessToken;
-        $user->shopify_url          = $request->shop;
+        if(!empty(Auth::User()->shopify_access_token)){
+            $user->shopify_access_token = $accessToken;
+        }
+        
+        $user->shopify_url = $request->shop;
         $user->save();
 
         pp(Auth::User());
