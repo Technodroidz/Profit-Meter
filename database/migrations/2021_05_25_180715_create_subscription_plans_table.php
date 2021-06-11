@@ -20,6 +20,9 @@ class CreateSubscriptionPlansTable extends Migration
             $table->string('package_duration')->nullable();
             $table->text('short_decription')->nullable();
             $table->text('package_log_description')->nullable();
+            $table->string('stripe_id')->nullable();
+            $table->string('stripe_plan')->nullable();
+            $table->integer('quantity')->nullable();
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

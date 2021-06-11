@@ -48,10 +48,11 @@ class PayPalController extends Controller
        
         $recurring = ($request->get('mode') === 'recurring') ? true : false;
         $cart = $this->getCheckoutData($recurring);
-          
+        
         try {
+            
             $response = $this->provider->setExpressCheckout($cart, $recurring);
-             print_r($response); exit;
+            print_r( $response); exit;
             return redirect($response['paypal_link']);
         } catch (\Exception $e) {
             $invoice = $this->createInvoice($cart, 'Invalid');
@@ -208,7 +209,7 @@ class PayPalController extends Controller
         $data['cancel_url'] = url('/paynow');
 
        
-        $total = 0;
+        $total = 1;
         foreach ($data['items'] as $item) {
             $total += $item['price'] * $item['qty'];
         }

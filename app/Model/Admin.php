@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model;
+use App\Model\User;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

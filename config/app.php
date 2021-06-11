@@ -174,7 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class
+        Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
     ],
 

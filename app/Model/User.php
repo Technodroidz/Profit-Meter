@@ -8,13 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Model\Role;
 use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
 use Osiset\ShopifyApp\Traits\ShopModel;
-
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements IShopModel
 {
     use Notifiable;
     use ShopModel;
-
+    use Billable;
     /**
      * The attributes that are mass assignable.
      *

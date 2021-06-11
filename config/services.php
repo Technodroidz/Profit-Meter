@@ -33,5 +33,10 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
+    'stripe' => [
+        'model' => App\Model\User::class,
+        'STRIPE_KEY' =>'pk_test_51HuWQHJRRrJp7PIAIkuAgvuEWXj9CwiwwVl9YPSBPZIp87M0WTFZD8VuAFIhb3thCG0hF5mF6poVsmlt3IEiOftq00CKI0k6WY',
+        'STRIPE_SECRET' => 'sk_test_51HuWQHJRRrJp7PIAkEzyhyUaSTq9lqd6b8SHQacS91T7rOO2pWwztoTSpsolvE46p7ROFEjLvUHYE2P6vSjEAf0C00GGPMAQm6',
+    ],
 
 ];
