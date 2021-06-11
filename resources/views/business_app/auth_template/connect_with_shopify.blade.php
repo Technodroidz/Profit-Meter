@@ -57,7 +57,7 @@
                                 <!-- sign_in  -->
                                 <div class="modal-content cs_modal">
                                     <div class="modal-header theme_bg_1 justify-content-center">
-                                        <h5 class="modal-title text_white">Connect Your Shopify Account</h5>
+                                        <h5 class="modal-title text_white">Connect Your Shopify Account({{Auth::User()->email}})</h5>
                                     </div>
                                     <div class="modal-body">
                                         @if(session()->has('error'))
@@ -79,6 +79,9 @@
                                                 <input type="text" name="shop_url" class="form-control" placeholder="example.myshopify.com">
                                             </div>
                                             <button class="btn_1 full_width text-center"> Connect</button>
+                                            <div class="form-group">
+                                            </div>
+                                            <a href="{{route('business_logout')}}" class="btn_2 full_width text-center"> Logout</a>
                                         </form>
                                     </div>
                                 </div>

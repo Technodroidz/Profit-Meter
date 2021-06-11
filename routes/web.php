@@ -82,17 +82,22 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 });
 
-Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
-Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
-Route::match(['POST','GET'],'business/register','ShopifyApp\AuthController@register')->name('business_register');
 Route::get('authenticate','ShopifyApp\AuthController@authenticate')->name('authenticate');
+
+Route::group(['middleware' => ['restrict.registered.user']],function(){
+	Route::match(['POST','GET'],'business/register','ShopifyApp\AuthController@register')->name('business_register');
+	Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
+	Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
+});
+
 Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
 
-Route::group(['middleware' => ['auth:web']],function(){
+Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
+
+Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->name('home');
 	// ->middleware(['auth.shopify'])
 
-	Route::get('business/logout','ShopifyApp\AuthController@logout')->name('business_logout');
 	Route::get('business/simulator','ShopifyApp\SimulatorController@simulator')->name('business_simulator');
 	Route::get('business/lifetime-value','ShopifyApp\LifetimeValueController@lifetimeValue')->name('business_lifetime_value');
 

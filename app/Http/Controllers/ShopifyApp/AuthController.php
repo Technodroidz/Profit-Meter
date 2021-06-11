@@ -130,8 +130,7 @@ class AuthController extends Controller
                 $auth_url = \PHPShopify\AuthHelper::createAuthRequest($scopes, $redirectUrl, null, null, true);
 
                 if(!empty($auth_url)){
-                    header('Location: '.$auth_url);
-                    die;
+                    return redirect()->away($auth_url);
                 }else{
                     return back()->with('error', 'Invalid Shop Url.');
                 }
