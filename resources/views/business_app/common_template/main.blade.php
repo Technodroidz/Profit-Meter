@@ -84,7 +84,7 @@
             </ul> -->
         </li>
         <li class="">
-            <a  href="{{route('business_simulator')}}" aria-expanded="false">
+            <a  href="{{route('business_simulator')}}" aria-expanded="false" data-link="simulator">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/2.svg" alt="">
                 </div>
@@ -94,7 +94,7 @@
             </a>
         </li>
         <li class="">
-            <a  href="{{route('business_lifetime_value')}}" aria-expanded="false">
+            <a  href="{{route('business_lifetime_value')}}" aria-expanded="false" data-link="lifetime_value">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/3.svg" alt="">
                 </div>
@@ -104,7 +104,7 @@
             </a>
         </li> 
         <li class="">
-            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false" data-link="reports">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/4.svg" alt="">
                 </div>
@@ -114,14 +114,14 @@
             </a>
 
             <ul>
-                <li><a href="{{route('business_report_products')}}">Products</a></li>
-                <li><a href="{{route('business_report_orders')}}">Orders</a></li>
-                <li><a href="{{route('business_report_map')}}">Map</a></li>
-                <li><a href="{{route('business_report_disputes')}}">Disputes</a></li>
+                <li><a href="{{route('business_report_products')}}" data-link="products">Products</a></li>
+                <li><a href="{{route('business_report_orders')}}" data-link="orders">Orders</a></li>
+                <li><a href="{{route('business_report_map')}}" data-link="map">Map</a></li>
+                <li><a href="{{route('business_report_disputes')}}" data-link="disputes">Disputes</a></li>
             </ul>
         </li>
         <li class="">
-            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false" data-link="expenses">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/5.svg" alt="">
                 </div>
@@ -131,11 +131,11 @@
             </a>
 
             <ul>
-                <li><a href="{{route('business_expenses_product_cost')}}">Product Costs</a></li>
-                <li><a href="{{route('business_expenses_shipping_cost')}}">Shipping Costs</a></li>
-                <li><a href="{{route('business_expenses_handling_cost')}}">Handling Costs</a></li>
-                <li><a href="{{route('business_expenses_transaction_cost')}}">Transaction Costs</a></li>
-                <li><a href="{{route('business_expenses_custom_cost')}}">Custom Costs</a></li>
+                <li><a href="{{route('business_expenses_product_cost')}}" data-link="product_cost">Product Costs</a></li>
+                <li><a href="{{route('business_expenses_shipping_cost')}}" data-link="shipping_cost">Shipping Costs</a></li>
+                <li><a href="{{route('business_expenses_handling_cost')}}" data-link="handling_cost">Handling Costs</a></li>
+                <li><a href="{{route('business_expenses_transaction_cost')}}" data-link="transaction_cost">Transaction Costs</a></li>
+                <li><a href="{{route('business_expenses_custom_cost')}}" data-link="custom_cost">Custom Costs</a></li>
           
             </ul>
         </li>
@@ -151,7 +151,7 @@
             
         </li> -->
         <li class="">
-            <a href="{{route('business_integration')}}" aria-expanded="false">
+            <a href="{{route('business_integration')}}" aria-expanded="false" data-link="integration">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/7.svg" alt="">
                 </div>
@@ -172,7 +172,7 @@
             </a>
         </li> -->
         <li class="">
-            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false" data-link="setting">
                 <div class="nav_icon_small">
                     <img src="{{asset('business_app')}}/img/menu-icon/6.svg" alt="">
                 </div>
@@ -181,9 +181,9 @@
                 </div>
             </a>
             <ul>
-              <li><a href="{{route('business_setting_rules')}}">Rules</a></li>
-              <li><a href="{{route('business_setting_sync_status')}}">Sync Status</a></li>
-              <li><a href="{{route('business_setting_account')}}">Account</a></li>
+              <li><a href="{{route('business_setting_rules')}}" data-link="rules">Rules</a></li>
+              <li><a href="{{route('business_setting_sync_status')}}" data-link="sync_status">Sync Status</a></li>
+              <li><a href="{{route('business_setting_account')}}" data-link="account">Account</a></li>
           
             </ul>
         </li>
@@ -220,9 +220,9 @@
                     </div>
                     <div class="header_right d-flex justify-content-between align-items-center">
                         <div class="header_notification_warp d-flex align-items-center">
-                            <li>
+                            <!-- <li>
                                 <a class="CHATBOX_open nav-link-notify" href="#"> <img src="{{asset('business_app')}}/img/icon/msg.svg" alt="">   </a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="bell_notification_clicker nav-link-notify" href="#"> <img src="{{asset('business_app')}}/img/icon/bell.svg" alt="">
                                     <!-- <span>2</span> -->

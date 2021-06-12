@@ -40,6 +40,7 @@ $("#sidebar_menu >li a").each(function() {
 
     // var link = $(this).attr("href");
     var link = $(this).attr("data-link");
+
     if(link && current){
         if (current.indexOf(link) != -1) {
             $(this).parents().parents().children('ul.mm-collapse').addClass('mm-show').closest('li').addClass('mm-active');

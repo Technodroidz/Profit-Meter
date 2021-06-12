@@ -62,6 +62,80 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($products as $value)
+
+                                    <tr>
+                                        <td>
+                                            <div class="trade d-flex align-items-center">
+                                               
+                                                <span class="ml-3">{{$value['id']}}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{$value['title']}}</td>
+                                        <td>451</td>
+                                        <td>5654</td>
+                                        <td>5624</td>
+                                        
+                                    </tr>
+
+                                    @endforeach
+                                    <!-- <tr>
+                                        <td>
+                                            <div class="trade d-flex align-items-center">
+                                               
+                                                <span class="ml-3">55612</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Bathing Shampoo</td>
+                                        <td>451</td>
+                                        <td>5654</td>
+                                        <td>5624</td>
+                                        
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <div class="trade d-flex align-items-center">
+                                               
+                                                <span class="ml-3">55612</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Bathing Shampoo</td>
+                                        <td>451</td>
+                                        <td>5654</td>
+                                        <td>5624</td>
+                                        
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <div class="trade d-flex align-items-center">
+                                               
+                                                <span class="ml-3">55612</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Bathing Shampoo</td>
+                                        <td>451</td>
+                                        <td>5654</td>
+                                        <td>5624</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="trade d-flex align-items-center">
+                                               
+                                                <span class="ml-3">55612</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Bathing Shampoo</td>
+                                        <td>451</td>
+                                        <td>5654</td>
+                                        <td>5624</td>
+                                        
+                                    </tr>
                                     <tr>
                                         <td>
                                             <div class="trade d-flex align-items-center">
@@ -103,77 +177,7 @@
                                         <td>5654</td>
                                         <td>5624</td>
                                         
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
+                                    </tr> -->
                                    
                                 </tbody>
                             </table>
@@ -184,6 +188,8 @@
         </div>
     </div>
 </div>
+    @section('script')
+
 
     <script>
         $(function() {
@@ -212,5 +218,5 @@
              
         });
     </script>
-
+    @endsection
 @endsection

@@ -33,4 +33,14 @@ class User extends Authenticatable implements IShopModel
         'password', 'remember_token',
     ];
 
+    public static function getShopByUrl($shopify_url)
+    {
+        return User::where('shopify_url',$shopify_url)->first();
+    }
+
+    public static function updateByShopUrl($shopify_url,$array)
+    {
+        User::where('shopify_url',$shopify_url)->update($array);
+    }
+
 }
