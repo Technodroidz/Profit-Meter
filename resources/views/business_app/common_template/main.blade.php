@@ -481,7 +481,7 @@
         <div class="login-card card-block login-card-modal">
             <form class="md-float-material">
                 <div class="text-center">
-                    <img src="img\logo.png" alt="logo.png">
+                    <img src="{{asset('')}}business_app/img/logo.png" alt="logo.png">
                 </div>
                 <div class="card m-t-15">
                     <div class="auth-box card-block">
@@ -598,15 +598,10 @@ $(function() {
   });
 });
 </script>
-<script type="text/javascript" src="{{asset('')}}files/assets/js/script.js"></script>
-    <script src="{{asset('')}}backend/js/demo/peity-demo.js"></script>
     <script src="{{asset('')}}backend/js/plugins/validate/jquery.validate.min.js"></script>
-      <script src="{{ asset('admin_new/js/jquery.form.min.js') }}"></script>
+    <script src="{{ asset('admin_new/js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('admin_new/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('admin_new/js/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('admin_new/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('admin_new/js/dataTables.bootstrap.min.js') }}"></script>
-   
 @yield('script')
 
 </body>
