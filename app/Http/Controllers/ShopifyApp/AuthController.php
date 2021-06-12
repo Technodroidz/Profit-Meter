@@ -99,7 +99,7 @@ class AuthController extends Controller
     {
         if($request->isMethod('post')){
             $validation_array = [
-                'shop_url'      => 'required',
+                'shop_url'      => 'required|unique:users,shopify_url',
             ];
 
             $validation_attributes = [
@@ -113,7 +113,6 @@ class AuthController extends Controller
                 return back()->with('error', $validation_message);       
             }else{
                 $config = array(
-                    // 'ShopUrl'   => 'profitmeter3152021.myshopify.com',
                     'ShopUrl'   => $request->shop_url,
                     'ApiKey'    => env('SHOPIFY_API_KEY'),
                     'SharedSecret'  => env('SHOPIFY_API_SECRET'),
@@ -168,28 +167,87 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        $config = array(
-            'ShopUrl'   => $request->shop,
-            'ApiKey'    => env('SHOPIFY_API_KEY'),
-            'SharedSecret'  => env('SHOPIFY_API_SECRET'),
-        );
+        if(!empty($request->shop)){
 
-        \PHPShopify\ShopifySDK::config($config);
-        $accessToken = \PHPShopify\AuthHelper::getAccessToken();
-        
-        //Now store it in database or somewhere else
+            $user = Auth::User();
+            if(Auth::User()){
+                if(empty(Auth::User()->shopify_access_token)){
+                    $config = array(
+                        'ShopUrl'   => $request->shop,
+                        'ApiKey'    => env('SHOPIFY_API_KEY'),
+                        'SharedSecret'  => env('SHOPIFY_API_SECRET'),
+                    );
 
-        $user = Auth::User();
-        if(!empty(Auth::User()->shopify_access_token)){
-            $user->shopify_access_token = $accessToken;
-        }else{
-            $user->shopify_access_token = $user->shopify_access_token;
+                    \PHPShopify\ShopifySDK::config($config);
+                    $accessToken = \PHPShopify\AuthHelper::getAccessToken();
+
+                    $user->shopify_access_token = $accessToken;
+                }else{
+                    $user->shopify_access_token = $user->shopify_access_token;
+                }
+
+                $user->shopify_url = $request->shop;
+                $user->save();
+                return redirect()->route('home');
+            }else{
+                $shop_exist = User::getShopByUrl($request->shop);
+
+                if(!empty($shop_exist)){
+                    if(empty($shop_exist->shopify_access_token)){
+                        $config = array(
+                            'ShopUrl'   => $request->shop,
+                            'ApiKey'    => env('SHOPIFY_API_KEY'),
+                            'SharedSecret'  => env('SHOPIFY_API_SECRET'),
+                        );
+
+                        \PHPShopify\ShopifySDK::config($config);
+                        $accessToken = \PHPShopify\AuthHelper::getAccessToken();
+                        User::updateByShopUrl($request->shop,['shopify_access_token'=>$accessToken]);
+                    }
+
+                    $credentials = ['email'=>$shop_exist->email,'shopify_url'=>$shop_exist->shop];
+
+                    if(Auth::attempt($credentials)){
+                        return redirect()->route('home');
+                    }
+                }else{
+
+                    $config = array(
+                        'ShopUrl'   => $request->shop,
+                        'ApiKey'    => env('SHOPIFY_API_KEY'),
+                        'SharedSecret'  => env('SHOPIFY_API_SECRET'),
+                    );
+
+                    \PHPShopify\ShopifySDK::config($config);
+                    $accessToken = \PHPShopify\AuthHelper::getAccessToken();
+
+                    $config = array(
+                        'ShopUrl' => $request->shop,
+                        'AccessToken' => $accessToken,
+                    );
+                    $shopify    = new \PHPShopify\ShopifySDK($config);
+                    
+                    $shop = $shopify->Shop->get();
+
+                    $data = [
+                        'name'      => $shop->name,
+                        'email'     => $shop->email,
+                        'password'  => '',
+                        'shopify_url'           => $request->shop,
+                        'shopify_access_token'  => $accessToken,
+                    ];
+
+                    User::insert($data);
+                    $credentials = ['email'=>$shop->email,'shopify_url'=>$shop->shop];
+                    if(Auth::attempt($credentials)){
+                        return redirect()->route('home');
+                    }
+                }
+
+            }
         }
-
-        $user->shopify_url = $request->shop;
-        $user->save();
-
-        return redirect()->route('home');
+        Auth::logout();
+        return redirect()->route('login')->with('error', 'Invalid Request.');
     }
 
     public function logout(Request $request)

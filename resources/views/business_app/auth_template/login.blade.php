@@ -97,12 +97,13 @@
 
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('home') }}" accept-charset="UTF-8">
+                                        <form method="POST" action="{{ route('connect_shopify_account') }}" accept-charset="UTF-8">
+                                            @csrf
                                             <div class="form-group">
                                                 <!-- <p class="subtitle"> -->
                                                   <label for="shop">Enter your shop domain to log in or install this app.</label>
                                                 <!-- </p> -->
-                                                <input id="shop" name="shop" type="text" autofocus="autofocus" placeholder="example.myshopify.com" class="form-control">
+                                                <input id="shop" name="shop_url" type="text" autofocus="autofocus" placeholder="example.myshopify.com" class="form-control">
                                             </div>
                                           
                                             <button type="submit" class="btn_2 full_width text-center" style="border:2px dashed;">Login with Shopify</button>

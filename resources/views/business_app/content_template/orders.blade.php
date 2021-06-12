@@ -109,23 +109,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($orders as $value)
                                         <tr>
-                                           <td>5200001</td>
-                                           <td>15 May 2021</td>
+                                           <td>{{$value['order_number']}}</td>
+                                           <td>{{$value['created_at']}}</td>
                                            <td>John Doe</td>
-                                           <td>Active</td>
-                                           <td>35</td>
+                                           <td>{{$value['financial_status']}}</td>
+                                           <td>{{$value['line_items'][0]['title']}}</td>
                                            <td>5200</td>
                                            <td>2500</td>
                                            <td>3522</td>
                                            <td>5485</td>
-                                           <td>1500</td>
+                                           <td>{{$value['current_total_price']}}</td>
                                            <td>25</td>
                                            <td>35</td>
                                            <td>52</td>
-                                           <td>35</td>
+                                           <td>{{$value['current_total_tax']}}</td>
                                         </tr>
-                                        <tr>
+                                        @endforeach
+
+                                        <!-- <tr>
                                            <td>5200002</td>
                                            <td>15 May 2021</td>
                                            <td>Iris</td>
@@ -188,7 +191,7 @@
                                            <td></td>
                                            <td></td>
                                            <td></td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

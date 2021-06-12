@@ -14,15 +14,17 @@ class DashboardController extends Controller
     public function dashboard(Request $request)
     {
         
-        $data       = ['current_link' => 'home'];
         $config = array(
             'ShopUrl' => Auth::User()->shopify_url,
             'AccessToken' => Auth::User()->shopify_access_token,
         );
         $shopify    = new \PHPShopify\ShopifySDK($config);
         
-        $products = $shopify->Product->get();
-        // pp($products);
+        $shop = $shopify->Shop->get();
+        // pp($shop);
+        $data = ['current_link' => 'home','shop' => $shop];
+        // $data = ['current_link' => 'home'];
+        
         return view('business_app/content_template/dashboard',$data);
     }
 

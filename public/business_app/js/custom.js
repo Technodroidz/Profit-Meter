@@ -35,12 +35,13 @@ $( "#sidebar_menu" ).find( "li" ).removeClass("mm-active");
 $( "#sidebar_menu" ).find( "li ul" ).removeClass("mm-show");
 
 // var current = window.location.pathname
-var current = $('nav .sidebar').attr('data-current_link');
-$("#sidebar_menu >li a").filter(function() {
+var current = $('body nav,.sidebar').attr('data-current_link');
+$("#sidebar_menu >li a").each(function() {
 
     // var link = $(this).attr("href");
     var link = $(this).attr("data-link");
-    if(link){
+    
+    if(link && current){
         if (current.indexOf(link) != -1) {
             $(this).parents().parents().children('ul.mm-collapse').addClass('mm-show').closest('li').addClass('mm-active');
             $(this).addClass('active');
