@@ -6,6 +6,9 @@
       .planCard{
           height:100%;
       }
+      .error{
+        color: red;
+      }
   }
 </style>
 

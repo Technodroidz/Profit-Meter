@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
 
     <!-- <link rel="icon" href="img/favicon.png" type="image/png"> -->
     <!-- Bootstrap CSS -->
@@ -57,7 +57,7 @@
                                 <!-- sign_in  -->
                                 <div class="modal-content cs_modal">
                                     <div class="modal-header theme_bg_1">
-                                        <h5 class="modal-title text_white">Forget Password</h5>
+                                        <h5 class="modal-title text_white">Reset Password</h5>
                                     </div>
                                     <div class="modal-body">
                                         @if(session()->has('error'))
@@ -76,10 +76,14 @@
                                                 </button>
                                             </div>
                                         @endif
-                                        <form method="POST" action="{{ route('business_forgot_password') }}">
+                                        <form method="POST" action="{{ route('update_business_reset_password') }}">
                                             @csrf
+                                            <input type="hidden" name="token" value="{{ $token }}">
                                             <div class="form-group">
-                                                <input type="text" name="email" class="form-control" placeholder="Enter your email">
+                                                <input type="password" name="password" class="form-control" placeholder="New Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm  Password">
                                             </div>
                                             <button type="submit" class="btn_1 full_width text-center">SEND</button>
                                         

@@ -82,7 +82,7 @@
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart fb">
-                                          <img src="img/facebook.png">
+                                          <img src="{{asset('')}}/business_app/img/facebook.png">
                                           <h4 class="card-title">Facebook Ads</h4>
                                           <p class="txt">import your AdSpend from Facebook</p>
                                           <span class="redBatch">NOT CONNECTED</span>
@@ -103,7 +103,7 @@
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart stripe">
-                                          <img src="img/stripe.svg">
+                                          <img src="{{asset('')}}/business_app/img/stripe.svg">
                                           <h4 class="card-title">Stripe</h4>
                                           <p class="txt">import Disputes from Stripe</p>
                                           <span class="redBatch">NOT CONNECTED</span>
@@ -124,7 +124,7 @@
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart paypal">
-                                          <img src="img/paypal.png">
+                                          <img src="{{asset('')}}/business_app/img/paypal.png">
                                           <h4 class="card-title">Paypal</h4>
                                           <p class="txt">import Disputes from Paypal</p>
                                           <span class="redBatch">NOT CONNECTED</span>
@@ -145,7 +145,7 @@
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart google_ana">
-                                          <img src="img/snapchat-logo-png-.png">
+                                          <img src="{{asset('')}}/business_app/img/snapchat-logo-png-.png">
                                           <h4 class="card-title">Snapchat</h4>
                                           <p class="txt">import User Data from Snapchat</p>
                                           <span class="redBatch">NOT CONNECTED</span>
@@ -166,7 +166,7 @@
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart google_ad">
-                                          <img src="img/google-ads.png">
+                                          <img src="{{asset('')}}/business_app/img/google-ads.png">
                                           <h4 class="card-title">Google Adwords</h4>
                                           <p class="txt">import AdSpend from Google Adwords</p>
                                           <span class="redBatch">NOT CONNECTED</span>

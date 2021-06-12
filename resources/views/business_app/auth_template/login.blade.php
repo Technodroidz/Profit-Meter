@@ -89,7 +89,7 @@
                                             <button type="submit" class="btn_1 full_width text-center" >Log in</button>
                                             <p>Need an account? <a href="{{ route('business_register')  }}"> Sign Up</a></p>
                                             <div class="text-center">
-                                                <a href="{{ url('business/forgot-password')  }}" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
+                                                <a href="{{ url('business/forgot-password')  }}" class="pass_forget_btn">Forget Password?</a>
                                             </div>
 
                                         </form>

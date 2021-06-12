@@ -86,7 +86,9 @@ Route::get('authenticate','ShopifyApp\AuthController@authenticate')->name('authe
 
 Route::group(['middleware' => ['restrict.registered.user']],function(){
 	Route::match(['POST','GET'],'business/register','ShopifyApp\AuthController@register')->name('business_register');
-	Route::get('business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
+	Route::match(['POST','GET'],'business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
+	Route::get('business/reset-password/{token}', 'ShopifyApp\AuthController@resetPassword')->name('business_reset_password/{token}');
+	Route::post('business/reset-password', 'ShopifyApp\AuthController@updateResetPassword')->name('update_business_reset_password');
 	Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
 });
 
@@ -113,11 +115,12 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(
 	Route::get('business/expenses/custom-cost','ShopifyApp\ExpenseController@customCost')->name('business_expenses_custom_cost');
 
 	Route::get('business/integration','ShopifyApp\IntegrationController@integration')->name('business_integration');
-	Route::get('business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
+	Route::match(['POST','GET'],'business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
 	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
 	Route::post('user-profile-update','ShopifyApp\SettingController@updateUserProfile');
 	Route::post('user-password-update','ShopifyApp\SettingController@updateUserPassword');
+
 });
 
 

@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 use PHPShopify\ShopifySDK;
 use App\Model\User;
 use Redirect;
+use Mail;
+use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -42,13 +46,92 @@ class AuthController extends Controller
                 }
             }
         }
-        // Auth::logout();
+        
         return view('business_app/auth_template/login',$data);
     }
     
     public function forgotPassword(Request $request)
     {
+        // $token = Str::random(64);
+        // Mail::send('business_app/email_template/forgot_password_email', ['token' => $token], function($message) use($request){
+        //             $message->to('x@gmail.com');
+        //             $message->subject('Reset Password Notification');
+        //         });
+        // die;
+        if($request->isMethod('post')){
+
+            $validation_array = [
+                'email' => 'required|email|exists:users',
+            ];
+
+            $validation_attributes = [
+                'email'   => 'Email',
+            ];
+
+            $validator = Validator::make($request->all(), $validation_array,[],$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                return back()->with('error', $validation_message);       
+            }else{
+
+                $token = Str::random(64);
+                // pp($token);
+
+                DB::table('password_resets')->insert(
+                    ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
+                );
+
+                Mail::send('business_app/email_template/forgot_password_email', ['token' => $token], function($message) use($request){
+                    $message->to($request->email);
+                    $message->subject('Reset Password Notification');
+                });
+
+                return back()->with('success', 'We have e-mailed your password reset link!');
+            }
+        }
         return view('business_app/auth_template/forgot_password');
+    }
+
+    public function resetPassword($token='')
+    {
+        return view('business_app/auth_template/reset_password',['token' => $token]);
+    }
+
+    public function updateResetPassword(Request $request)
+    {
+
+        $validation_array = [
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required',
+            'token' => 'required|exists:password_resets'
+        ];
+
+        $validation_attributes = [
+            'password'              => 'Password',
+            'password_confirmation' => 'Confirm Password',
+            'token'                 => 'Token',
+        ];
+
+        $validator = Validator::make($request->all(), $validation_array,[],$validation_attributes);
+        $validation_message   = get_message_from_validator_object($validator->errors());
+
+        if($validator->fails()){
+            return back()->with('error', $validation_message);       
+        }else{
+            $updatePassword = DB::table('password_resets')
+                              ->where(['token' => $request->token])
+                              ->first();
+
+            if(!$updatePassword)
+                return back()->withInput()->with('error', 'Invalid token!');
+
+            $user = User::where('email', $updatePassword->email)->update(['password' => bcrypt($request->password)]);
+
+            DB::table('password_resets')->where(['email'=> $updatePassword->email])->delete();
+
+            return redirect()->route('login')->with('message', 'Your password has been changed!');
+        }
     }
 
     public function register(Request $request)

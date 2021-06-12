@@ -107,7 +107,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            @foreach ($products as $value)
+                                                @foreach ($value['variants'] as $val)
+                                                    <tr>
+                                                       <td>{{$val['id']}}</td>
+                                                       <td>{{$value['title'].' '.$val['title']}}</td>
+                                                       <td>{{$val['sku']}}</td>
+                                                       <td>{{$val['price']}}</td>
+                                                       <td>{{$val['price']}}</td>
+                                                       <td>45</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endforeach
+
+                                            <!-- <tr>
                                                <td>This is product title</td>
                                                <td>2541</td>
                                                <td>568520</td>
@@ -130,15 +143,7 @@
                                                <td>2500</td>
                                                <td>25</td>
                                                <td>45</td>
-                                            </tr>
-                                            <tr>
-                                               <td>This is product title</td>
-                                               <td>2541</td>
-                                               <td>568520</td>
-                                               <td>2500</td>
-                                               <td>25</td>
-                                               <td>45</td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>

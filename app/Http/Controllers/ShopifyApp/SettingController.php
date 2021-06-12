@@ -5,14 +5,75 @@ namespace App\Http\Controllers\ShopifyApp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
+use App\Model\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 class SettingController extends Controller
 {
     public function rules(Request $request)
     {
-        return view('business_app/content_template/rules');
+        if($request->isMethod('post')){
+            
+            $validation_array = [
+                'financial_status'                      => '',            
+                'zero_value_order'                      => '',            
+                'cancelled_order'                       => '',            
+                'order_tags'                            => 'required',        
+                'pos'                                   => '',
+                'draft_order'                           => '',        
+                'order_channels'                        => 'required',            
+                'customer_tags'                         => 'required',            
+                'refund_order_cost_to_zero'             => '',                        
+                'assign_original_order_date_to_refund'  => ''                          
+            ];
+
+            $validation_attributes = [
+                'financial_status'                      => 'Financial Status',
+                'zero_value_order'                      => 'Zero Value Order',
+                'cancelled_order'                       => 'Cancelled Order',
+                'order_tags'                            => 'Order Tags',
+                'pos'                                   => 'POS',
+                'draft_order'                           => 'Draft Order',
+                'order_channels'                        => 'Order Channels',
+                'customer_tags'                         => 'Customer Tags',
+                'refund_order_cost_to_zero'             => 'Refund Order Cost To Zero',
+                'assign_original_order_date_to_refund'  => 'Assign Original Order Date To Refund',
+            ];
+            
+            $validator = Validator::make($request->all(), $validation_array,[],$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                return back()->with('error', $validation_message);       
+            }else{
+                
+                $insert_array = [
+                    'user_id'                              => Auth::User()->id,
+                    'financial_status'                     => isset($request->financial_status)?$request->financial_status:null,
+                    'zero_value_order'                     => isset($request->zero_value_order)?$request->zero_value_order:0,
+                    'cancelled_order'                      => isset($request->cancelled_order)?$request->cancelled_order:0,
+                    'order_tags'                           => $request->order_tags,
+                    'pos'                                  => isset($request->pos)?$request->pos:0,
+                    'draft_order'                          => isset($request->draft_order)?$request->draft_order:0,
+                    'order_channels'                       => $request->order_channels,
+                    'customer_tags'                        => $request->customer_tags,
+                    'refund_order_cost_to_zero'            => isset($request->refund_order_cost_to_zero)?$request->refund_order_cost_to_zero:0,
+                    'assign_original_order_date_to_refund' => isset($request->assign_original_order_date_to_refund)?$request->assign_original_order_date_to_refund:0
+                ];
+                
+                Rule::updateOrCreate(['user_id' => Auth::User()->id],$insert_array);
+                return redirect()->route('business_setting_rules');
+            }
+        }
+
+        $rules = Rule::getRuleByUserId(Auth::User()->id);
+
+        $data  = ['current_link' => 'rules', 'rules'=> $rules]; 
+
+        return view('business_app/content_template/rules',$data);
     }
 
     public function syncStatus(Request $request)

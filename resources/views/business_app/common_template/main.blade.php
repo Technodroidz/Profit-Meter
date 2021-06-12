@@ -324,8 +324,8 @@
                                     <h5>{{Auth::User()->name}}</h5>
                                 </div>
                                 <div class="profile_info_details">
-                                    <a href="#">My Profile </a>
-                                    <a href="#">Settings</a>
+                                    <a href="{{route('business_setting_account')}}">My Profile </a>
+                                    <!-- <a href="#">Settings</a> -->
                                     <a href="{{route('business_logout')}}">Log Out </a>
                                 </div>
                             </div>
