@@ -190,11 +190,11 @@ class AuthController extends Controller
 
             if($request->shopify_form_type == 'connect_with_shopify'){
                 $validation_array = [
-                    'shop_url'      => 'required|unique:users,shopify_url',
+                    'shop_url'      => 'required|regex:(.myshopify.com)|unique:users,shopify_url',
                 ];
             }else{
                 $validation_array = [
-                    'shop_url'      => 'required',
+                    'shop_url'      => 'required|regex:(.myshopify.com)',
                 ];
             }
 
