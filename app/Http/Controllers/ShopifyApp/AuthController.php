@@ -52,12 +52,7 @@ class AuthController extends Controller
     
     public function forgotPassword(Request $request)
     {
-        // $token = Str::random(64);
-        // Mail::send('business_app/email_template/forgot_password_email', ['token' => $token], function($message) use($request){
-        //             $message->to('x@gmail.com');
-        //             $message->subject('Reset Password Notification');
-        //         });
-        // die;
+
         if($request->isMethod('post')){
 
             $validation_array = [
@@ -76,7 +71,6 @@ class AuthController extends Controller
             }else{
 
                 $token = Str::random(64);
-                // pp($token);
 
                 DB::table('password_resets')->insert(
                     ['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]
