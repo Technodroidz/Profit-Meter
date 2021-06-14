@@ -46,6 +46,7 @@ class AuthController extends Controller
                 }
             }
         }
+        $data['shopify_form_type'] = 'login_with_shopify';
         
         return view('business_app/auth_template/login',$data);
     }
@@ -174,10 +175,18 @@ class AuthController extends Controller
 
     public function loginWithShopify(Request $request)
     {
+        $data = [];
         if($request->isMethod('post')){
-            $validation_array = [
-                'shop_url'      => 'required',
-            ];
+
+            if($request->shopify_form_type == 'connect_with_shopify'){
+                $validation_array = [
+                    'shop_url'      => 'required|unique:users,shopify_url',
+                ];
+            }else{
+                $validation_array = [
+                    'shop_url'      => 'required',
+                ];
+            }
 
             $validation_attributes = [
                 'shop_url'      => 'Shop Url',
@@ -239,7 +248,8 @@ class AuthController extends Controller
                 }
             }
         }
-        return view('business_app/auth_template/connect_with_shopify');
+        $data['shopify_form_type'] = 'connect_with_shopify';
+        return view('business_app/auth_template/connect_with_shopify',$data);
     }
 
     public function authenticate(Request $request)

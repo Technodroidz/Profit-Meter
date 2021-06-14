@@ -104,6 +104,7 @@
                                                   <label for="shop">Enter your shop domain to log in or install this app.</label>
                                                 <!-- </p> -->
                                                 <input id="shop" name="shop_url" type="text" autofocus="autofocus" placeholder="example.myshopify.com" class="form-control">
+                                                <input type="hidden" name="shopify_form_type" value="{{$shopify_form_type}}">
                                             </div>
                                           
                                             <button type="submit" class="btn_2 full_width text-center" style="border:2px dashed;">Login with Shopify</button>

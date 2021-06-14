@@ -77,6 +77,7 @@
                                             @csrf
                                             <div class="form-group">
                                                 <input type="text" name="shop_url" class="form-control" placeholder="example.myshopify.com">
+                                                <input type="hidden" name="shopify_form_type" value="{{$shopify_form_type}}">
                                             </div>
                                             <button class="btn_1 full_width text-center"> Connect</button>
                                             <div class="form-group">
