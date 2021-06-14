@@ -33,7 +33,7 @@ class ReportController extends Controller
         $shopify    = new \PHPShopify\ShopifySDK($config);
         
         $orders     = $shopify->Order->get();
-        pp($orders);
+        
         $data       = ['current_link' => 'orders','orders' => $orders];
 
         return view('business_app/content_template/orders',$data);
