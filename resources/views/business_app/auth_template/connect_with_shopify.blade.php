@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Connect Shopify</title>
 
+    <link rel="icon" href="{{asset('business_app')}}/img/mini_logo.png" type="image/png">
     <!-- <link rel="icon" href="img/favicon.png" type="image/png"> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('business_app')}}/css/bootstrap.min.css" />
