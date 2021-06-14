@@ -307,15 +307,15 @@ class AuthController extends Controller
                     $shop = $shopify->Shop->get();
 
                     $data = [
-                        'name'      => $shop->name,
-                        'email'     => $shop->email,
+                        'name'      => $shop['name'],
+                        'email'     => $shop['email'],
                         'password'  => '',
                         'shopify_url'           => $request->shop,
                         'shopify_access_token'  => $accessToken,
                     ];
 
                     User::insert($data);
-                    $credentials = ['email'=>$shop->email,'shopify_url'=>$shop->shop];
+                    $credentials = ['email'=>$shop['email'],'shopify_url'=>$shop['shop']];
                     if(Auth::attempt($credentials)){
                         return redirect()->route('home');
                     }
