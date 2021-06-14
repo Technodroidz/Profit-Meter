@@ -79,7 +79,7 @@ class AuthController extends Controller
 
                 Mail::send('business_app/email_template/forgot_password_email', ['token' => $token], function($message) use($request){
                     $message->to($request->email);
-                    $message->subject('Reset Password Notification');
+                    $message->subject('Reset Your Profit-Meter Password');
                 });
 
                 return back()->with('success', 'We have e-mailed your password reset link!');
@@ -90,6 +90,16 @@ class AuthController extends Controller
 
     public function resetPassword($token='')
     {
+        $validation_content = ['token'=> $token];
+        $validation_array = [
+            'token' => 'required|exists:password_resets',
+        ];
+        $validator = Validator::make($validation_content, $validation_array);
+        
+        if($validator->fails()){
+            $token = '';
+        }
+
         return view('business_app/auth_template/reset_password',['token' => $token]);
     }
 
@@ -125,7 +135,7 @@ class AuthController extends Controller
 
             DB::table('password_resets')->where(['email'=> $updatePassword->email])->delete();
 
-            return redirect()->route('login')->with('message', 'Your password has been changed!');
+            return redirect()->route('login')->with('success', 'Your password has been changed!');
         }
     }
 

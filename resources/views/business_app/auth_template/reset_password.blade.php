@@ -61,34 +61,45 @@
                                         <h5 class="modal-title text_white">Reset Password</h5>
                                     </div>
                                     <div class="modal-body">
-                                        @if(session()->has('error'))
+                                        @if ($token)
+
+                                            @if(session()->has('error'))
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                  <strong>{{ session()->get('error') }}</strong>
+                                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                            @endif
+                                            @if(session()->has('success'))
+                                                <div class="alert alert-success alert-dismissable hiddenError" role="alert">
+                                                    {{ session()->get('success') }}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                            <form method="POST" action="{{ route('update_business_reset_password') }}">
+                                                @csrf
+                                                <input type="hidden" name="token" value="{{ $token }}">
+                                                <div class="form-group">
+                                                    <input type="password" name="password" class="form-control" placeholder="New Password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm  Password">
+                                                </div>
+                                                <button type="submit" class="btn_1 full_width text-center">SEND</button>
+                                            
+                                            </form>
+                                        @else
                                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                              <strong>{{ session()->get('error') }}</strong>
+                                              <strong>Reset Password Link Expired</strong>
                                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                               </button>
                                             </div>
+                                            <a href="{{route('login')}}" type="submit" class="btn_1 full_width text-center">Get Back to Login</a>
                                         @endif
-                                        @if(session()->has('success'))
-                                            <div class="alert alert-success alert-dismissable hiddenError" role="alert">
-                                                {{ session()->get('success') }}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        @endif
-                                        <form method="POST" action="{{ route('update_business_reset_password') }}">
-                                            @csrf
-                                            <input type="hidden" name="token" value="{{ $token }}">
-                                            <div class="form-group">
-                                                <input type="password" name="password" class="form-control" placeholder="New Password">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm  Password">
-                                            </div>
-                                            <button type="submit" class="btn_1 full_width text-center">SEND</button>
-                                        
-                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -90,7 +90,7 @@ Route::group(['middleware' => ['restrict.registered.user']],function(){
 	Route::get('business/reset-password/{token}', 'ShopifyApp\AuthController@resetPassword')->name('business_reset_password/{token}');
 	Route::post('business/reset-password', 'ShopifyApp\AuthController@updateResetPassword')->name('update_business_reset_password');
 	Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
-});
+}); 
 
 Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
 
