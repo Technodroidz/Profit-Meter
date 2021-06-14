@@ -176,7 +176,7 @@ class AuthController extends Controller
     {
         if($request->isMethod('post')){
             $validation_array = [
-                'shop_url'      => 'required|unique:users,shopify_url',
+                'shop_url'      => 'required',
             ];
 
             $validation_attributes = [
