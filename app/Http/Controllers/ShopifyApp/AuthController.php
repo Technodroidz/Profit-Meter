@@ -315,7 +315,7 @@ class AuthController extends Controller
                     ];
 
                     User::insert($data);
-                    $credentials = ['shopify_url'=>$shop['shop']];
+                    $credentials = ['shopify_url'=>$shop['domain']];
                     if(Auth::attempt($credentials)){
                         return redirect()->route('home');
                     }
