@@ -314,9 +314,10 @@ class AuthController extends Controller
                         'shopify_access_token'  => $accessToken,
                     ];
 
-                    User::insert($data);
+                    $user_id = User::insertGetId($data);
                     $credentials = ['shopify_url'=>$shop['domain']];
-                    if(Auth::attempt($credentials)){
+                    
+                    if(Auth::loginUsingId($user_id)){
                         return redirect()->route('home');
                     }
                 }
