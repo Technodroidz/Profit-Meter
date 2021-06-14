@@ -282,9 +282,9 @@ class AuthController extends Controller
                         User::updateByShopUrl($request->shop,['shopify_access_token'=>$accessToken]);
                     }
 
-                    $credentials = ['email'=>$shop_exist->email,'shopify_url'=>$shop_exist->shop];
+                    // $credentials = ['email'=>$shop_exist->email,'shopify_url'=>$shop_exist->shop];
 
-                    if(Auth::attempt($credentials)){
+                    if(Auth::loginUsingId($shop_exist->id)){
                         return redirect()->route('home');
                     }
                 }else{
@@ -315,8 +315,8 @@ class AuthController extends Controller
                     ];
 
                     $user_id = User::insertGetId($data);
-                    $credentials = ['shopify_url'=>$shop['domain']];
-                    
+                    // $credentials = ['shopify_url'=>$shop['domain']];
+
                     if(Auth::loginUsingId($user_id)){
                         return redirect()->route('home');
                     }
