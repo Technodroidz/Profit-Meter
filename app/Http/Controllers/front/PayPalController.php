@@ -52,7 +52,7 @@ class PayPalController extends Controller
         try {
             
             $response = $this->provider->setExpressCheckout($cart, $recurring);
-            print_r( $response); exit;
+            // print_r($response); exit;
             return redirect($response['paypal_link']);
         } catch (\Exception $e) {
             $invoice = $this->createInvoice($cart, 'Invalid');
@@ -102,7 +102,7 @@ class PayPalController extends Controller
                 session()->put(['code' => 'danger', 'message' => "Error processing PayPal payment for Order $invoice->id!"]);
             }
 
-            return redirect('/');
+            return redirect('/paynow');
         }
     }
 
@@ -209,14 +209,14 @@ class PayPalController extends Controller
         $data['cancel_url'] = url('/paynow');
 
        
-        $total = 1;
+        $total = 0;
         foreach ($data['items'] as $item) {
             $total += $item['price'] * $item['qty'];
         }
 
         $data['total'] = $total;
-        // print_r( $data['total'] ); exit;
-        
+        //  print_r( $data );
+        //  print_r( $data ); exit;
         return $data;
     }
 

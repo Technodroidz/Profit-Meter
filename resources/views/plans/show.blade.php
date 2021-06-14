@@ -8,7 +8,7 @@
                 <p>You will be charged ${{ number_format($plan->cost, 2) }} for {{ $plan->name }} Plan</p>
             </div>
             <div class="card">
-                <form action="{{ route('subscription.create') }}" method="post" id="payment-form">
+                <form action="{{ route('submit-payment.create') }}" method="post" id="payment-form">
                     @csrf                    
                     <div class="form-group">
                         <div class="card-header">
@@ -23,6 +23,7 @@
                             <!-- Used to display form errors. -->
                             <div id="card-errors" role="alert"></div>
                             <input type="hidden" name="plan" value="{{ $plan->id }}" />
+                            <input type="hidden" name="price" value="{{$plan->cost}}" />
                         </div>
                     </div>
                     <div class="card-footer">

@@ -76,9 +76,9 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::post('submit-user-register','front\HomeController@SubmitUserForm');
 	
-	Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'front\PaypalController@payWithPaypal',));
-	Route::post('paypal', array('as' => 'paypal','uses' => 'front\PaypalController@postPaymentWithpaypal',));
-	Route::get('paypal', array('as' => 'status','uses' => 'front\PaypalController@getPaymentStatus',));
+	// Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'front\PaypalController@payWithPaypal',));
+	// Route::post('paypal', array('as' => 'paypal','uses' => 'front\PaypalController@postPaymentWithpaypal',));
+	// Route::get('paypal', array('as' => 'status','uses' => 'front\PaypalController@getPaymentStatus',));
 
 	Route::get('paynow', 'front\PayPalController@getIndex');
 	Route::get('paypal/ec-checkout', 'front\PayPalController@getExpressCheckout');
@@ -93,8 +93,8 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('/subscribe', function () {
 		return view('subscribe');
 	});
-	Route::post('/subscribe_process', 'CheckoutController@subscribe_process');
 
+	Route::post('/subscribe_process', 'CheckoutController@subscribe_process');
 	Route::get('/strip-pay', 'front\StripController@Viewcharge');
 	Route::post('/charge', 'front\StripController@charge');
 
@@ -106,7 +106,12 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::get('/plans', 'front\PlanController@index')->name('plans.index');
     Route::get('/plan/{plan}', 'front\PlanController@show')->name('plans.show');
-    Route::post('/subscription', 'front\SubscriptionController@create')->name('subscription.create');
+	Route::post('/subscription', 'front\SubscriptionController@create')->name('subscription.create');
+	
+	// Route::get('/pay-stripe', 'front\PlanController@payment')->name('plans.index');
+
+	Route::post('/submit-payment', 'front\PlanController@payment')->name('submit-payment.create');;
+
 
 });
 

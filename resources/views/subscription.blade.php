@@ -1,244 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Monthly Subscription App using Stripe, Cashier and Laravel 5.4 with example</title>
-    <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://formvalidation.io/vendor/formvalidation/css/formValidation.min.css"> -->
-    <link rel="stylesheet" href="https://formvalidation.io/vendors/formvalidation/css/formValidation.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://formvalidation.io/vendors/formvalidation/js/formValidation.min.js"></script>
-    <script src="https://formvalidation.io/vendors/formvalidation/js/framework/bootstrap.min.js"></script>
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>    
-<script src="/vendors/formvalidation/dist/js/FormValidation.min.js"></script>
-<script src="https://formvalidation.io/vendors/formvalidation/dist/js/plugins/Bootstrap3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://formvalidation.io/vendors/formvalidation/dist/css/formValidation.min.css">
 </head>
 <body>
-<div class="row" style="margin-top: 10px;">
+    <form id="demoForm" method="POST">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">New password</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" name="pwd" autocomplete="off" />
+                
+                <!-- The progress bar is hidden initially -->
+                <div class="progress mt-2" id="progressBar" style="opacity: 0;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animate" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
 
-<form id="s" class="form-horizontal" method="post" action="{{asset('pay-strip')}}">
-    <input type="hidden" name="_token" value="{{csrf_token()}}">
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Subscription Plan</label>
-        <div class="col-xs-5">
-            <select name="subscription" class="form-control">
-                <option value="diamond">Diamond ($20.00/month)</option>
-            </select>
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Name</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="name" />
-        </div>
-    </div>
+    </form>
 
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Email</label>
-        <div class="col-xs-5">
-            <input type="email" class="form-control" name="email" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Password</label>
-        <div class="col-xs-5">
-            <input type="password" class="form-control" name="password" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Credit card number</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" data-stripe="number" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Expiration</label>
-        <div class="col-xs-3">
-            <input type="text" class="form-control" placeholder="Month" data-stripe="exp-month" />
-        </div>
-        <div class="col-xs-2">
-            <input type="text" class="form-control" placeholder="Year" data-stripe="exp-year" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">CVV</label>
-        <div class="col-xs-2">
-            <input type="text" class="form-control" data-stripe="cvc" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-9 col-xs-offset-3">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </div>
-    </div>
-
-    <input type="hidden" name="token" value="" />
-</form>
-</div>
-<script src="https://js.stripe.com/v2/"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+<script src="https://formvalidation.io/vendors/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="https://formvalidation.io/vendors/formvalidation/dist/js/plugins/Bootstrap.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    // Change the key to your one
-    Stripe.setPublishableKey('pk_test_51HuWQHJRRrJp7PIAIkuAgvuEWXj9CwiwwVl9YPSBPZIp87M0WTFZD8VuAFIhb3thCG0hF5mF6poVsmlt3IEiOftq00CKI0k6WY');
+document.addEventListener('DOMContentLoaded', function(e) {
+    const strongPassword = function {
+        return {
+            validate: function(input) {
+                // input.value is the field value
+                // input.options are the validator options
 
-    $('#paymentForm')
-        .formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The name is required'
-                        }
-                    }
-                },
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The email is required'
-                        }
-                    }
-                },
-                password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The password is required'
-                        }
-                    }
-                },
-                ccNumber: {
-                    selector: '[data-stripe="number"]',
-                    validators: {
-                        notEmpty: {
-                            message: 'The credit card number is required'
+                const value = input.value;
+                if (value === '') {
+                    return {
+                        valid: true,
+                    };
+                }
+
+                const result = zxcvbn(value);
+                const score = result.score;
+                const message = result.feedback.warning || 'The password is weak';
+
+                // By default, the password is treat as invalid if the score is smaller than 3
+                // We allow user to change this number via options.minimalScore
+                const minimalScore = input.options && input.options.minimalScore
+                                    ? input.options.minimalScore
+                                    : 3;
+
+                if (score < minimalScore) {
+                    return {
+                        valid: false,
+                        // Yeah, this will be set as error message
+                        message: message,
+                        meta: {
+                            // This meta data will be used later
+                            score: score,
                         },
-                        creditCard: {
-                            message: 'The credit card number is not valid'
-                        }
-                    }
-                },
-                expMonth: {
-                    selector: '[data-stripe="exp-month"]',
-                    row: '.col-xs-3',
-                    validators: {
-                        notEmpty: {
-                            message: 'The expiration month is required'
-                        },
-                        digits: {
-                            message: 'The expiration month can contain digits only'
-                        },
-                        callback: {
-                            message: 'Expired',
-                            callback: function(value, validator) {
-                                value = parseInt(value, 10);
-                                var year         = validator.getFieldElements('expYear').val(),
-                                    currentMonth = new Date().getMonth() + 1,
-                                    currentYear  = new Date().getFullYear();
-                                if (value < 0 || value > 12) {
-                                    return false;
-                                }
-                                if (year == '') {
-                                    return true;
-                                }
-                                year = parseInt(year, 10);
-                                if (year > currentYear || (year == currentYear && value >= currentMonth)) {
-                                    validator.updateStatus('expYear', 'VALID');
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                },
-                expYear: {
-                    selector: '[data-stripe="exp-year"]',
-                    row: '.col-xs-3',
-                    validators: {
-                        notEmpty: {
-                            message: 'The expiration year is required'
-                        },
-                        digits: {
-                            message: 'The expiration year can contain digits only'
-                        },
-                        callback: {
-                            message: 'Expired',
-                            callback: function(value, validator) {
-                                value = parseInt(value, 10);
-                                var month        = validator.getFieldElements('expMonth').val(),
-                                    currentMonth = new Date().getMonth() + 1,
-                                    currentYear  = new Date().getFullYear();
-                                if (value < currentYear || value > currentYear + 100) {
-                                    return false;
-                                }
-                                if (month == '') {
-                                    return false;
-                                }
-                                month = parseInt(month, 10);
-                                if (value > currentYear || (value == currentYear && month >= currentMonth)) {
-                                    validator.updateStatus('expMonth', 'VALID');
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                },
-                cvvNumber: {
-                    selector: '[data-stripe="cvc"]',
-                    validators: {
-                        notEmpty: {
-                            message: 'The CVV number is required'
-                        },
-                        cvv: {
-                            message: 'The value is not a valid CVV',
-                            creditCardField: 'ccNumber'
-                        }
                     }
                 }
+            },
+        };
+    };
+
+    FormValidation
+        .formValidation(
+            document.getElementById('demoForm'),
+            {
+                fields: {
+                    pwd: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The password is required and cannot be empty'
+                            },
+                            checkPassword: {
+                                message: 'The password is too weak',
+                                minimalScore: 3,
+                            },
+                        }
+                    }
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap(),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    icon: new FormValidation.plugins.Icon({
+                        valid: 'fa fa-check',
+                        invalid: 'fa fa-times',
+                        validating: 'fa fa-refresh',
+                    }),
+                },
+            }
+        )
+        .registerValidator('checkPassword', strongPassword)
+        .on('core.validator.validating', function(e) {
+            if (e.field === 'pwd' && e.validator === 'checkPassword') {
+                document.getElementById('progressBar').style.opacity = '1';
             }
         })
-        .on('success.form.fv', function(e) {
-            e.preventDefault();
-            var $form = $(e.target);
-            // Reset the token first
-            $form.find('[name="token"]').val('');
-            Stripe.card.createToken($form, function(status, response) {
-                if (response.error) {
-                    alert(response.error.message);
-                } else {                  
-                    // Set the token value
-                    $form.find('[name="token"]').val(response.id);                 
-                    // Or using Ajax
-                    $.ajax({
-                        // You need to change the url option to your back-end endpoint
-                        url: "{{asset('pay-strip')}}",
-                        data: $form.serialize(),
-                        method: 'POST',
-                        dataType: 'json'
-                    }).success(function(data) {
-                        alert(data.msg);                        
-                        // Reset the form
-                        $form.formValidation('resetForm', true);
-                    });
+        .on('core.validator.validated', function(e) {
+            if (e.field === 'pwd' && e.validator === 'checkPassword') {
+                const progressBar = document.getElementById('progressBar');
+
+                if (e.result.meta) {
+                    // Get the score which is a number between 0 and 4
+                    const score = e.result.meta.score;
+                    
+                    // Update the width of progress bar
+                    const width = (score == 0) ? '1%' : score * 25 + '%';
+                    progressBar.style.opacity = 1;
+                    progressBar.style.width = width;
+                } else {
+                    progressBar.style.opacity = 0;
+                    progressBar.style.width = '0%';
                 }
-            });
+            }
         });
 });
 </script>

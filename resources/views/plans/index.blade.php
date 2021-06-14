@@ -6,6 +6,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Plans </div>
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach($plans as $plan)

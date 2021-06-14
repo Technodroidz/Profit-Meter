@@ -60,7 +60,6 @@ public function subscribepage(){
 public function editSubscription($id){
    
    
-        
     $getBussiness = SubscriptionPlan::where('id',$id)->get();
     $getSubscriber = SubscriptionPlan::all();
     $result = [

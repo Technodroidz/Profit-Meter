@@ -15,10 +15,10 @@ class StripController extends Controller {
     }
     public function postSubscription(Request $request){
         $user = new User;
-        // $user->name  = $request->name;        
-        // $user->email = $request->email;
-        // $user->password = bcrypt($request->password);
-        // $user->save();
+        $user->name  = $request->name;        
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
         $user->newSubscription('main',$request->subscription)->create($request->token);
         if ($user->subscribed('main')) {
                return response()->json(['msg'=>'Successfully subscribed']);
@@ -67,16 +67,14 @@ class StripController extends Controller {
         try {
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $user = User::find(1);
-         
             $user->newSubscription('main', 'bronze')->create($request->stripeToken);
-
             return 'Subscription successful, you get the course!';
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }
 
     }
-
+  
 
     
 }
