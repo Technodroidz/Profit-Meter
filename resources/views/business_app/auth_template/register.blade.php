@@ -98,7 +98,7 @@
                                                 </label>
                                             </div> -->
                                             <button type="submit" class="btn_1 full_width text-center"> Sign Up</button>
-                                            <p>Need an account? <a href="{{route('login')}}">Log in</a></p>
+                                            <p>Already have an account? <a href="{{route('login')}}">Log in</a></p>
                                             <div class="text-center">
                                                 <a href="#" data-toggle="modal" data-target="#forgot_password" data-dismiss="modal" class="pass_forget_btn">Forget Password?</a>
                                             </div>
