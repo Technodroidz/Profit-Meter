@@ -63,17 +63,24 @@
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package name</label>
-                                                                    <input type="text" class="form-control" name="name" id="name" value="{{@$getSubscribeData['0']['package_name']}}" placeholder="Enter package name" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trail-plan'? 'readonly':'') ?>>
+                                                                    <input type="text" class="form-control" name="name" id="name" value="{{@$getSubscribeData['0']['package_name']}}" placeholder="Enter package name">
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package amount (In $) </label>
-                                                                    <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trail-plan'? 'readonly':'') ?>>
+                                                                    <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any">
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package duration (In Days)</label>
                                                                     <input type="text" class="form-control" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
                                                                 </div>
-                                                            
+                                                                <!-- <div class="col-sm-3 col-xs-12 form-group">
+                                                                    <label class="col-form-label">Status</label>
+                                                                    <select class="currency-selector input-group-addon" name="status">
+                                                                    <option value="" >Please Select One </option>
+                                                                    <option value="1" <?php echo ('1'==@$getSubscribeData['0']['status'] ?'selected':''); ?>>Active</option>
+                                                                    <option value="2" <?php echo ('2'==@$getSubscribeData['0']['status'] ?'selected':''); ?>>Deactivet</option>
+                                                                    </select>
+                                                                </div> -->
                                                                 <div class="col-md-6 col-xs-12">
                                                                     <label class="col-form-label">Package short description</label>
                                                                     <textarea class="form-control" name="sort_description" id="sort_description" placeholder="Type here...">{!!@$getSubscribeData['0']['short_decription']!!}</textarea>
@@ -117,9 +124,9 @@
                                                                         <th>Package Name</th>
                                                                         <th>Package Amount</th>
                                                                         <th>Package Duration</th>
-                                                                        <th>Package short Description</th>
+                                                                        <th>Package Sort Description</th>
                                                                         <th>Package Long Description</th>
-                                                                       {{-- <th>Status</th> --}}
+                                                                        <th>Status</th>
                                                                         <th>Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -133,15 +140,16 @@
                                                                         <td>{{$list['package_duration']}}</td>
                                                                         <td>{{$list['short_decription']}}</td>
                                                                         <td>{{$list['package_log_description']}}</td>
-                                                                    {{--    <td><?php echo ($list['short_decription']==1 ?'Active': 'Deactive') ?></td> --}}
+                                                                        <td><?php echo ($list['short_decription']==1 ?'Active': 'Deactive') ?></td>
                                                                         <td class="d-flex">
                                                                       
                                                                       
                                                                             <a href="{{ URL('subscription-user-edit', $list['id']) }}" class="greenBtn"><i class="fa fa-edit"></i></a>
-                                                                          @if($list['package_name_slug']=='trail-plan')
-                                                                          @else
-                                                                          <a href="{{ URL('subscruption-user-delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete {{$list['package_name']}} ?');"><i class="fa fa-trash"></i></a>
-                                                                          @endif
+                                                                            <a href="{{ URL('subscruption-user-delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete {{$list['package_name']}} ?');"><i class="fa fa-trash"></i></a>
+                                                                            <!-- <a href="#definekeyword" class="btn btn-warning btn-sm data_edit" data-value="{{$list}}"><i class="fa fa-edit"></i></a>
+                                                                            <a href="JavaScript:void(0);" class="delete-record btn btn-danger btn-sm" data-value="{{$list}}">
+                                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                            </a> -->
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach

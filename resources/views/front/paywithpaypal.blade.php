@@ -28,7 +28,7 @@
                 </div>
                 <?php Session::forget('error');?>
                 @endif
-                <div class="panel-heading"><b>Pay with Paypal</b></div>
+                <div class="panel-heading"><b>Paywith Paypal</b></div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!! URL::route('paypal') !!}" >
                         {{ csrf_field() }}

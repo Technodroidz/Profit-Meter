@@ -99,6 +99,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
                                         <input type="text" class="form-control">
+                                        <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
                                     </div>
                                 </div>
                             </li>
@@ -266,18 +267,10 @@
                                         <span class="pcoded-mtext">Company Details</span>
                                     </a>
                                 </li> -->
-                                
                                 <li class="">
                                     <a href="{{asset('subscription')}}">
                                         <span class="pcoded-micon"><i class="feather icon-package"></i></span>
                                         <span class="pcoded-mtext">Subscription Plan</span>
-                                    </a>
-                                </li>
-
-                                <li class="">
-                                    <a href="{{asset('report')}}">
-                                        <span class="pcoded-micon"><i class="feather icon-package"></i></span>
-                                        <span class="pcoded-mtext">Report</span>
                                     </a>
                                 </li>
                                
@@ -301,17 +294,6 @@
                                         <li class="">
                                             <a href="{{asset('email')}}">
                                                 <span class="pcoded-mtext">Email</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="{{asset('templete')}}">
-                                                <span class="pcoded-mtext">Email Templates</span>
-                                            </a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="{{asset('view_pages')}}">
-                                                <span class="pcoded-mtext">Pages</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -351,11 +333,11 @@
     <script src="{{asset('')}}files/assets/pages/data-table/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{asset('')}}files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{asset('')}}files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-  
+    <!-- ck editor -->
+    <script src="{{asset('')}}files/assets/pages/ckeditor/ckeditor.js"></script>
     <!-- echart js -->
     <script src="{{asset('')}}files/assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
     <!-- i18next.min.js -->
-
     <script type="text/javascript" src="{{asset('')}}files/bower_components/i18next/i18next.min.js"></script>
     <script type="text/javascript" src="{{asset('')}}files/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
     <script type="text/javascript" src="{{asset('')}}files/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
@@ -373,7 +355,6 @@
     <script src="{{ asset('admin_new/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('admin_new/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin_new/js/dataTables.bootstrap.min.js') }}"></script>
-   
     @yield('custom_script')
 </body>
 
