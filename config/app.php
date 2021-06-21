@@ -174,7 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class
+        Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        // laravel\Socialite\SocialiteServiceProvider::class
 
     ],
 
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Facebook' => Scottybo\LaravelFacebookSdk\FacebookFacade::class,
+        // 'Socialite' => laravel\Socialite\SocialiteServiceProvider::class
 
     ],
 

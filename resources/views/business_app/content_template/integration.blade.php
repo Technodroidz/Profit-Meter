@@ -177,7 +177,7 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <button class="contBtn">Connected</button>
+                                                <a href="{{route('connect_google')}}" class="contBtn">Connect</a>
                                             </div>
                                         </div>
                                     </div>

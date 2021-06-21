@@ -82,6 +82,8 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 });
 
+// Shopify Account Login
+Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
 Route::get('authenticate','ShopifyApp\AuthController@authenticate')->name('authenticate');
 
 Route::group(['middleware' => ['restrict.registered.user']],function(){
@@ -92,7 +94,6 @@ Route::group(['middleware' => ['restrict.registered.user']],function(){
 	Route::match(['POST','GET'],'business/login','ShopifyApp\AuthController@login')->name('login');
 }); 
 
-Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
 
 Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
 
@@ -124,16 +125,14 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(
 });
 
 
-Route::get('business/account', function () {
-    return view('business_app/content_template/account_profile');
-})->name('account_profile');
-
-
 // Generate a login URL
 Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
-
 // Endpoint that is redirected to after an authentication attempt
 Route::get('/facebook/callback','ShopifyApp\FacebookController@facebookCallback');
+
+Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
+Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
+Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->name('show_google_ads');
 
 
 
