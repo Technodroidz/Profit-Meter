@@ -20,7 +20,7 @@
                                                 <div class="page-header-breadcrumb">
                                                     <ul class="breadcrumb-title">
                                                         <li class="breadcrumb-item" style="float: left;">
-                                                            <a href="index.php"> <i class="feather icon-home"></i> </a>
+                                                            <a href="{{asset('admin-panel')}}"> <i class="feather icon-home"></i> </a>
                                                         </li>
                                                         <li class="breadcrumb-item" style="float: left;"><a href="#!">Payment Gateway Settings</a>
                                                         </li>
@@ -103,20 +103,7 @@
                                                                     </div>
                                                                 </div>
                                                             @endforeach
-                                                            <!-- <div class="form-group row">
-                                                                <label class="col-sm-2 col-form-label">Currency</label>
-                                                                <div class="col-sm-10">
-                                                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                                                        <div class="input-group-addon currency-symbol">$</div>
-                                                                        <input type="text" class="form-control currency-amount" id="inlineFormInputGroup" placeholder="0.00" size="8">
-                                                                        <div class="input-group-addon currency-addon">
-                                                                            <select class="currency-selector">
-                                                                                <option data-symbol="$" data-placeholder="0.00" selected>USD</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> -->
+                                                           
                                                             
                                                             <div class="form-group row">
                                                                 <div class="col-md-12 text-right">

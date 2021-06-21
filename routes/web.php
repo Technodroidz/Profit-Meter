@@ -75,10 +75,49 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('user-register','front\HomeController@resisterUser');
 
 	Route::post('submit-user-register','front\HomeController@SubmitUserForm');
+
 	
-	Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'front\PaypalController@payWithPaypal',));
-	Route::post('paypal', array('as' => 'paypal','uses' => 'front\PaypalController@postPaymentWithpaypal',));
-	Route::get('paypal', array('as' => 'status','uses' => 'front\PaypalController@getPaymentStatus',));
+	
+	Route::get('paynow', 'front\PayPalController@getIndex');
+	Route::get('paypal/ec-checkout', 'front\PayPalController@getExpressCheckout');
+	Route::get('paypal/ec-checkout-success', 'front\PayPalController@getExpressCheckoutSuccess');
+	Route::get('paypal/adaptive-pay', 'front\PayPalController@getAdaptivePay');
+	Route::post('paypal/notify', 'front\PayPalController@notify');
+
+	Route::get('pay-strip', 'front\StripController@subscription');
+	Route::post('pay-strip', 'front\StripController@postSubscription');
+
+	Route::post('/subscribe_process', 'CheckoutController@subscribe_process');
+	Route::get('/strip-pay', 'front\StripController@Viewcharge');
+	Route::post('/charge', 'front\StripController@charge');
+
+	Route::get('/strip-pay-sub', 'front\StripController@ViewSubcharge');
+
+	Route::post('/strip-subscribe_process', 'front\StripController@subscribe_process_sub');
+
+	Route::get('/plans', 'front\PlanController@index')->name('plans.index');
+    Route::get('/plan/{plan}', 'front\PlanController@show')->name('plans.show');
+	Route::post('/subscription', 'front\SubscriptionController@create')->name('subscription.create');
+	Route::post('/submit-payment', 'front\PlanController@payment')->name('submit-payment.create');
+
+
+
+	Route::get('/report', 'admin\UserSubscriptionController@index');
+	Route::get('report-add', 'front\HomeController@reportAdd');
+	Route::post('report-submit', 'front\HomeController@SubmitReport');
+
+	Route::get('/templete', 'admin\TempleteController@index');
+	Route::get('add-templete', 'admin\TempleteController@AddTemplete');
+	Route::get('edit-templete/{id}', 'admin\TempleteController@editTemplete');
+	Route::post('submit-templete', 'admin\TempleteController@submitTemplete');
+	Route::get('delete-templete/{id}', 'admin\TempleteController@deleteTemplete');
+
+	Route::get('/view_pages', 'admin\PageController@index');
+	Route::get('add-page', 'admin\PageController@AddPage');
+	Route::get('edit-page/{id}', 'admin\PageController@editPage');
+	Route::post('submit-page', 'admin\PageController@submitPage');
+	Route::get('delete-page/{id}', 'admin\PageController@deletePage');
+	Route::post('change-status-page', 'admin\PageController@changeStatus');
 
 });
 

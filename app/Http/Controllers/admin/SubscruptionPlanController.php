@@ -10,6 +10,7 @@ use App\Model\Role;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Config;
 
 class SubscruptionPlanController extends Controller
@@ -45,6 +46,7 @@ public function subscribepage(){
       
         $getInsertedData = SubscriptionPlan::updateOrCreate(['id'=>$request['table_id']],[
             "package_name" => $request['name'],
+            'package_name_slug'=>Str::slug($request['name']),
             "package_amount" => $request['amount'],
             "package_duration" => $request['duration'],
             "short_decription" => $request['sort_description'],
@@ -60,7 +62,6 @@ public function subscribepage(){
 public function editSubscription($id){
    
    
-        
     $getBussiness = SubscriptionPlan::where('id',$id)->get();
     $getSubscriber = SubscriptionPlan::all();
     $result = [

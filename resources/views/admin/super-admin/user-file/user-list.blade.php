@@ -42,7 +42,7 @@
                                                                         <th>ID</th>
                                                                         <th>First name</th>
                                                                         <th>Last name</th>
-                                                                        <th>Business name</th>
+                                                                      {{--  <th>Business name</th>--}}
                                                                         <th>Email</th>
                                                                         <th>Contact no.</th>
                                                                         <th>Shopify store URL</th>
@@ -50,16 +50,17 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                              
                                                                 @if(!empty($getdata))
                                                                 @foreach($getdata as $key=>$list)
                                                                     <tr>
                                                                         <td>{{++$key}}</td>
                                                                         <td>{{$list['name']}}</td>
                                                                         <td>{{$list['last_name']}}</td>
-                                                                        <td>{{$list['bussiness_name']}}</td>
+                                                                     {{--   <td>{{$list['bussiness_name']}}</td>--}}
                                                                         <td>{{$list['email']}}</td>
                                                                         <td>{{$list['number']}}</td>
-                                                                        <td>{{$list['shofiy_store_url']}}</td>
+                                                                        <td>{{$list['shopify_url']}}</td>
                                                                      
                                                                         <td class="d-flex">
                                                                       
