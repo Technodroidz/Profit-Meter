@@ -90,9 +90,9 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::post('pay-strip', 'front\StripController@postSubscription');
 	// Route::get('subscription', ['as'=>'subscription','uses'=>'front\HomeController@subscription']);
 	// Route::post('subscription', ['as'=>'post-subscription','uses'=>'fronHomeController@postSubscription']);
-	Route::get('/subscribe', function () {
-		return view('subscribe');
-	});
+	// Route::get('/subscribe', function () {
+	// 	return view('subscribe');
+	// });
 
 	Route::post('/subscribe_process', 'CheckoutController@subscribe_process');
 	Route::get('/strip-pay', 'front\StripController@Viewcharge');
@@ -112,6 +112,26 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::post('/submit-payment', 'front\PlanController@payment')->name('submit-payment.create');;
 
+	Route::get('report-add', 'front\HomeController@reportAdd');
+	Route::post('report-submit', 'front\HomeController@SubmitReport');
+
+	Route::get('/report', 'admin\UserSubscriptionController@index');
+
+	Route::get('/templete', 'admin\TempleteController@index');
+
+	Route::get('add-templete', 'admin\TempleteController@AddTemplete');
+	Route::get('edit-templete/{id}', 'admin\TempleteController@editTemplete');
+	Route::post('submit-templete', 'admin\TempleteController@submitTemplete');
+	Route::get('delete-templete/{id}', 'admin\TempleteController@deleteTemplete');
+
+
+
+	Route::get('/view_pages', 'admin\PageController@index');
+	Route::get('add-page', 'admin\PageController@AddPage');
+	Route::get('edit-page/{id}', 'admin\PageController@editPage');
+	Route::post('submit-page', 'admin\PageController@submitPage');
+	Route::get('delete-page/{id}', 'admin\PageController@deletePage');
+	Route::post('change-status-page', 'admin\PageController@changeStatus');
 
 });
 
@@ -125,17 +145,6 @@ Route::get('business/logout','ShopifyApp\AuthController@logout')->name('business
 Route::get('business/account', function () {
     return view('business_app/content_template/account_profile');
 })->name('account_profile');
-
-
-//This will redirect user to login page.
-// Route::get('/login', function () {
-//     if (Auth::user()) {
-//         return redirect()->route('home');
-//     }
-//     return view('login');
-// })->name('login');
-
-
 
 
 // Generate a login URL

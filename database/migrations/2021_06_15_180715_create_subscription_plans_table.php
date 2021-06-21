@@ -17,6 +17,7 @@ class CreateSubscriptionPlansTable extends Migration
             $table->bigIncrements('id');
             $table->string('package_name')->nullable();
             $table->string('package_amount')->nullable();
+            $table->string('package_name_slug')->nullable();
             $table->string('package_duration')->nullable();
             $table->text('short_decription')->nullable();
             $table->text('package_log_description')->nullable();
