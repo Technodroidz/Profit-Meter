@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Model\UserSubscription;
 use Schema;
 class HomeController extends Controller
 {
@@ -88,6 +89,47 @@ public function SubmitUserForm(Request $request){
     return back()->with('message', 'Added  successfully'); 
 
 }
+
+public function reportAdd(){
+        
+    return view('front.add-report');
+}
+
+public function SubmitReport(Request $request){
+
+
+   
+    $request->validate([
+        'email' => 'required|email',
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'plan_name' => 'required',
+        'plan_duration' => 'required',
+        'plan_amount' => 'required',
+        'contact' => 'required',
+        'expiry_date' => 'required',
+        'creation_date' => 'required',
+    ]);
+    
+
+    $getInsertedData = UserSubscription::updateOrCreate(['id'=>$request['id']],[
+        
+        "email" => $request['email'],
+        "first_name" => $request['first_name'],
+        "plan_name" => $request['plan_name'],
+        "last_name" => $request['last_name'],
+        "plan_amount" => $request['plan_amount'],
+        "plan_duration" => $request['plan_duration'],
+        "contact" => $request['contact'],
+        "expiry_date" => $request['expiry_date'],
+        "creation_date" => $request['creation_date'],
+
+    ]);
+
+    return back()->with('message', 'Report Added  successfully'); 
+
+}
+    
     
     
 }

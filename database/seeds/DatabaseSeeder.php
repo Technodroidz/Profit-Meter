@@ -13,5 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SettingSeeder::class);
         $this->call(AdminRoleSeeder::class);
+        $this->call(PagesSeeder::class);
+        $this->call(EmailTempleteSeeder::class);
     }
 }
