@@ -156,7 +156,8 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <button class="contBtn">Connected</button>
+                                                <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
+                                                <!-- <button class="contBtn">Connected</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +178,7 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <a href="{{route('connect_google')}}" class="contBtn">Connect</a>
+                                                <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
                                             </div>
                                         </div>
                                     </div>

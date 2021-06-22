@@ -30,6 +30,7 @@ class GoogleController extends Controller
     {
         
         $user = Socialite::driver('google')->stateless()->user();
+        // pp($user);
         $insert_array = [
             'user_id'          => Auth::User()->id,
             'token'            => $user->token,

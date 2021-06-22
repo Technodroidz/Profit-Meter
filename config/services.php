@@ -40,4 +40,10 @@ return [
         'redirect' => 'http://127.0.0.1/Profit-Meter/login/google/callback',
     ],
 
+    'snapchat' => [
+        'client_id' => env('SNAPCHAT_CLIENT_ID'),
+        'client_secret' => env('SNAPCHAT_CLIENT_SECRET'),
+        'redirect' => 'http://127.0.0.1/Profit-Meter/login/snapchat/callback',
+    ],
+
 ];
