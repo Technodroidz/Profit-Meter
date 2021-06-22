@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Page;
+use App\Model\Page;
 class PagesSeeder extends Seeder
 {
     /**
