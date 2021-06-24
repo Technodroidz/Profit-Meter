@@ -43,7 +43,18 @@ public function subscribepage(){
             'sort_description' => 'required',
             'long_description' => 'required',
         ]);
-      
+        $currentPackegName=Str::slug($request['name']);
+        $getDublicateData = SubscriptionPlan::where('package_name_slug',$currentPackegName)->withTrashed()->get();
+       
+        if(@$getDublicateData['0']['package_name_slug']==$currentPackegName){
+            $product = SubscriptionPlan::withTrashed()->find($getDublicateData['0']['id']); //get the object of product you want to update
+            $product->package_amount =  $request['amount'];
+            $product->short_decription = $request['sort_description'];
+            $product->package_duration = $request['duration'];
+            $product->package_log_description = $request['long_description'];
+            $product->deleted_at = null;
+            $product->save();
+        }else{
         $getInsertedData = SubscriptionPlan::updateOrCreate(['id'=>$request['table_id']],[
             "package_name" => $request['name'],
             'package_name_slug'=>Str::slug($request['name']),
@@ -51,8 +62,9 @@ public function subscribepage(){
             "package_duration" => $request['duration'],
             "short_decription" => $request['sort_description'],
             "package_log_description" => $request['long_description']
-        ]);
-
+        ]); 
+        
+        }
         return redirect('subscription')->with('success', 'Contract added  successfully'); 
     
     
@@ -76,10 +88,24 @@ public function editSubscription($id){
 
 public function deleteSubscription($id){
     $productid=SubscriptionPlan::findOrFail($id);
-   // SubscriptionPlan::where('id',$id)->forceDelete();
     $productid->delete();
     return back()
         ->with('success', 'Record deleted successfully');
+}
+
+public function changeStatus(Request $request){
+    $changeStatus=SubscriptionPlan::findOrFail($request->id);
+    if($changeStatus){
+        $status=0;
+        if($request->status=="true"){
+            $status=1;
+        }
+        $changeStatus->update([
+            'status'=>$status,
+         ]);
+         return response()->json($changeStatus);
+    }
+    return response()->json(['error'=>'get error'],422);
 }
 
 }

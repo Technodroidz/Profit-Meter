@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\EmailTemplate;
+use App\Model\EmailTemplate;
 class EmailTempleteSeeder extends Seeder
 {
     /**

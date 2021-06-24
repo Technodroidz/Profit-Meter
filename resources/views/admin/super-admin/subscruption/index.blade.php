@@ -115,11 +115,11 @@
                                                                     <tr>
                                                                         <th>ID</th>
                                                                         <th>Package Name</th>
-                                                                        <th>Package Amount</th>
-                                                                        <th>Package Duration</th>
+                                                                        <th>Package Amount ($)</th>
+                                                                        <th>Package Duration (In Days)</th>
                                                                         <th>Package short Description</th>
                                                                         <th>Package Long Description</th>
-                                                                       {{-- <th>Status</th> --}}
+                                                                        <th>Status</th> 
                                                                         <th>Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -133,10 +133,8 @@
                                                                         <td>{{$list['package_duration']}}</td>
                                                                         <td>{{$list['short_decription']}}</td>
                                                                         <td>{{$list['package_log_description']}}</td>
-                                                                    {{--    <td><?php echo ($list['short_decription']==1 ?'Active': 'Deactive') ?></td> --}}
+                                                                        <td><input type="checkbox" data-status="{{$list['id']}}"class="statusSwitch"@if($list['status']==1) checked @endif id="customSwitch{{$list['id']}}"></td>
                                                                         <td class="d-flex">
-                                                                      
-                                                                      
                                                                             <a href="{{ URL('subscription-user-edit', $list['id']) }}" class="greenBtn"><i class="fa fa-edit"></i></a>
                                                                           @if($list['package_name_slug']=='trail-plan')
                                                                           @else
@@ -175,6 +173,10 @@
     <script>
 
         $(document).ready(function () { 
+
+            jQuery.validator.addMethod("dollarsscents", function(value, element) {
+                return this.optional(element) || /^\d{0,4}(\.\d{0,2})?$/i.test(value);
+            }, "You must include two decimal places");
        
                 $('form#addSocialIconsForm1').validate({
                     rules: {
@@ -185,9 +187,11 @@
                             required: true,
                             maxlength:6,
                             number:true,
+                            dollarsscents: true,
                         },
                         duration: {
                             required: true,
+                            number:true,
                             maxlength:3,
                         },
                         sort_description: {
@@ -221,6 +225,29 @@
                 });
 
                
+            });
+
+
+            $('.statusSwitch').on('change',function(){
+                $.ajax({
+                    type: 'POST',
+                    url: "{{asset('status-subscription')}}",
+                    data: {
+                        '_token':"{{ csrf_token() }}",
+                        'id': $(this).data('status'),
+                        'status': $(this).is(":checked")
+                    },
+                    success: function (responseText) {
+                        window.swal({
+                            title: "{{ Config::get('constants.Messages.status') }}",
+                            timer: 1000,
+                            className: "messagedivcontainer",
+                            button:false,
+                            icon: 'success',
+                        });
+                        //$('#updated'+responseText.id).html(moment(responseText.updated_at).format('DD/MM/Y hh:mm A'));
+                    }
+                });
             });
     </script>
 @endsection

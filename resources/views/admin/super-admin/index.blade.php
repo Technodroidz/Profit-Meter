@@ -15,7 +15,7 @@
                                         <div class="row align-items-center">
                                             <div class="col">
                                                 <p class="m-b-5">Total Active Packages</p>
-                                                <h4 class="m-b-0">852</h4>
+                                                <h4 class="m-b-0">{{$getPackageData}}</h4>
                                             </div>
                                             <div class="col col-auto text-right">
                                                 <i class="feather icon-user f-50 text-c-yellow"></i>
