@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Rule;
+use App\Model\UserSubscription;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
@@ -84,7 +85,8 @@ class SettingController extends Controller
     public function account(Request $request)
     {
         $getUserData = User::where('id',Auth::user()->id)->first();
-        $data       = ['current_link' => 'account','getUserData'=>$getUserData];
+        $trial_subscription = UserSubscription::getTrialSubscription(Auth::User()->id);
+        $data       = ['current_link' => 'account','getUserData' => $getUserData,'trial_subscription' => $trial_subscription];
       
         return view('business_app/content_template/account',$data);
     }

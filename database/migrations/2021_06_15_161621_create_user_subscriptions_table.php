@@ -15,6 +15,7 @@ class CreateUserSubscriptionsTable extends Migration
     {
         Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('user_id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
@@ -24,6 +25,7 @@ class CreateUserSubscriptionsTable extends Migration
             $table->string('plan_duration')->nullable();
             $table->string('creation_date')->nullable();
             $table->string('expiry_date')->nullable();
+            $table->tinyInteger('is_trial')->default(0);
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

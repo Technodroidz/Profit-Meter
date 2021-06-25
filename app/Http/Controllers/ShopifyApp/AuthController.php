@@ -13,6 +13,9 @@ use Mail;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Model\MultiTenantModel;
+use App\Model\SubscriptionPlan;
+use App\Model\UserSubscription;
 
 class AuthController extends Controller
 {
@@ -162,7 +165,7 @@ class AuthController extends Controller
             $validation_message   = get_message_from_validator_object($validator->errors());
 
             if($validator->fails()){
-                return back()->with('error', $validation_message);       
+                return back()->with('error', $validation_message);
             }else{
                 $data = [
                     'name'      => $request->first_name,
@@ -171,8 +174,41 @@ class AuthController extends Controller
                     'password'  => bcrypt($request->password)
                 ];
 
-                User::insert($data);
-                $credentials = $request->only('email', 'password');
+                $user_id        = User::insertGetId($data);
+                $credentials    = $request->only('email', 'password');
+
+                $long_token     = generateStringLogToken();
+                $short_token    = generateStringSortToken();
+              
+                $userName = 'business_user_database_'.$user_id;  // Your Database name to be created
+
+                DB::statement("CREATE DATABASE $userName");
+
+                $conn = mysqli_connect(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD') , $userName);
+                $query = '';
+
+                $sqlScript = public_path('db\dummy.sql');
+    
+                $sqlScript = file($sqlScript);
+               
+                foreach ($sqlScript as $line){
+                    
+                    $startWith = substr(trim($line), 0 ,2);
+                    $endWith = substr(trim($line), -1 ,1);
+                    
+                    if (empty($line) || $startWith == '--' || $startWith == '/*' || $startWith == '//') {
+                        continue;
+                    }
+
+                    $query = $query . $line;
+                    if ($endWith == ';') {
+                        mysqli_query($conn,$query);
+                        $query= '';
+                    }
+                }
+
+                User::where('id',$user_id)->update(['database_name' => $userName]);
+
                 if(Auth::attempt($credentials)){
                     return redirect()->route('connect_shopify_account');
                 }else{
@@ -185,6 +221,8 @@ class AuthController extends Controller
 
     public function loginWithShopify(Request $request)
     {
+        $tenant_user = MultiTenantModel::getTenantUser();
+        pp($tenant_user);
         $data = [];
         if($request->isMethod('post')){
 
@@ -264,6 +302,8 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
+        $return = false;
+        $user_id;
         if(!empty($request->shop)){
 
             $user = Auth::User();
@@ -285,7 +325,9 @@ class AuthController extends Controller
 
                 $user->shopify_url = $request->shop;
                 $user->save();
-                return redirect()->route('home');
+                $user_id = Auth::User()->id;
+                $return = true;
+                
             }else{
                 $shop_exist = User::getShopByUrl($request->shop);
 
@@ -303,9 +345,10 @@ class AuthController extends Controller
                     }
 
                     // $credentials = ['email'=>$shop_exist->email,'shopify_url'=>$shop_exist->shop];
+                    $user_id = $shop_exist->id;
 
                     if(Auth::loginUsingId($shop_exist->id)){
-                        return redirect()->route('home');
+                        $return = true;
                     }
                 }else{
 
@@ -338,10 +381,25 @@ class AuthController extends Controller
                     // $credentials = ['shopify_url'=>$shop['domain']];
 
                     if(Auth::loginUsingId($user_id)){
-                        return redirect()->route('home');
+                        $return = true;
                     }
                 }
 
+            }
+            if($return == true){
+                $trial_plan = SubscriptionPlan::getTrialPlan();
+                $insert_array = [
+                    'user_id'       => $user_id,
+                    'plan_name'     => $trial_plan->package_name,
+                    'plan_amount'   => $trial_plan->package_amount,
+                    'plan_duration' => $trial_plan->package_duration,
+                    'expiry_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). ' + '.$trial_plan->package_duration.' days')),
+                    'is_trial'      => 1,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                ];
+
+                UserSubscription::insertUserSubscription($insert_array);
+                return redirect()->route('home');
             }
         }
         Auth::logout();

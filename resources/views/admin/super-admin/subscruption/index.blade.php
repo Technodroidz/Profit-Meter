@@ -63,11 +63,11 @@
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package name</label>
-                                                                    <input type="text" class="form-control" name="name" id="name" value="{{@$getSubscribeData['0']['package_name']}}" placeholder="Enter package name" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trail-plan'? 'readonly':'') ?>>
+                                                                    <input type="text" class="form-control" name="name" id="name" value="{{@$getSubscribeData['0']['package_name']}}" placeholder="Enter package name" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trial-plan'? 'readonly':'') ?>>
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package amount (In $) </label>
-                                                                    <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trail-plan'? 'readonly':'') ?>>
+                                                                    <input type="text" class="form-control" name="amount" id="amount" value="{{@$getSubscribeData['0']['package_amount']}}" placeholder="Enter Amount" step="any" <?php echo (@$getSubscribeData['0']['package_name_slug']=='trial-plan'? 'readonly':'') ?>>
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package duration (In Days)</label>
@@ -138,7 +138,7 @@
                                                                       
                                                                       
                                                                             <a href="{{ URL('subscription-user-edit', $list['id']) }}" class="greenBtn"><i class="fa fa-edit"></i></a>
-                                                                          @if($list['package_name_slug']=='trail-plan')
+                                                                          @if($list['package_name_slug']=='trial-plan')
                                                                           @else
                                                                           <a href="{{ URL('subscruption-user-delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete {{$list['package_name']}} ?');"><i class="fa fa-trash"></i></a>
                                                                           @endif

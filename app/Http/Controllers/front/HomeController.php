@@ -19,7 +19,6 @@ class HomeController extends Controller
 {
 
     public function resisterUser(){
-        
         return view('front.add-user');
     }
 
@@ -36,11 +35,9 @@ public function SubmitUserForm(Request $request){
         'last_name' => 'required',
         'name' => 'required',
         'number' => 'required',
-     
         'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-         'password_confirmation' => 'min:6',
+        'password_confirmation' => 'min:6',
         'ur' => 'required',
-       
     ]);
     
 
@@ -65,10 +62,13 @@ public function SubmitUserForm(Request $request){
 
     DB::statement("CREATE DATABASE $userName");
 
-
     $conn = mysqli_connect('localhost', 'root', '' , $userName);
     $query = '';
-    $sqlScript = file('db/dummy.sql');
+
+    // $sqlScript = file('db/dummy.sql');
+    $sqlScript = public_path('db\dummy.sql');
+    
+    $sqlScript = file($sqlScript);
    
     foreach ($sqlScript as $line)	{
         

@@ -122,10 +122,11 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 });
 
 // Shopify Account Login
-Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
+Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account')->middleware(['configure.multi_tenant_db']);
 Route::get('authenticate','ShopifyApp\AuthController@authenticate')->name('authenticate');
+Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
 
-Route::group(['middleware' => ['restrict.registered.user']],function(){
+Route::group(['middleware' => ['restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::match(['POST','GET'],'business/register','ShopifyApp\AuthController@register')->name('business_register');
 	Route::match(['POST','GET'],'business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
 	Route::get('business/reset-password/{token}', 'ShopifyApp\AuthController@resetPassword')->name('business_reset_password/{token}');
@@ -134,9 +135,8 @@ Route::group(['middleware' => ['restrict.registered.user']],function(){
 }); 
 
 
-Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
 
-Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(){
+Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->name('home');
 	// ->middleware(['auth.shopify'])
 
@@ -163,7 +163,6 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(
 
 });
 
-
 // Generate a login URL
 Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
 // Endpoint that is redirected to after an authentication attempt
@@ -175,3 +174,6 @@ Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->nam
 
 Route::get('login/snapchat', 'ShopifyApp\SnapchatController@redirectToProvider')->name('connect_snapchat');
 Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProviderCallback')->name('snapchat_callback');
+
+Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
+Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');

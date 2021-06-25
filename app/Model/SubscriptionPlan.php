@@ -14,4 +14,12 @@ class SubscriptionPlan extends Model
     protected $table = 'subscription_plans';
     protected $dates = ['deleted_at'];
     protected $guarded = []; 
+
+    public static function getTrialPlan()
+    {
+        return SubscriptionPlan::where('package_name_slug','trial-plan')->first();
+    }
+
 }
+
+
