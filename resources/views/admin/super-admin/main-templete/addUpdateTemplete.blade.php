@@ -11,7 +11,7 @@
                                             <div class="col-lg-8">
                                                 <div class="page-header-title">
                                                     <div class="d-inline">
-                                                        <h4>Templete</h4>
+                                                        <h4>Template</h4>
                                                         <a href="{{asset('templete')}}"><span>Back</span></a>
                                                     </div>
                                                 </div>
@@ -22,7 +22,7 @@
                                                         <li class="breadcrumb-item" style="float: left;">
                                                             <a href="index.php"> <i class="feather icon-home"></i> </a>
                                                         </li>
-                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('templete')}}">Templete</a>
+                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('templete')}}">Template</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -37,7 +37,7 @@
                                             <div class="col-md-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Templete</h5>
+                                                        <h5>Template</h5>
                                                         <div class="card-header-right">
                                                             <i class="icofont icofont-spinner-alt-5"></i>
                                                         </div>
@@ -64,7 +64,7 @@
                                                        @csrf
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Templete Name</label>
+                                                                    <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
@@ -89,7 +89,7 @@
                                                        @csrf
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Templete Name</label>
+                                                                    <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
@@ -114,7 +114,7 @@
                                                        @csrf
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Templete Name</label>
+                                                                    <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
@@ -139,7 +139,7 @@
                                                        @csrf
                                                             <div class="row">
                                                                 <div class="col-sm-3 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Templete Name</label>
+                                                                    <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">

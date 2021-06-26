@@ -29,7 +29,6 @@ class PayPalController extends Controller
             $response['code'] = session()->get('code');
             session()->forget('code');
         }
-
         if (session()->has('message')) {
             $response['message'] = session()->get('message');
             session()->forget('message');

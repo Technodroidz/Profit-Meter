@@ -10,14 +10,14 @@
                                             <div class="col-lg-8">
                                                 <div class="page-header-title">
                                                     <div class="d-inline">
-                                                        <h4>Email Templete</h4>
+                                                        <h4>Email Template</h4>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="page-header-breadcrumb">
                                                     <ul class="breadcrumb-title">
-                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('')}}">Email Templete</a>
+                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('templete')}}">Email Template</a>
                                                         </li>
                                                     </ul>
                                                 </div>

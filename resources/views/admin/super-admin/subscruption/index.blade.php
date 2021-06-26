@@ -21,7 +21,7 @@
                                                         <li class="breadcrumb-item" style="float: left;">
                                                             <a href="index.php"> <i class="feather icon-home"></i> </a>
                                                         </li>
-                                                        <li class="breadcrumb-item" style="float: left;"><a href="#!">Subscription</a>
+                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('subscription')}}">Subscription</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -71,7 +71,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package duration (In Days)</label>
-                                                                    <input type="text" class="form-control" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
+                                                                    <input type="text" class="form-control number" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
                                                                 </div>
                                                             
                                                                 <div class="col-md-6 col-xs-12">
@@ -129,11 +129,14 @@
                                                                     <tr>
                                                                         <td>{{++$key}}</td>
                                                                         <td>{{$list['package_name']}}</td>
-                                                                        <td>{{$list['package_amount']}}</td>
-                                                                        <td>{{$list['package_duration']}}</td>
+                                                                        <td>$ {{$list['package_amount']}}</td>
+                                                                        <td> {{$list['package_duration']}}</td>
                                                                         <td>{{$list['short_decription']}}</td>
                                                                         <td>{{$list['package_log_description']}}</td>
-                                                                        <td><input type="checkbox" data-status="{{$list['id']}}"class="statusSwitch"@if($list['status']==1) checked @endif id="customSwitch{{$list['id']}}"></td>
+                                                                        <td>@if($list['package_name_slug']=='trail-plan') @else
+                                                                        <input type="checkbox" data-status="{{$list['id']}}"class="statusSwitch"@if($list['status']==1) checked @endif id="customSwitch{{$list['id']}}">
+                                                                        @endif
+                                                                        </td>
                                                                         <td class="d-flex">
                                                                             <a href="{{ URL('subscription-user-edit', $list['id']) }}" class="greenBtn"><i class="fa fa-edit"></i></a>
                                                                           @if($list['package_name_slug']=='trail-plan')
@@ -183,16 +186,17 @@
                         name: {
                             required: true,
                         },
-                        amount: {
-                            required: true,
-                            maxlength:6,
-                            number:true,
-                            dollarsscents: true,
-                        },
+                     
                         duration: {
                             required: true,
                             number:true,
                             maxlength:3,
+                        },
+                        amount: {
+                            required: true,
+                            maxlength:8,
+                            number:true,
+                            dollarsscents: true,
                         },
                         sort_description: {
                             required: true,
@@ -206,12 +210,13 @@
                         name: {
                             required: 'This field is required',
                         },
-                        amount: {
-                            required: 'This field is required',
-                        },
                         duration: {
                             required: 'This field is required ',
                         },
+                        amount: {
+                            required: 'This field is required',
+                        },
+                       
                         sort_description: {
                             required: 'This field is required ',
                         },
