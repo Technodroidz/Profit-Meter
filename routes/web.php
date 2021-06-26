@@ -28,9 +28,7 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::get('edit-user/{id}','admin\LoginController@editUser');
 
-
 	Route::get('user-delete/{id}','admin\LoginController@deleteUser');
-
 
 	Route::get('logout','admin\LoginController@logout');
 
@@ -47,10 +45,8 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('bussiness-user-edit/{id}','admin\BussinesController@editBussiness');
 	Route::get('busssiness-user-delete/{id}','admin\BussinesController@deleteBussiness');
 
-	
 	Route::get('profile','admin\ProfileController@profilePage');
 	
-
 	/** user setting url  */
 	Route::get('paymentgateway','admin\SettingController@paymentGateway');
 	Route::POST('submit-payment-configration','admin\SettingController@submitPaymentsetting');
@@ -76,8 +72,6 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::post('submit-user-register','front\HomeController@SubmitUserForm');
 
-	
-	
 	Route::get('paynow', 'front\PayPalController@getIndex');
 	Route::get('paypal/ec-checkout', 'front\PayPalController@getExpressCheckout');
 	Route::get('paypal/ec-checkout-success', 'front\PayPalController@getExpressCheckoutSuccess');
@@ -99,8 +93,6 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
     Route::get('/plan/{plan}', 'front\PlanController@show')->name('plans.show');
 	Route::post('/subscription', 'front\SubscriptionController@create')->name('subscription.create');
 	Route::post('/submit-payment', 'front\PlanController@payment')->name('submit-payment.create');
-
-
 
 	Route::get('/report', 'admin\UserSubscriptionController@index');
 	Route::get('report-add', 'front\HomeController@reportAdd');
@@ -135,7 +127,6 @@ Route::group(['middleware' => ['restrict.registered.user','configure.multi_tenan
 }); 
 
 
-
 Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->name('home');
 	// ->middleware(['auth.shopify'])
@@ -158,6 +149,8 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	Route::match(['POST','GET'],'business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
 	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
+	Route::get('business/settings/upgrade_plan','ShopifyApp\SettingController@upgradePlan')->name('business_setting_upgrade_plan');
+
 	Route::post('user-profile-update','ShopifyApp\SettingController@updateUserProfile');
 	Route::post('user-password-update','ShopifyApp\SettingController@updateUserPassword');
 

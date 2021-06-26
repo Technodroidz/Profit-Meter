@@ -221,8 +221,6 @@ class AuthController extends Controller
 
     public function loginWithShopify(Request $request)
     {
-        $tenant_user = MultiTenantModel::getTenantUser();
-        pp($tenant_user);
         $data = [];
         if($request->isMethod('post')){
 
