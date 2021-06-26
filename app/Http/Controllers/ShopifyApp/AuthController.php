@@ -187,7 +187,7 @@ class AuthController extends Controller
                 $conn = mysqli_connect(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD') , $userName);
                 $query = '';
 
-                $sqlScript = public_path('db\dummy.sql');
+                $sqlScript = public_path('db/dummy.sql');
     
                 $sqlScript = file($sqlScript);
                
