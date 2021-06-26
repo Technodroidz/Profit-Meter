@@ -34,6 +34,7 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::get('user-update/{id}','admin\LoginController@userUpdate');
 	Route::post('submit-user-update','admin\LoginController@UpdateUserDetail');
+	Route::post('status-user-change','admin\LoginController@userStatusChange');
 	/**Subsriptionpage url */
 	Route::get('subscruption','admin\SubscruptionPlanController@subscribepage');
 	Route::POST('submit-subscruption','admin\SubscruptionPlanController@submitsubscribepage');
@@ -46,7 +47,8 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('busssiness-user-delete/{id}','admin\BussinesController@deleteBussiness');
 
 	Route::get('profile','admin\ProfileController@profilePage');
-	
+
+	Route::post('status-subscription','admin\SubscruptionPlanController@changeStatus');
 	/** user setting url  */
 	Route::get('paymentgateway','admin\SettingController@paymentGateway');
 	Route::POST('submit-payment-configration','admin\SettingController@submitPaymentsetting');

@@ -12,6 +12,7 @@
                                                 <div class="page-header-title">
                                                     <div class="d-inline">
                                                         <h4>User Update</h4>
+                                                        <a href="{{asset('user-list')}}">Back</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -21,7 +22,7 @@
                                                         <li class="breadcrumb-item" style="float: left;">
                                                             <a href="index.php"> <i class="feather icon-home"></i> </a>
                                                         </li>
-                                                        <li class="breadcrumb-item" style="float: left;"><a href="#!">User Update</a>
+                                                        <li class="breadcrumb-item" style="float: left;"><a href="{{asset('user-list')}}">User Update</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -70,8 +71,8 @@
                                                                     <input type="text" class="form-control" name="last_name" id="last_name" value="{{@$getdata['0']['last_name']}}" placeholder="Last Name">
                                                                 </div>
                                                                 <div class="col-sm-4 col-xs-12 form-group">
-                                                                    <label class="col-form-label">Bussiness Name</label>
-                                                                    <input type="text" class="form-control" name="bussiness_name" id="bussiness_name" value="{{@$getdata['0']['bussiness_name']}}" placeholder="Bussiness Name">
+                                                                    <label class="col-form-label">Password</label>
+                                                                    <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password">
                                                                 </div>
                                                                 <div class="col-md-6 col-xs-12">
                                                                     <label class="col-form-label">Contact Number</label>
@@ -83,14 +84,13 @@
                                                                 </div>
                                                                 <div class="col-md-6 col-xs-12">
                                                                     <label class="col-form-label">Shopify store url</label>
-                                                                    <textarea class="form-control" name="shofiy_store_url" id="shofiy_store_url" placeholder="Shopify store url">{!!@$getdata['0']['shofiy_store_url']!!}</textarea>
+                                                                    <textarea class="form-control" name="shofiy_store_url" id="shofiy_store_url" placeholder="Shopify store url">{!!@$getdata['0']['shopify_url']!!}</textarea>
                                                                 </div>
                                                             </div>
                                                             <hr/>
                                                             <div class="form-group row">
                                                                 <div class="col-md-12 text-right">
-                                                                <input type="hidden" class="form-control" value="{{@$getdata['0']['password']}}" name="password" >
-                                                                 <input type="hidden" class="form-control" value="{{@$getdata['0']['id']}}" name="" id="table_id">
+                                                                 <input type="hidden" class="form-control" value="{{@$getdata['0']['id']}}" name="id" id="table_id">
                                                                     <button type="submit" class="btn btn-success">Save Changes</button>
                                                                 </div>
                                                             </div>
@@ -130,20 +130,23 @@
                       
                         number: {
                             required: true,
-                            maxlength:10,
-                            minlength:10,
+                            maxlength:16,
+                            minlength:7,
                             number:true,
                         },
                         last_name: {
                             required: true,
                         },
                        
-                        bussiness_name:{
-                            required: true,
-                        },
+                       
                         shofiy_store_url:{
                             required: true,
-                        }
+                        },
+                        password: {
+                            required: false,
+                            minlength:6,
+                           
+                        },
                       
                 
                     },
@@ -160,11 +163,12 @@
                         last_name: {
                             required: 'This field is required ',
                         },
-                        bussiness_name: {
-                            required: 'This field is required ',
-                        },
+                       
                         shofiy_store_url: {
                             required: 'This field is required ',
+                        },
+                        password: {
+                            required: 'Minimum six characters is required ',
                         },
                     
                     },

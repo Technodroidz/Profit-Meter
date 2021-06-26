@@ -17,7 +17,7 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->enum('input_type',['text','password','email'])->default('text');
             $table->string('option_name',255);
-            $table->string('option_value',255);
+            $table->string('option_value',255)->nullable();
             $table->string('setting_type',255);
             $table->enum('display',['yes','no'])->default('yes');
             $table->timestamps();

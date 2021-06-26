@@ -11,14 +11,12 @@
                                                 <div class="page-header-title">
                                                     <div class="d-inline">
                                                         <h4>Email Templete</h4>
-                                                      <a href="{{asset('add-templete')}}"><span>Add Templete</span></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="page-header-breadcrumb">
                                                     <ul class="breadcrumb-title">
-                                                      
                                                         <li class="breadcrumb-item" style="float: left;"><a href="{{asset('')}}">Email Templete</a>
                                                         </li>
                                                     </ul>
@@ -45,7 +43,7 @@
                                                                     <tr>
                                                                         <th>ID</th>
                                                                         <th>Name</th>
-                                                                        <th>Status</th>
+                                                                        <th>Action</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>

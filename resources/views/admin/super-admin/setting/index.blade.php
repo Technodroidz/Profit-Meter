@@ -51,9 +51,18 @@
                                                             @foreach ($getPayment['paypal'] as $settingValue)
                                                                 <div class="form-group row">
                                                                     <label class="col-sm-2 col-form-label">{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}</label>
+                                                                    @if($settingValue->option_name !='paypal_status')
                                                                     <div class="col-sm-10">
                                                                         <input type="{{ $settingValue->input_type }}" class="form-control" name="{{ $settingValue->option_name }}"  placholder="{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}"  value="{{ @$settingValue->option_value }}">
                                                                     </div>
+                                                                    @else
+                                                                    <div class="col-sm-10">
+                                                                    <select class="currency-selector input-group-addon" name="{{$settingValue->option_name }}">
+                                                                    <option value="ACTIVE" <?php echo ('ACTIVE'==@$settingValue->option_value  ?'selected':''); ?>>Active</option>
+                                                                    <option value="Inactive" <?php echo ('Inactive'==@$settingValue->option_value  ?'selected':''); ?>>Inactive</option>
+                                                                    </select>
+                                                                    </div>
+                                                                    @endif
                                                                 </div>
                                                             @endforeach
 
@@ -98,9 +107,19 @@
                                                             @foreach ($getPayment['stripe'] as $settingValue)
                                                                 <div class="form-group row">
                                                                     <label class="col-sm-2 col-form-label">{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}</label>
+                                                                    @if($settingValue->option_name !='stripe_status')
                                                                     <div class="col-sm-10">
                                                                         <input type="{{ $settingValue->input_type }}" class="form-control" name="{{ $settingValue->option_name }}"  placholder="{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}"  value="{{ @$settingValue->option_value }}">
                                                                     </div>
+                                                                    @else
+                                                                    <div class="col-sm-10">
+                                                                    <select class="currency-selector input-group-addon" name="{{$settingValue->option_name }}">
+                                                                    <option value="ACTIVE" <?php echo ('ACTIVE'==@$settingValue->option_value  ?'selected':''); ?>>Active</option>
+                                                                    <option value="Inactive" <?php echo ('Inactive'==@$settingValue->option_value  ?'selected':''); ?>>Inactive</option>
+                                                                    </select>
+                                                                    </div>
+                                                                    @endif
+                                                                    
                                                                 </div>
                                                             @endforeach
                                                            

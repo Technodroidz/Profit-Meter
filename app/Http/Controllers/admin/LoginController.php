@@ -10,12 +10,13 @@ use App\Model\Role;
 use App\SecretiantModel;
 use App\AdministrativeModel;
 use App\UnderSecretiantModel;
-
+use Mail; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use App\Model\Ip_address;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use App\Model\EmailTemplate;
+use Illuminate\Support\Str;
 use Config;
 
 class LoginController extends Controller
@@ -34,7 +35,7 @@ class LoginController extends Controller
 
     public function userList(){
  
-       $getdata = User::where('status',1)->get();
+       $getdata = User::all();
        
        return view('admin.super-admin.user-file.user-list',compact('getdata'));
 
@@ -63,7 +64,7 @@ class LoginController extends Controller
 
     public function userUpdate($id){
 
-        $getdata = Admin::where('id',$id)->get();
+        $getdata = User::where('id',$id)->get();
         $menu_active="1";
 
         $result = [
@@ -81,35 +82,56 @@ class LoginController extends Controller
 
 public function UpdateUserDetail(Request $request){
 
-    $dublicatCheck  = Admin::where('id',$request['id'])->get();
-
+    $dublicatCheck  = User::where('id',$request['id'])->get();
+   
     $request->validate([
-    
         'name' => 'required',
         'last_name' => 'required',
-        'bussiness_name' => 'required',
         'number' => 'required|integer',
         'shofiy_store_url' => 'required',
-       
-       
     ]);
 
-    $getInsertedData = Admin::updateOrCreate(['id'=>$request['id']],[
-        
-        "name" => $request['name'],
-        "username" => $request['name'],
-        "last_name" => $request['last_name'],
-        "bussiness_name" => $request['bussiness_name'],
-        "number" => $request['number'],
-        "shofiy_store_url" => $request['shofiy_store_url'],
-        "role_id" => 2,
-        'email'=>$request['email'],
-        'password'=>$request['password']
-       
-       
-    ]);
+    if(!empty($request['password'])){
+        try {
+        $getInsertedData = User::updateOrCreate(['id'=>$request['id']],[
+            "name" => $request['name'],
+            "last_name" => $request['last_name'],
+            "number" => $request['number'],
+            "shopify_url" => $request['shofiy_store_url'],
+            "password" => bcrypt($request['password']),
+            "role_id" => 2,
+        ]);
+        $token = Str::random(64);
+        $getSubscribData=EmailTemplate::where('page_type','forgot_password')->get();
+        Mail::send('admin/email_template/forgot_password_email', ['token' => $token,'password'=>$request['password'],'getInsertedData'=>$getInsertedData,'getSubscribData'=>$getSubscribData], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Reset Your Profit-Meter Password');
+        });
+        } catch(\Exception $e) {
+       // return response($e->getMessage(), 422);
+        }
+    }else{
+        try{
+        $getInsertedData = User::updateOrCreate(['id'=>$request['id']],[
+            "name" => $request['name'],
+            "last_name" => $request['last_name'],
+            "number" => $request['number'],
+            "shopify_url" => $request['shofiy_store_url'],
+            "role_id" => 2,
+        ]);
+        $token = Str::random(64);
+    
+        Mail::send('admin/email_template/forgot_password_email', ['token' => $token,'password'=>""], function($message) use($request){
+            $message->to($request->email);
+            $message->subject(' Your Profit-Meter Profile Updated');
+        });
+        } catch(\Exception $e) {
+    // return response($e->getMessage(), 422);
+        }
+    }
+    
    
-    return redirect('user-list')->with('success', 'Added  successfully'); 
+    return redirect('user-list')->with('success', 'Update  successfully'); 
 
 }
 
@@ -126,7 +148,7 @@ public function UpdateUser(Request $request){
 
     } else{
 
-        $password= bcrypt($request['passsword']);
+        $password= bcrypt($request['password']);
     }
 
     if(@$dublicatCheck['0']['email']== $request['email']){
@@ -284,11 +306,34 @@ public function UpdateUser(Request $request){
 	}
 
     public function deleteUser($id){
-      
-        $productid=Admin::findOrFail($id);
-        $productid->delete();
+      try{
+        $userDelete=User::findOrFail($id);
+        
+        $userDelete->forceDelete();
+        Mail::send('admin/email_template/user_delete_account', ['userData' => $userDelete,'password'=>""], function($message) use($userDelete){
+            $message->to($userDelete['email']);
+            $message->subject(' Your account has been deleted');
+        });
+        } catch(\Exception $e) {
+    //return response($e->getMessage(), 422);
+        }
         return back()
             ->with('success', 'User deleted successfully');
+    }
+
+    public function userStatusChange(Request $request){
+        $changeStatus=User::findOrFail($request->id);
+        if($changeStatus){
+            $status=0;
+            if($request->status=="true"){
+                $status=1;
+            }
+            $changeStatus->update([
+                'status'=>$status,
+             ]);
+             return response()->json($changeStatus);
+        }
+        return response()->json(['error'=>'get error'],422);
     }
 
 }

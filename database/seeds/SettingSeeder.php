@@ -51,6 +51,11 @@ class SettingSeeder extends Seeder
                 'setting_type' => 'PAYPAL',
             ],[
                 'input_type'   => 'text',
+                'option_name'  => 'paypal_status',
+                'option_value' => '1',
+                'setting_type' => 'PAYPAL',
+            ],[
+                'input_type'   => 'text',
                 'option_name'  => 'smtp_server_host',
                 'option_value' => '',
                 'setting_type' => 'MAIL',
@@ -64,6 +69,11 @@ class SettingSeeder extends Seeder
                 'option_name'  => 'smtp_user',
                 'option_value' => '',
                 'setting_type' => 'MAIL',
+            ],[
+                'input_type'   => 'text',
+                'option_name'  => 'stripe_status',
+                'option_value' => '1',
+                'setting_type' => 'STRIPE',
             ],[
                 'input_type'   => 'text',
                 'option_name'  => 'smtp_username',

@@ -50,10 +50,21 @@
                                                             @foreach ($getemail as $settingValue)
                                                                 <div class="form-group row">
                                                                     <label class="col-sm-2 col-form-label">{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}</label>
+                                                                    @if($settingValue->option_name !='email_encryption_type')
                                                                     <div class="col-sm-10">
                                                                         <input type="{{ $settingValue->input_type }}" class="form-control" name="{{ $settingValue->option_name }}"  placholder="{{ strtoupper(str_replace('_', ' ', $settingValue->option_name)) }}"  value="{{ @$settingValue->option_value }}">
                                                                     </div>
+                                                                    @else
+                                                               <div class="col-sm-10">
+                                                                <select class="currency-selector input-group-addon" name="{{$settingValue->option_name }}">
+                                                                <option value="1" >NONE</option>
+                                                                  <option value="TLS" <?php echo ('TLS'==@$settingValue->option_value  ?'selected':''); ?>>TLS</option>
+                                                                  <option value="SMTP" <?php echo ('SMTP'==@$settingValue->option_value  ?'selected':''); ?>>SMTP</option>
+                                                                </select>
                                                                 </div>
+                                                                    @endif
+                                                                </div>
+                                                             
                                                             @endforeach
                                                     
                                                             <!-- <div class="form-group row">

@@ -52,7 +52,7 @@ class PayPalController extends Controller
         try {
             
             $response = $this->provider->setExpressCheckout($cart, $recurring);
-            // print_r($response); exit;
+            //print_r($response); exit;
             return redirect($response['paypal_link']);
         } catch (\Exception $e) {
             $invoice = $this->createInvoice($cart, 'Invalid');
