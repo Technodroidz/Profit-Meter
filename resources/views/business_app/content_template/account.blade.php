@@ -117,14 +117,14 @@
                   </div>
                   </form>
                   <div class="col-md-6 col-xs-12">
-                    <h4 class="text-center">Your Plan</h4>
+                    <h4 class="text-center">Your Current Plan</h4>
                     <br/>
                     <div class="row">
                       <div class="col-md-12 col-xs-12 form-group">
                         <div class="planCard">
-                          <p class="planTitle">BASIC</p>
-                          <h2 class="planPrice">$9</h2>
-                          <p class="prMonth">per month</p>
+                          <p class="planTitle">{{$trial_subscription->plan_name}}</p>
+                          <h2 class="planPrice">${{$trial_subscription->plan_amount}}</h2>
+                          <p class="prMonth">For {{$trial_subscription->plan_duration}} days</p>
                           <h4>Unlimited history data:</h4>
                           <ul>
                             <li>
@@ -160,7 +160,8 @@
                               <span class="textPlan">Priority 7/7 support</span>
                             </li>
                           </ul>
-                          <a href="#" class="crntPlan">Current plan</a>
+                          
+                          <a href="{{route('business_setting_upgrade_plan')}}" class="crntPlan">Upgrade Plan </a>
                         </div>
                       </div>
            

@@ -135,7 +135,8 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <button class="contBtn">Connected</button>
+                                                <!-- <button class="contBtn">Connected</button> -->
+                                                <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button>
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +157,14 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <button class="contBtn">Connected</button>
+                                                <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
+                                                <!-- <button id="my-login-button-target">Connect</button>
+
+                                                <div id="display_name"></div>
+                                                <img id="bitmoji" />
+                                                <div id="external_id"></div>
+                                                <hr /> -->
+                                                <!-- <button class="contBtn">Connected</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +185,7 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <a href="{{route('connect_google')}}" class="contBtn">Connect</a>
+                                                <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
                                             </div>
                                         </div>
                                     </div>
@@ -231,4 +239,44 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+      //   window.snapKitInit = function () {
+      //   var loginButtonIconId = "my-login-button-target";
+      //   // Mount Login Button
+      //   snap.loginkit.mountButton(loginButtonIconId, {
+      //     clientId: "a5caacda-52b2-46b2-ae4a-31b0f9d766a2",
+      //     redirectURI: "http://127.0.0.1/Profit-Meter/login/snapchat/callback",
+      //     scopeList: [            "user.display_name",            "user.bitmoji.avatar",            "user.external_id",          ],
+      //     handleResponseCallback: function () {
+      //       snap.loginkit.fetchUserInfo().then(
+      //         function (result) {
+      //           console.log("User info:", result.data.me);
+      //           document.getElementById("display_name").innerHTML =
+      //             result.data.me.displayName;
+      //           document.getElementById("bitmoji").src =
+      //             result.data.me.bitmoji.avatar;
+      //           document.getElementById("external_id").src =
+      //             result.data.me.externalId;
+      //         },
+      //         function (err) {
+      //           console.log(err); // Error
+      //         }
+      //       );
+      //     },
+      //   });
+      // };
+      // // Load the SDK asynchronously
+      // (function (d, s, id) {
+      //   var js,
+      //     sjs = d.getElementsByTagName(s)[0];
+      //   if (d.getElementById(id)) return;
+      //   js = d.createElement(s);
+      //   js.id = id;
+      //   js.src = "https://sdk.snapkit.com/js/v1/login.js";
+      //   sjs.parentNode.insertBefore(js, sjs);
+      // })(document, "script", "loginkit-sdk");
+    </script>
 @endsection

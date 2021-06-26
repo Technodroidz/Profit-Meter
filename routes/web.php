@@ -28,9 +28,7 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::get('edit-user/{id}','admin\LoginController@editUser');
 
-
 	Route::get('user-delete/{id}','admin\LoginController@deleteUser');
-
 
 	Route::get('logout','admin\LoginController@logout');
 
@@ -48,10 +46,9 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::get('bussiness-user-edit/{id}','admin\BussinesController@editBussiness');
 	Route::get('busssiness-user-delete/{id}','admin\BussinesController@deleteBussiness');
 
-	
 	Route::get('profile','admin\ProfileController@profilePage');
-	Route::post('status-subscription','admin\SubscruptionPlanController@changeStatus');
 
+	Route::post('status-subscription','admin\SubscruptionPlanController@changeStatus');
 	/** user setting url  */
 	Route::get('paymentgateway','admin\SettingController@paymentGateway');
 	Route::POST('submit-payment-configration','admin\SettingController@submitPaymentsetting');
@@ -77,8 +74,6 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 
 	Route::post('submit-user-register','front\HomeController@SubmitUserForm');
 
-	
-	
 	Route::get('paynow', 'front\PayPalController@getIndex');
 	Route::get('paypal/ec-checkout', 'front\PayPalController@getExpressCheckout');
 	Route::get('paypal/ec-checkout-success', 'front\PayPalController@getExpressCheckoutSuccess');
@@ -101,8 +96,6 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 	Route::post('/subscription', 'front\SubscriptionController@create')->name('subscription.create');
 	Route::post('/submit-payment', 'front\PlanController@payment')->name('submit-payment.create');
 
-
-
 	Route::get('/report', 'admin\UserSubscriptionController@index');
 	Route::get('report-add', 'front\HomeController@reportAdd');
 	Route::post('report-submit', 'front\HomeController@SubmitReport');
@@ -123,10 +116,11 @@ Route::group(['middleware' => ['prevent-back-history','auth:webadmin']],function
 });
 
 // Shopify Account Login
-Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account');
+Route::match(['POST','GET'],'connect-shopify-account','ShopifyApp\AuthController@loginWithShopify')->name('connect_shopify_account')->middleware(['configure.multi_tenant_db']);
 Route::get('authenticate','ShopifyApp\AuthController@authenticate')->name('authenticate');
+Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
 
-Route::group(['middleware' => ['restrict.registered.user']],function(){
+Route::group(['middleware' => ['restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::match(['POST','GET'],'business/register','ShopifyApp\AuthController@register')->name('business_register');
 	Route::match(['POST','GET'],'business/forgot-password','ShopifyApp\AuthController@forgotPassword')->name('business_forgot_password');
 	Route::get('business/reset-password/{token}', 'ShopifyApp\AuthController@resetPassword')->name('business_reset_password/{token}');
@@ -135,9 +129,7 @@ Route::group(['middleware' => ['restrict.registered.user']],function(){
 }); 
 
 
-Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
-
-Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(){
+Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->name('home');
 	// ->middleware(['auth.shopify'])
 
@@ -159,11 +151,12 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(
 	Route::match(['POST','GET'],'business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
 	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
+	Route::get('business/settings/upgrade_plan','ShopifyApp\SettingController@upgradePlan')->name('business_setting_upgrade_plan');
+
 	Route::post('user-profile-update','ShopifyApp\SettingController@updateUserProfile');
 	Route::post('user-password-update','ShopifyApp\SettingController@updateUserPassword');
 
 });
-
 
 // Generate a login URL
 Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
@@ -174,5 +167,8 @@ Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->na
 Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
 Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->name('show_google_ads');
 
+Route::get('login/snapchat', 'ShopifyApp\SnapchatController@redirectToProvider')->name('connect_snapchat');
+Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProviderCallback')->name('snapchat_callback');
 
-
+Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
+Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');

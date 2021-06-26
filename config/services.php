@@ -37,7 +37,19 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://127.0.0.1/Profit-Meter/login/google/callback',
+        'redirect' => 'http://127.0.0.1/Profit-Meter/login/google/callback'
+    ],
+
+    'snapchat' => [
+        'client_id' => env('SNAPCHAT_CLIENT_ID'),
+        'client_secret' => env('SNAPCHAT_CLIENT_SECRET'),
+        'redirect' => 'http://127.0.0.1/Profit-Meter/login/snapchat/callback',
+    ],
+
+    'paypal' => [    
+        'client_id' => env('PAYPAL_CLIENT_ID'),  
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),  
+        'redirect' => 'http://127.0.0.1/Profit-Meter/login/paypal/callback' 
     ],
 
 ];

@@ -23,13 +23,16 @@ class GoogleController extends Controller
 {
     public function redirectToProvider()
     {
-        return Socialite::driver('google')->redirect();
+        $scopes = ['https://www.googleapis.com/auth/adwords'];
+        $parameters = ['access_type' => 'offline'];
+        return Socialite::driver('google')->scopes($scopes)->with($parameters)->redirect();
     }
 
     public function handleProviderCallback()
     {
         
         $user = Socialite::driver('google')->stateless()->user();
+        
         $insert_array = [
             'user_id'          => Auth::User()->id,
             'token'            => $user->token,
@@ -41,7 +44,7 @@ class GoogleController extends Controller
             'avatar'           => $user->avatar,
         ];
 
-        BusinessUserGoogleAccount::insert($insert_array);
+        BusinessUserGoogleAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
         return redirect()->route('show_google_ads');
 
         // $findUser = User::where('email',$user->getEmail())->first();
@@ -60,11 +63,12 @@ class GoogleController extends Controller
 
     public function fetchGoogleAds()
     {
-        $google_account = BusinessUserGoogleAccount::where('user_id',Auth::User()->id)->first();
+        $google_account = BusinessUserGoogleAccount::where('user_id',Auth::User()->id)->first(); 
+
         $oAuth2Credential = (new OAuth2TokenBuilder())
             ->withClientId(env('GOOGLE_CLIENT_ID'))
             ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
-            ->withRefreshToken('1//0gzqnQQ91bCNrCgYIARAAGBASNwF-L9IrJZKYcVJd7yp2UFVXUfSi1g1_u9VV0wptoR5eGzoGnpgGE3OwVEU4CweiRuINvA1g_YU')
+            ->withRefreshToken($google_account->refresh_token)
             // ...
             ->build();
 
@@ -75,7 +79,7 @@ class GoogleController extends Controller
             ->build();
 
         $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
-        $customer = $customerServiceClient->getCustomer(ResourceNames::forCustomer('331-339-2666'));
+        $customer = $customerServiceClient->getCustomer(ResourceNames::forCustomer('9953755478'));
         dd($customer);
     }
 }
