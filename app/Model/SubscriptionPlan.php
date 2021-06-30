@@ -25,6 +25,11 @@ class SubscriptionPlan extends Model
         return SubscriptionPlan::where('package_name_slug','!=','trial-plan')->where('deleted_at',null)->get();
     }
 
+    public static function getSubscriptionPlanById($id)
+    {
+        return SubscriptionPlan::where('id',$id)->first();
+    }
+
 }
 
 

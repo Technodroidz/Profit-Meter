@@ -588,6 +588,7 @@
 <!-- custom js -->
 <script src="{{asset('business_app')}}/js/dashboard_init.js"></script>
 <script src="{{asset('business_app')}}/js/custom.js"></script>
+<script src="{{asset('business_app')}}/js/business_app_custom.js"></script>
 
 <script>
 $(function() {

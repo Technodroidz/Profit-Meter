@@ -104,5 +104,4 @@ class SubscruptionPlanController extends Controller
         }
         return response()->json(['error'=>'get error'],422);
     }
-
 }

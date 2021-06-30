@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ShopifyApp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\Model\BusinessUserGoogleAccount;
+use App\Model\UserGoogleAccount;
 use Illuminate\Support\Facades\Auth;
 
 use GetOpt\GetOpt;
@@ -44,7 +44,7 @@ class GoogleController extends Controller
             'avatar'           => $user->avatar,
         ];
 
-        BusinessUserGoogleAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
+        UserGoogleAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
         return redirect()->route('show_google_ads');
 
         // $findUser = User::where('email',$user->getEmail())->first();
@@ -63,7 +63,7 @@ class GoogleController extends Controller
 
     public function fetchGoogleAds()
     {
-        $google_account = BusinessUserGoogleAccount::where('user_id',Auth::User()->id)->first(); 
+        $google_account = UserGoogleAccount::where('user_id',Auth::User()->id)->first(); 
 
         $oAuth2Credential = (new OAuth2TokenBuilder())
             ->withClientId(env('GOOGLE_CLIENT_ID'))

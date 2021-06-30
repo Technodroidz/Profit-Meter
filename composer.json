@@ -25,7 +25,7 @@
         "scottybo/laravel-facebook-sdk": "^5.1",
         "socialiteproviders/paypal": "^4.1",
         "socialiteproviders/snapchat": "^4.1",
-        "srmklive/paypal": "~3.0",
+        "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^7.83"
     },
     "require-dev": {
