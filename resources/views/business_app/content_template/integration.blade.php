@@ -24,9 +24,9 @@
                 transform: translate(-50%, 0%);
             }
         }
-        *, ::after, ::before {
+        /**, ::after, ::before {
              box-sizing: content-box; 
-        }
+        }*/
 
     </style>
 
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-lg-3">
+                            <div class="col-12 col-sm-4 col-lg-3" id="paypal_app">
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart paypal">
@@ -140,7 +140,9 @@
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
                                                 <!-- <button class="contBtn">Connected</button> -->
-                                                <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button>
+                                                <button class="contBtn" data-toggle="modal" data-target="#paypalConnect"><a href="javascript:void(0);" style="color:inherit;">Connect</a></button>
+
+                                                <!-- <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -297,6 +299,72 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=update_google_ads_setting]" data-replace_element="#google_app" data-show_error="#show_error" >Add & Continue</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="paypalConnect" tabindex="-1" role="dialog" aria-labelledby="paypalConnectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form role="update_paypal_api_settings" method="POST" action="{{ route('update_paypal_api_settings') }}">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLongTitle">Add Paypal Api Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
+                      <strong id="show_paypal_form_error">Error</strong>
+                      <button type="button" class="close dismiss_alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <label for="basic-url">Mode</label>
+                    <div class="input-group mb-3">
+                        <!-- <div class="input-group-prepend">
+                            <span class="input-group-text">ID</span>
+                        </div> -->
+                        <!-- <input name="mode" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"> -->
+                        <select name="mode" class="form-control" id="cars" aria-describedby="basic-addon3">
+                          <option value="sandbox">Sandbox</option>
+                          <option value="live">Live</option>
+                        </select>
+                    </div>
+
+                    <label for="basic-url">SandBox</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" >Client ID</span>
+                        </div>
+                        <input name="sandbox_client_id" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" >Client Secret</span>
+                        </div>
+                        <input name="sandbox_client_secret" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                    <label for="basic-url">Live</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" >Client ID</span>
+                        </div>
+                        <input name="live_client_id" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" >Client Secret</span>
+                        </div>
+                        <input name="live_client_secret" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=update_paypal_api_settings]" data-replace_element="#paypal_app" data-show_error="#show_paypal_form_error" >Add & Continue</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -38,66 +38,67 @@
                       {{ session()->get('message') }}
                   </div>
               @endif
-                                        
-                  @foreach ($subscription_plans as $plan)
-                    <div class="col-md-6 col-xs-6 col-sm-4">
-                      <h4 class="text-center">{{$plan->package_name}}</h4>
-                      <br/>
-                      <div class="row">
-                        <div class="col-md-8 col-xs-8 form-group">
-                          <div class="planCard">
-                            <p class="planTitle">{{$plan->package_name}}</p>
-                            <h2 class="planPrice">{{$plan->package_amount}}</h2>
-                            <p class="prMonth">For {{$plan->package_duration}} days</p>
-                            <h4>Unlimited history data:</h4>
-                            <ul>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan">Profit Dashboard</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan">Simulate Your Potential Revenue and Profit</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan"> Pull your spending from Facebook, Google Ads and Snapchat</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan"> Import your Disputes data from Stripe and PayPal</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan"> Track all your Expenses</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan"> Self-serve knowledge base</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan"> Lifetime Value Analysis</span>
-                              </li>
-                              <li>
-                                <span class="iconRight"><i class="fas fa-check"></i></span>
-                                <span class="textPlan">Priority 7/7 support</span>
-                              </li>
-                            </ul>
-                            
-                            <!-- <a href="#" class="crntPlan">Upgrade Plan </a> -->
-                            <a href="javascript:void(0);" class="crntPlan upgrade_plan_btn" data-toggle="modal" data-target="#exampleModalCenter" data-subscription_id = "{{$plan->id}}" data-subscription_cost="{{$plan->package_amount}}" data-subscription_name="{{$plan->package_name}}" >Upgrade Plan</a>
+                    <div class="row">                 
+                      @foreach ($subscription_plans as $plan)
 
+                        <div class="col-md-4 col-xs-4 col-sm-4">
+                          <!-- <h4 class="text-center">{{$plan->package_name}}</h4> -->
+                          <br/>
+                          <div class="row">
+                            <div class="col-md-12 col-xs-12 form-group">
+                              <div class="planCard">
+                                <p class="planTitle">{{$plan->package_name}}</p>
+                                <h2 class="planPrice">{{$plan->package_amount}}</h2>
+                                <p class="prMonth">For {{$plan->package_duration}} days</p>
+                                <h4>Unlimited history data:</h4>
+                                <ul>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan">Profit Dashboard</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan">Simulate Your Potential Revenue and Profit</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan"> Pull your spending from Facebook, Google Ads and Snapchat</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan"> Import your Disputes data from Stripe and PayPal</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan"> Track all your Expenses</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan"> Self-serve knowledge base</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan"> Lifetime Value Analysis</span>
+                                  </li>
+                                  <li>
+                                    <span class="iconRight"><i class="fas fa-check"></i></span>
+                                    <span class="textPlan">Priority 7/7 support</span>
+                                  </li>
+                                </ul>
+                                
+                                <!-- <a href="#" class="crntPlan">Upgrade Plan </a> -->
+                                <a href="javascript:void(0);" class="crntPlan upgrade_plan_btn" data-toggle="modal" data-target="#exampleModalCenter" data-subscription_id = "{{$plan->id}}" data-subscription_cost="{{$plan->package_amount}}" data-subscription_name="{{$plan->package_name}}" >Upgrade Plan</a>
+
+                              </div>
+                            </div>
+                 
                           </div>
+                          
                         </div>
-             
-                      </div>
-                      
+                      @endforeach
                     </div>
-                  @endforeach
-                </div>
-             
-           </div>
+                </div> 
+            </div>
         </div>
     </div>
 </div>
@@ -403,11 +404,18 @@
         function stripeTokenHandler(token) {
           // Insert the token ID into the form so it gets submitted to the server
           var form = document.getElementById('stripe-payment-form');
-          var hiddenInput = document.createElement('input');
-          hiddenInput.setAttribute('type', 'hidden');
-          hiddenInput.setAttribute('name', 'stripeToken');
-          hiddenInput.setAttribute('value', token.id);
-          form.appendChild(hiddenInput);
+          element = $('input[name="stripeToken"]');
+          
+            if (element.length > 0)
+            {
+                element.val(token.id);
+            }else{
+              var hiddenInput = document.createElement('input');
+              hiddenInput.setAttribute('type', 'hidden');
+              hiddenInput.setAttribute('name', 'stripeToken');
+              hiddenInput.setAttribute('value', token.id);
+              form.appendChild(hiddenInput);
+            }
           $('#stripe-payment-form').find('[data-request="web-ajax-submit"]').trigger('click');
           // Submit the form
           // form.submit();

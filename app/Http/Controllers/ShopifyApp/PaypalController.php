@@ -20,12 +20,12 @@ class PaypalController extends Controller
 
         // $parameters = ['access_type' => 'offline'];
         
-        return Socialite::driver('paypal')->redirect();
+        return Socialite::driver('paypal_sandbox')->redirect();
     }
 
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('paypal')->user();
+        $user = Socialite::driver('paypal_sandbox')->user();
         dd($user);
     }
 }

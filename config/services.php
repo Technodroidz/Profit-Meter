@@ -47,9 +47,15 @@ return [
     ],
 
     'paypal' => [    
-        'client_id' => env('PAYPAL_CLIENT_ID'),  
-        'client_secret' => env('PAYPAL_CLIENT_SECRET'),  
+        'client_id' => env('PAYPAL_SANDBOX_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
         'redirect' => 'http://127.0.0.1/Profit-Meter/login/paypal/callback' 
+    ],
+    
+    'paypal_sandbox' => [
+        'client_id'     => env('PAYPAL_SANDBOX_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
+        'redirect'      => 'http://127.0.0.1/Profit-Meter/login/paypal/callback'
     ],
 
 ];
