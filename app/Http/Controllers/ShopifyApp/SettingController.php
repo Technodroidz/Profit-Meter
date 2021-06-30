@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Rule;
+use App\Model\UserSubscription;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Model\SubscriptionPlan;
 
 class SettingController extends Controller
 {
@@ -84,8 +86,9 @@ class SettingController extends Controller
     public function account(Request $request)
     {
         $getUserData = User::where('id',Auth::user()->id)->first();
-        $data       = ['current_link' => 'account','getUserData'=>$getUserData];
-      
+        $trial_subscription = UserSubscription::getTrialSubscription(Auth::User()->id);
+        $paid_subscription = UserSubscription::getPaidSubscription(Auth::User()->id);
+        $data       = ['current_link' => 'account','getUserData' => $getUserData,'trial_subscription' => $trial_subscription,'paid_subscription' => $paid_subscription];
         return view('business_app/content_template/account',$data);
     }
 
@@ -107,7 +110,7 @@ class SettingController extends Controller
            $imageName = uploadSingleImages($request->file('profile_pick'),'profile_pick');
        }else{
            $imageName = Auth::user()->profile_pick;
-       } 
+       }
 
        $userEmail=Auth::user()->email;
        
@@ -140,7 +143,6 @@ class SettingController extends Controller
         else{
            return back()->with('message', 'Email id Alredy Exit'); 
         }
-       
     }
 
     public function updateUserPassword(Request $request){
@@ -156,4 +158,14 @@ class SettingController extends Controller
         return back()->with('status', 'Update  successfully'); 
 
     }
+
+    public function upgradePlan(Request $request)
+    {
+        $plans = SubscriptionPlan::getAllPlans();
+        $data  = ['current_link' => 'account','subscription_plans' => $plans];
+
+        return view('business_app/content_template/upgrade_plan',$data);
+    }
+
+    
 }

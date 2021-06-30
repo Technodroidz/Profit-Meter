@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminRoleSeeder::class);
         $this->call(PagesSeeder::class);
         $this->call(EmailTempleteSeeder::class);
+        $this->call(SubscriptionPlanSeeder::class);
     }
 }

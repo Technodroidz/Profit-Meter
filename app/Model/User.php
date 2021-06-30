@@ -43,4 +43,14 @@ class User extends Authenticatable implements IShopModel
         User::where('shopify_url',$shopify_url)->update($array);
     }
 
+    public static function getUserById($id)
+    {
+        return User::where('id',$id)->first();
+    }
+
+    public static function updateById($id,$update_array)
+    {
+        User::where('id',$id)->update($update_array);
+    }
+
 }

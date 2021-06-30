@@ -62,6 +62,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
         'restrict.registered.user' => \App\Http\Middleware\RestrictRegisterUser::class,
+        'configure.multi_tenant_db'=> \App\Http\Middleware\ConfigureMultiTenantDB::class,
+        'check.auth.on.cred.screen'=> \App\Http\Middleware\CheckAuthOnCredScreens::class
     ];
 
     /**

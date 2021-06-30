@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBusinessUserGoogleAccountsTable extends Migration
+class CreateUserGoogleAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBusinessUserGoogleAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('business_user_google_accounts', function (Blueprint $table) {
+        Schema::create('user_google_accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
             $table->text('token')->nullable();

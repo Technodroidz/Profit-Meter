@@ -16,21 +16,19 @@ use Config;
 class SubscruptionPlanController extends Controller
 {
 
+    public function subscribepage(){
 
-
-public function subscribepage(){
-
-    if(Auth::guard('webadmin')->check()){
-        $getUserData = User::where('id',Auth::guard('webadmin')->user()->id)->first();
-        $getSubscriber = SubscriptionPlan::all();
-        $result = [
-            'getSubscriber' => $getSubscriber,
-        ];
-        // return view('admin.super-admin.user-profile-form',$result);
-        return view('admin.super-admin.subscruption.index',$result);
-    }else{
-        return redirect('/admin-panel');
-    }
+        if(Auth::guard('webadmin')->check()){
+            $getUserData = User::where('id',Auth::guard('webadmin')->user()->id)->first();
+            $getSubscriber = SubscriptionPlan::all();
+            $result = [
+                'getSubscriber' => $getSubscriber,
+            ];
+            // return view('admin.super-admin.user-profile-form',$result);
+            return view('admin.super-admin.subscruption.index',$result);
+        }else{
+            return redirect('/admin-panel');
+        }
 
     }
     
@@ -67,45 +65,43 @@ public function subscribepage(){
         }
         return redirect('subscription')->with('success', 'Contract added  successfully'); 
     
-    
     }
-/** edit user detail */
+    /** edit user detail */
 
-public function editSubscription($id){
-   
-   
-    $getBussiness = SubscriptionPlan::where('id',$id)->get();
-    $getSubscriber = SubscriptionPlan::all();
-    $result = [
-        'getSubscribeData' => $getBussiness,
-        'getSubscriber' => $getSubscriber,
-    ];
-   
-    return view('admin.super-admin.subscruption.index',$result);
+    public function editSubscription($id){
+       
+        $getBussiness = SubscriptionPlan::where('id',$id)->get();
+        $getSubscriber = SubscriptionPlan::all();
+        $result = [
+            'getSubscribeData' => $getBussiness,
+            'getSubscriber' => $getSubscriber,
+        ];
+       
+        return view('admin.super-admin.subscruption.index',$result);
 
-}
-/** end user  */
+    }
+    /** end user  */
 
-public function deleteSubscription($id){
-    $productid=SubscriptionPlan::findOrFail($id);
-    $productid->delete();
-    return back()
-        ->with('success', 'Record deleted successfully');
-}
+    public function deleteSubscription($id){
+        $productid=SubscriptionPlan::findOrFail($id);
+       // SubscriptionPlan::where('id',$id)->forceDelete();
+        $productid->delete();
+        return back()
+            ->with('success', 'Record deleted successfully');
+    }
 
-public function changeStatus(Request $request){
-    $changeStatus=SubscriptionPlan::findOrFail($request->id);
-    if($changeStatus){
-        $status=0;
-        if($request->status=="true"){
-            $status=1;
+    public function changeStatus(Request $request){
+        $changeStatus=SubscriptionPlan::findOrFail($request->id);
+        if($changeStatus){
+            $status=0;
+            if($request->status=="true"){
+                $status=1;
+            }
+            $changeStatus->update([
+                'status'=>$status,
+             ]);
+             return response()->json($changeStatus);
         }
-        $changeStatus->update([
-            'status'=>$status,
-         ]);
-         return response()->json($changeStatus);
+        return response()->json(['error'=>'get error'],422);
     }
-    return response()->json(['error'=>'get error'],422);
-}
-
 }

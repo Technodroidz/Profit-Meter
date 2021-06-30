@@ -117,55 +117,104 @@
                   </div>
                   </form>
                   <div class="col-md-6 col-xs-12">
-                    <h4 class="text-center">Your Plan</h4>
+                    <h4 class="text-center">Your Current Plan</h4>
                     <br/>
-                    <div class="row">
-                      <div class="col-md-12 col-xs-12 form-group">
-                        <div class="planCard">
-                          <p class="planTitle">BASIC</p>
-                          <h2 class="planPrice">$9</h2>
-                          <p class="prMonth">per month</p>
-                          <h4>Unlimited history data:</h4>
-                          <ul>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan">Profit Dashboard</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan">Simulate Your Potential Revenue and Profit</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan"> Pull your spending from Facebook, Google Ads and Snapchat</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan"> Import your Disputes data from Stripe and PayPal</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan"> Track all your Expenses</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan"> Self-serve knowledge base</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan"> Lifetime Value Analysis</span>
-                            </li>
-                            <li>
-                              <span class="iconRight"><i class="fas fa-check"></i></span>
-                              <span class="textPlan">Priority 7/7 support</span>
-                            </li>
-                          </ul>
-                          <a href="#" class="crntPlan">Current plan</a>
+                    @if(!empty($paid_subscription))
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 form-group">
+                          <div class="planCard">
+                            <p class="planTitle">{{$paid_subscription->plan_name}}</p>
+                            <h2 class="planPrice">${{$paid_subscription->plan_amount}}</h2>
+                            <p class="prMonth">For {{$paid_subscription->plan_duration}} days</p>
+                            <h4>Unlimited history data:</h4>
+                            <ul>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Profit Dashboard</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Simulate Your Potential Revenue and Profit</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Pull your spending from Facebook, Google Ads and Snapchat</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Import your Disputes data from Stripe and PayPal</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Track all your Expenses</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Self-serve knowledge base</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Lifetime Value Analysis</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Priority 7/7 support</span>
+                              </li>
+                            </ul>
+                            
+                            <a href="{{route('business_setting_upgrade_plan')}}" class="crntPlan">Upgrade Plan </a>
+                          </div>
+                        </div>
+             
+                      </div>
+                    @else
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 form-group">
+                          <div class="planCard">
+                            <p class="planTitle">{{$trial_subscription->plan_name}}</p>
+                            <h2 class="planPrice">${{$trial_subscription->plan_amount}}</h2>
+                            <p class="prMonth">For {{$trial_subscription->plan_duration}} days</p>
+                            <h4>Unlimited history data:</h4>
+                            <ul>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Profit Dashboard</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Simulate Your Potential Revenue and Profit</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Pull your spending from Facebook, Google Ads and Snapchat</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Import your Disputes data from Stripe and PayPal</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Track all your Expenses</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Self-serve knowledge base</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan"> Lifetime Value Analysis</span>
+                              </li>
+                              <li>
+                                <span class="iconRight"><i class="fas fa-check"></i></span>
+                                <span class="textPlan">Priority 7/7 support</span>
+                              </li>
+                            </ul>
+                            
+                            <a href="{{route('business_setting_upgrade_plan')}}" class="crntPlan">Upgrade Plan </a>
+                          </div>
                         </div>
                       </div>
-           
-                    </div>
-                    
+                    @endif
                   </div>
                 </div>
              
@@ -173,6 +222,8 @@
         </div>
     </div>
 </div>
+
+    
 
 @endsection
 
