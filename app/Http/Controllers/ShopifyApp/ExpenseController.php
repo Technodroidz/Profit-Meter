@@ -50,8 +50,8 @@ class ExpenseController extends Controller
     {
       
         $data = ['current_link' => 'custom_cost'];
-        $getCategorylist=BusinessCategory::where('status','1')->get();
-        $getBusinelist=BusinessCustomCost::all();
+        $getCategorylist=BusinessCategory::where('status','1')->where('deleted_at',null)->get();
+        $getBusinelist=BusinessCustomCost::where('deleted_at',null)->get();
         $result=[
           "data" => $data,
           'getCategorylist'=>$getCategorylist,
@@ -88,11 +88,11 @@ class ExpenseController extends Controller
         //   print_r($request->all()); exit;
 
         $currentPackegName=Str::slug($request['name']);
-        @$getDublicateData = BusinessCustomCost::where('custom_slug',$currentPackegName)->withTrashed()->get();
+        @$getDublicateData = BusinessCustomCost::where('custom_slug',$currentPackegName)->get();
        
  
         if(@$getDublicateData['0']['custom_slug']==$currentPackegName){
-            $product = BusinessCustomCost::withTrashed()->find(@$getDublicateData['0']['id']); //get the object of product you want to update
+            $product = BusinessCustomCost::find(@$getDublicateData['0']['id']); //get the object of product you want to update
             $product->custom_name =  $request['name'];
             $product->frequency =  $request['frequency_name'];
             $product->category_id = $request['category_id'];
@@ -123,7 +123,7 @@ class ExpenseController extends Controller
       try{
       
         $userDelete=BusinessCustomCost::findOrFail($id);
-        $userDelete->delete();
+        $userDelete->update(['deleted_at'=>date('Y-m-d H:i:s')]);
         } catch(\Exception $e) {
         }
         return back()

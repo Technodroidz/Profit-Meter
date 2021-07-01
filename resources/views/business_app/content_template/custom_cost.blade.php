@@ -35,7 +35,7 @@
                <div class="view_btns">
                         
                     <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Custom Cost</button>
-                    <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#confirm-mail"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Confirm Email</button>
+                  
                    
                     <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a>  -->
                     <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">1Y</a>
