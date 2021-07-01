@@ -14,8 +14,6 @@ class IntegrationController extends Controller
 {
     public function integration(Request $request)
     {
-        // echo asset('');
-        // die;
         $google_account = UserGoogleAccount::getGoogleAccountByUserid(Auth::User()->id);
         $data = ['current_link' => 'integration','google_account' => $google_account];
         
