@@ -71,7 +71,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Package duration (In Days)</label>
-                                                                    <input type="text" class="form-control number" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
+                                                                    <input type="number" class="form-control number" name="duration" id="duration" value="{{@$getSubscribeData['0']['package_duration']}}" placeholder="Enter package duration">
                                                                 </div>
                                                             
                                                                 <div class="col-md-6 col-xs-12">

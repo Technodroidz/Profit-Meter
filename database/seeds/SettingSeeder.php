@@ -66,11 +66,6 @@ class SettingSeeder extends Seeder
                 'setting_type' => 'MAIL',
             ],[
                 'input_type'   => 'text',
-                'option_name'  => 'smtp_user',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
                 'option_name'  => 'stripe_status',
                 'option_value' => '1',
                 'setting_type' => 'STRIPE',
@@ -86,7 +81,7 @@ class SettingSeeder extends Seeder
                 'setting_type' => 'MAIL',
             ],[
                 'input_type'   => 'text',
-                'option_name'  => 'email_sign',
+                'option_name'  => 'email_driver',
                 'option_value' => '',
                 'setting_type' => 'MAIL',
             ],[

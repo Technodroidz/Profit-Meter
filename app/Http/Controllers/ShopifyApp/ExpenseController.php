@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PHPShopify\ShopifySDK;
 use Illuminate\Support\Facades\Auth;
-
+use App\Model\BusinessCategory;
+use App\Model\BusinessCustomCost;
+use Illuminate\Support\Str;
 class ExpenseController extends Controller
 {
     public function productCost(Request $request)
@@ -46,7 +48,85 @@ class ExpenseController extends Controller
 
     public function customCost(Request $request)
     {
+      
         $data = ['current_link' => 'custom_cost'];
-        return view('business_app/content_template/custom_cost',$data);
+        $getCategorylist=BusinessCategory::where('status','1')->get();
+        $getBusinelist=BusinessCustomCost::all();
+        $result=[
+          "data" => $data,
+          'getCategorylist'=>$getCategorylist,
+          'getBusinelist'=>$getBusinelist
+        ];
+        return view('business_app/content_template/custom_cost',$result);
+    }
+
+    public function submitCustomCost(Request $request)
+    {
+    
+        $request->validate([
+            'name' => 'required',
+            'frequency_name' => 'required',
+            'category_id' => 'required',
+            'cost' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            
+        ]);
+       
+        if($request->inlineitem==='on'){
+            $status=1;
+          }
+         else if(empty($request->inlineitem)){
+            $status=2;
+          } 
+          if($request->inlineitem==='2'){
+            $status=1;
+          }
+          if($request->inlineitem==='1'){
+            $status=2;
+          }
+        //   print_r($request->all()); exit;
+
+        $currentPackegName=Str::slug($request['name']);
+        @$getDublicateData = BusinessCustomCost::where('custom_slug',$currentPackegName)->withTrashed()->get();
+       
+ 
+        if(@$getDublicateData['0']['custom_slug']==$currentPackegName){
+            $product = BusinessCustomCost::withTrashed()->find(@$getDublicateData['0']['id']); //get the object of product you want to update
+            $product->custom_name =  $request['name'];
+            $product->frequency =  $request['frequency_name'];
+            $product->category_id = $request['category_id'];
+            $product->cost =  $request['cost'];
+            $product->start_date =  $request['start_date'];
+            $product->end_date =  $request['end_date'];
+            $product->accept_include_marketing =$status;
+            $product->deleted_at = null;
+            $product->save();
+        }else{
+        $getInsertedData = BusinessCustomCost::updateOrCreate(['id'=>$request['id']],[
+            "custom_name" => $request['name'],
+            "frequency" => $request['frequency_name'],
+            "category_id" => $request['category_id'],
+            "cost" => $request['cost'],
+            'custom_slug'=>Str::slug($request['name']),
+            "start_date" => $request['start_date'],
+            "end_date" => $request['end_date'],
+            "accept_include_marketing" => $status,
+        ]); 
+        
+        }
+
+        return redirect('business/expenses/custom-cost')->with('message', 'Custom cost added  successfully'); 
+    }
+
+    public function deleteCustomCost($id){
+      try{
+      
+        $userDelete=BusinessCustomCost::findOrFail($id);
+        $userDelete->delete();
+        } catch(\Exception $e) {
+        }
+        return back()
+            ->with('success', 'Category deleted successfully');
     }
 }

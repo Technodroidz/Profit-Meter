@@ -324,6 +324,8 @@ public function UpdateUser(Request $request){
     public function userStatusChange(Request $request){
         $changeStatus=User::findOrFail($request->id);
         if($changeStatus){
+         try{
+
             $status=0;
             if($request->status=="true"){
                 $status=1;
@@ -331,9 +333,19 @@ public function UpdateUser(Request $request){
             $changeStatus->update([
                 'status'=>$status,
              ]);
+
+             Mail::send('admin/email_template/user_account_status', ['userData' => $changeStatus], function($message) use($changeStatus){
+                $message->to($changeStatus['email']);
+                $message->subject(' Your account status');
+            });
+           
              return response()->json($changeStatus);
+            } catch(\Exception $e) {
+                return response($e->getMessage(), 422);
+            }
         }
         return response()->json(['error'=>'get error'],422);
+
     }
 
 }

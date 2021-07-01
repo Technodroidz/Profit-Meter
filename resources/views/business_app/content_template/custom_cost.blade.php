@@ -30,10 +30,7 @@
                <div class="view_btns">
                         
                     <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Custom Cost</button>
-                   
-                    <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a>  -->
-                    <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">1Y</a>
-                    <a href="#" class="mr_5 mb_10  small_blue_btn">YTD</a> -->
+                  
                 </div>
             </div>
         </div>
@@ -49,18 +46,40 @@
                                     <thead>
                                         
                                         <tr>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">sr. No</th>
+                                            <th scope="col">Custom Cost name</th>
+                                            <th scope="col">Category name</th>
                                             <th scope="col">Start Date</th>
                                             <th scope="col">End Date</th>
                                             <th scope="col">Frequency</th>
                                             <th scope="col">Included in Marketing</th>
-                                            
                                             <th scope="col">Cost</th>
-                                            
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                   
+                                    @if(!empty($getBusinelist))
+                                  
+                                        @foreach($getBusinelist as $key=>$list)
+                                        
+                                            <tr>
+                                                <td>{{++$key}}</td>
+                                                <td>{{$list['custom_name']}} </td>
+                                                <td>{{@$list['getCategory']['category_name']}} </td>
+                                                <td>{{$list['start_date']}} </td>
+                                                <td>{{$list['end_date']}} </td>
+                                               
+                                                <td>{{$list['frequency']}} </td>
+                                                <td><input type="checkbox" class="statusSwitch" @if($list['accept_include_marketing']==1) checked @endif  readonly > </td>
+                                                <td>{{$list['cost']}} </td>
+                                                <td>
+                                                <a href="#" class="greenBtn data_edit" data-value="{{$list}}"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ URL('business/expenses/custom/cost/delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete {{$list['package_name']}} ?');"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -73,7 +92,7 @@
 
         
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade exampleModalCenter"  id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -83,46 +102,64 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                <form id="formMaster" action="{{route('business_expenses_custmor_cost_submit')}}" method="POST" enctype='multipart/form-data'>
+                @csrf
                     <div class="mb-3">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                        <label>Custom Cost name</label>
+                        <input type="text" class="form-control name" placeholder="Custom cost name" name="name" id="name" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
-
-                           
                     <label>Frequency</label>
-                    <select class="custom-select mb-3" id="inputGroupSelect01">
-                        <option selected="">One Time</option>
-                        <option value="1">One Time</option>
-                        <option value="2">Daily</option>
-                          <option value="3">Weekly</option>
-                            <option value="4">Monthly</option>
-                        <option value="5">Yearly</option>
+                    <select class="custom-select mb-3 frequency_name" id="frequency_name" name="frequency_name">
+                        <option value="">Please Select One</option>
+                        <option value="One Time">One Time</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Yearly">Yearly</option>
+                    </select>
+                    <label>Category name</label>
+                    <select class="custom-select mb-3 category_id select2" searchable="Search here.." id="category_id" name="category_id">
+                        @if(!empty($getCategorylist))
+                        <option value="">Select One</option>
+                        @foreach($getCategorylist as $list)
+                        <option value="{{$list['id']}}">{{$list['category_name']}}</option>
+                        @endforeach
+                        @endif
                     </select>
                         
-
                     <label for="basic-url">Cost</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input type="text" class="form-control cost" id="cost" value="" name="cost" aria-describedby="basic-addon3">
                     </div>
-                    <label for="basic-url">Date</label>
+                    <label for="basic-url">Start Date</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3"><i class="fas fa-calendar"></i></span>
                         </div>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input type="date" class="form-control start_date datetimepicker1" id="start_date" name="start_date" aria-describedby="basic-addon3">
                     </div>
-                    <div class="inlineitem">  <input type="checkbox" aria-label="">&nbsp; &nbsp;
+                    <label for="basic-url">End Date</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text " id="basic-addon3"><i class="fas fa-calendar"></i></span>
+                        </div>
+                        <input type="date" class="form-control end_date datetimepicker1 " name="end_date" id="end_date" aria-describedby="basic-addon3">
+                    </div>
+                    <input type="hidden" name="inlineitem"  value="" >
+                    <div class="inlineitem">  <input type="checkbox" name="inlineitem" id="inlineitem" value="" aria-label="" >&nbsp; &nbsp;
                         <p class="mb-0 ">Include in marketing & CAC</p>
                     </div>
                     <p>Check to Include cost in marketing & CAC</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" >Add & Continue</button>
+                <input type="hidden"  name="id" id="id" >
+                    <button type="submit" class="btn btn-secondary" >Add & Continue</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Add & Close</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -155,4 +192,118 @@
             </div>
         </div>
     </div>
+    <style>
+    .modal-backdrop{
+        position: unset;
+    }
+    </style>
+@endsection
+
+@section('script')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="{{ asset('admin/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $('.select2').select2()
+        });
+       
+        $(function() {
+          $('.datetimepicker1').datetimepicker();
+        });
+    
+        $(".data_edit").on('click',function(){
+            $('#name').val($(this).data('value').custom_name);
+            $('#frequency_name').val($(this).data('value').frequency);
+            $('#category_id').val($(this).data('value').category_id);
+            $('#cost').val($(this).data('value').cost);
+            $('#start_date').val($(this).data('value').start_date);
+            $('#end_date').val($(this).data('value').end_date);
+            $('#inlineitem').val($(this).data('value').accept_include_marketing);
+            $('#id').val($(this).data('value').id);
+            $('.exampleModalCenter').modal('show')
+        });
+
+        jQuery.validator.addMethod("dollarsscents", function(value, element) {
+                return this.optional(element) || /^\d{0,4}(\.\d{0,2})?$/i.test(value);
+            }, "You must include two decimal places");
+       
+        $('form#formMaster').validate({
+            rules: {
+                name:{
+                    required: true,
+                },
+                cost: {
+                    required: true,
+                    maxlength:8,
+                    number:true,
+                    dollarsscents: true,
+                },
+                start_date:{
+                    required: true, 
+                },
+                end_date:{
+                    required: true, 
+                },
+                category_id:{
+                    required: true, 
+                },
+                frequency_name:{
+                    required: true, 
+                },
+               
+            },
+            messages: {
+                name:{
+                    required: 'Name is required',
+                },
+                cost: {
+                    required: 'Cost is required',
+                },
+                start_date: {
+                    required: 'Start Date is required',
+                },
+                end_date: {
+                    required: 'End Date is required',
+                },
+                category_id: {
+                    required: 'Category name is required',
+                },
+                frequency_name: {
+                    required: 'Frequency name is required',
+                },
+                
+            },
+            submitHandler: function (form) {
+                return true;
+            }
+        });
+
+        $('.statusSwitch').on('change',function(){
+                $.ajax({
+                    type: 'POST',
+                    url: "{{asset('business/category/status')}}",
+                    data: {
+                        '_token':"{{ csrf_token() }}",
+                        'id': $(this).data('status'),
+                        'status': $(this).is(":checked")
+                    },
+                    success: function (responseText) {
+                        window.swal({
+                            title: "{{ Config::get('constants.Messages.status') }}",
+                            timer: 1000,
+                            className: "messagedivcontainer",
+                            button:false,
+                            icon: 'success',
+                        });
+                        //$('#updated'+responseText.id).html(moment(responseText.updated_at).format('DD/MM/Y hh:mm A'));
+                    }
+                });
+            });
+            
+            
+    </script>
 @endsection

@@ -9,6 +9,8 @@ class IntegrationController extends Controller
 {
     public function integration(Request $request)
     {
+       
+       // return view('business_app/content_template/lifetime');
         return view('business_app/content_template/integration');
     }
 }
