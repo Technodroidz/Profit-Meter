@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /public/images/owner_pic
+/public/images/profile_pick
 .env
 .env.backup
 .phpunit.result.cache
@@ -13,3 +14,9 @@ npm-debug.log
 yarn-error.log
 /.well-known
 /cgi-bin
+/node
+.htaccess
+.user.ini
+/backup
+error_log
+php.ini
