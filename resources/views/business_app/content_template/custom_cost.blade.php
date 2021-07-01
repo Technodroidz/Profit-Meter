@@ -1,6 +1,11 @@
 @extends('business_app/common_template/main')
 
 @section('content')
+    <style type="text/css">
+        .modal-backdrop {
+          z-index: -1;
+        }
+    </style>
 
     <div class="container-fluid p-0 ">
             
@@ -30,7 +35,11 @@
                <div class="view_btns">
                         
                     <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Custom Cost</button>
-                  
+                    <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#confirm-mail"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Confirm Email</button>
+                   
+                    <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a>  -->
+                    <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">1Y</a>
+                    <a href="#" class="mr_5 mb_10  small_blue_btn">YTD</a> -->
                 </div>
             </div>
         </div>

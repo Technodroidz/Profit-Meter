@@ -21,11 +21,9 @@ class EventServiceProvider extends ServiceProvider
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // ... other providers
             'SocialiteProviders\\Snapchat\\SnapchatExtendSocialite@handle',
-        ],
-        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
-            // ... other providers
             'SocialiteProviders\\PayPal\\PayPalExtendSocialite@handle',
-        ],
+            'SocialiteProviders\\PayPalSandbox\\PayPalSandboxExtendSocialite@handle',
+        ]
     ];
 
     /**

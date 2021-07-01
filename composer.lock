@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67ee85640726c9290644c7de282fd2f7",
+    "content-hash": "4a81198bda9db8d4984337395062be62",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5277,6 +5277,47 @@
             "time": "2020-12-01T23:10:59+00:00"
         },
         {
+            "name": "socialiteproviders/paypal-sandbox",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/PayPal-Sandbox.git",
+                "reference": "495f3157e52026913dae1fea1f6efe5bfc5a27db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/PayPal-Sandbox/zipball/495f3157e52026913dae1fea1f6efe5bfc5a27db",
+                "reference": "495f3157e52026913dae1fea1f6efe5bfc5a27db",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\PayPalSandbox\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Faust",
+                    "email": "hello@brianfaust.de"
+                }
+            ],
+            "description": "PayPal Sandbox OAuth2 Provider for Laravel Socialite",
+            "support": {
+                "source": "https://github.com/SocialiteProviders/PayPal-Sandbox/tree/4.1.0"
+            },
+            "time": "2020-12-01T23:10:59+00:00"
+        },
+        {
             "name": "socialiteproviders/snapchat",
             "version": "4.1.0",
             "source": {
@@ -10058,5 +10099,5 @@
         "php": "^7.1.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

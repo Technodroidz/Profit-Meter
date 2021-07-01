@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        App\Providers\ResponseServiceProvider::class,
         // laravel\Socialite\SocialiteServiceProvider::class
 
     ],

@@ -87,7 +87,8 @@ class SettingController extends Controller
     {
         $getUserData = User::where('id',Auth::user()->id)->first();
         $trial_subscription = UserSubscription::getTrialSubscription(Auth::User()->id);
-        $data       = ['current_link' => 'account','getUserData' => $getUserData,'trial_subscription' => $trial_subscription];
+        $paid_subscription = UserSubscription::getPaidSubscription(Auth::User()->id);
+        $data       = ['current_link' => 'account','getUserData' => $getUserData,'trial_subscription' => $trial_subscription,'paid_subscription' => $paid_subscription];
         return view('business_app/content_template/account',$data);
     }
 
@@ -161,8 +162,10 @@ class SettingController extends Controller
     public function upgradePlan(Request $request)
     {
         $plans = SubscriptionPlan::getAllPlans();
-        $data  = ['current_link' => 'account','subscription_plans'=>$plans];
-        
+        $data  = ['current_link' => 'account','subscription_plans' => $plans];
+
         return view('business_app/content_template/upgrade_plan',$data);
     }
+
+    
 }
