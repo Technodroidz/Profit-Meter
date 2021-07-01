@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-lg-3">
+                            <!-- <div class="col-12 col-sm-4 col-lg-3">
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart stripe">
@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-sm-4 col-lg-3" id="paypal_app">
                                 <div class="card">
                                     <div class="card-body pad-0">
@@ -163,13 +163,13 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
-                                                <!-- <button id="my-login-button-target">Connect</button>
+                                                <!-- <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button> -->
+                                                <button id="my-login-button-target">Connect</button>
 
                                                 <div id="display_name"></div>
                                                 <img id="bitmoji" />
                                                 <div id="external_id"></div>
-                                                <hr /> -->
+                                                <hr />
                                                 <!-- <button class="contBtn">Connected</button> -->
                                             </div>
                                         </div>
@@ -286,7 +286,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">ID</span>
                         </div>
-                        <input name="customer_id" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="customer_id" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
 
                     <label for="basic-url">Developer Token</label>
@@ -294,7 +294,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Token</span>
                         </div>
-                        <input name="developer_token" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="developer_token" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -329,7 +329,7 @@
                         <!-- <div class="input-group-prepend">
                             <span class="input-group-text">ID</span>
                         </div> -->
-                        <!-- <input name="mode" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"> -->
+                        <!-- <input name="mode" type="text" class="form-control" aria-describedby="basic-addon3"> -->
                         <select name="mode" class="form-control" id="cars" aria-describedby="basic-addon3">
                           <option value="sandbox">Sandbox</option>
                           <option value="live">Live</option>
@@ -341,26 +341,26 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client ID</span>
                         </div>
-                        <input name="sandbox_client_id" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="sandbox_client_id" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client Secret</span>
                         </div>
-                        <input name="sandbox_client_secret" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="sandbox_client_secret" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                     <label for="basic-url">Live</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client ID</span>
                         </div>
-                        <input name="live_client_id" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="live_client_id" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client Secret</span>
                         </div>
-                        <input name="live_client_secret" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <input name="live_client_secret" type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -375,40 +375,40 @@
 
 @section('script')
     <script>
-      //   window.snapKitInit = function () {
-      //   var loginButtonIconId = "my-login-button-target";
-      //   // Mount Login Button
-      //   snap.loginkit.mountButton(loginButtonIconId, {
-      //     clientId: "a5caacda-52b2-46b2-ae4a-31b0f9d766a2",
-      //     redirectURI: "http://127.0.0.1/Profit-Meter/login/snapchat/callback",
-      //     scopeList: [            "user.display_name",            "user.bitmoji.avatar",            "user.external_id",          ],
-      //     handleResponseCallback: function () {
-      //       snap.loginkit.fetchUserInfo().then(
-      //         function (result) {
-      //           console.log("User info:", result.data.me);
-      //           document.getElementById("display_name").innerHTML =
-      //             result.data.me.displayName;
-      //           document.getElementById("bitmoji").src =
-      //             result.data.me.bitmoji.avatar;
-      //           document.getElementById("external_id").src =
-      //             result.data.me.externalId;
-      //         },
-      //         function (err) {
-      //           console.log(err); // Error
-      //         }
-      //       );
-      //     },
-      //   });
-      // };
-      // // Load the SDK asynchronously
-      // (function (d, s, id) {
-      //   var js,
-      //     sjs = d.getElementsByTagName(s)[0];
-      //   if (d.getElementById(id)) return;
-      //   js = d.createElement(s);
-      //   js.id = id;
-      //   js.src = "https://sdk.snapkit.com/js/v1/login.js";
-      //   sjs.parentNode.insertBefore(js, sjs);
-      // })(document, "script", "loginkit-sdk");
+        window.snapKitInit = function () {
+        var loginButtonIconId = "my-login-button-target";
+        // Mount Login Button
+        snap.loginkit.mountButton(loginButtonIconId, {
+          clientId: "{{ env('SNAPCHAT_CLIENT_ID') }}",
+          redirectURI: "{{env('SNAPCHAT_REDIRECT_URL')}}",
+          scopeList: [            "user.display_name",            "user.bitmoji.avatar",            "user.external_id",          ],
+          handleResponseCallback: function () {
+            snap.loginkit.fetchUserInfo().then(
+              function (result) {
+                console.log("User info:", result.data.me);
+                document.getElementById("display_name").innerHTML =
+                  result.data.me.displayName;
+                document.getElementById("bitmoji").src =
+                  result.data.me.bitmoji.avatar;
+                document.getElementById("external_id").src =
+                  result.data.me.externalId;
+              },
+              function (err) {
+                console.log(err); // Error
+              }
+            );
+          },
+        });
+      };
+      // Load the SDK asynchronously
+      (function (d, s, id) {
+        var js,
+          sjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://sdk.snapkit.com/js/v1/login.js";
+        sjs.parentNode.insertBefore(js, sjs);
+      })(document, "script", "loginkit-sdk");
     </script>
 @endsection
