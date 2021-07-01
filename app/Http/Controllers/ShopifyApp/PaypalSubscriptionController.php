@@ -314,7 +314,7 @@ class PaypalSubscriptionController extends Controller
 
                 UserSubscription::where('paypal_subscription_id',$request->subscription_id)->update($update_array);
                 
-                return redirect()->route('business_setting_account');
+                return redirect()->route('business_setting_account')->with('message', 'Subscription successful for package name'.$user_subscription->plan_name);
             }
             return redirect()->route('business_setting_upgrade_plan');
         }

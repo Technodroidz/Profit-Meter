@@ -139,7 +139,7 @@ Route::group(['middleware' => ['check.auth.on.cred.screen']],function(){
 
 Route::get('business/logout','ShopifyApp\AuthController@logout')->middleware(['auth:web'])->name('business_logout');
 
-Route::group(['middleware' => ['auth:web','restrict.registered.user']],function(){
+Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.multi_tenant_db']],function(){
 	Route::get('/','ShopifyApp\DashboardController@dashboard')->name('home');
 	// ->middleware(['auth.shopify'])
 

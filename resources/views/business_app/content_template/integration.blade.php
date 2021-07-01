@@ -307,7 +307,7 @@
         snap.loginkit.mountButton(loginButtonIconId, {
           clientId: "{{ env('SNAPCHAT_CLIENT_ID') }}",
           redirectURI: "{{env('SNAPCHAT_REDIRECT_URL')}}",
-          scopeList: [            "user.display_name",            "user.bitmoji.avatar",            "user.external_id",          ],
+          scopeList: ["snapchat-marketing-api",          ],
           handleResponseCallback: function () {
             snap.loginkit.fetchUserInfo().then(
               function (result) {

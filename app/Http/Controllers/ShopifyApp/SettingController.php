@@ -162,6 +162,15 @@ class SettingController extends Controller
     public function upgradePlan(Request $request)
     {
         $plans = SubscriptionPlan::getAllPlans();
+        foreach ($plans as $key => &$value) {
+            $subscription_exists = UserSubscription::where('subscription_status','active')->where('plan_id',$value->id)->where('user_id',Auth::User()->id)->exists();
+            if($subscription_exists){
+                session()->put('success', 'You are Currently Subscribed to '.$value->package_name);
+                $value->subscription_active = true;
+            }else{
+                $value->subscription_active = false;
+            }
+        }
         $data  = ['current_link' => 'account','subscription_plans' => $plans];
 
         return view('business_app/content_template/upgrade_plan',$data);
