@@ -48,7 +48,7 @@
                             <div class="col-md-12 col-xs-12 form-group">
                               <div class="planCard">
                                 <p class="planTitle">{{$plan->package_name}}</p>
-                                <h2 class="planPrice">{{$plan->package_amount}}</h2>
+                                <h2 class="planPrice">${{$plan->package_amount}}</h2>
                                 <p class="prMonth">For {{$plan->package_duration}} days</p>
                                 <h4>Unlimited history data:</h4>
                                 <ul>
