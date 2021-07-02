@@ -5,6 +5,10 @@ $(document).on('click','.dismiss_alert',function(){
     $(this).parent().css('display','none');
 });
 
+$(document).on('click','.dismiss_alert',function(){
+    $(this).parent().css('display','none');
+});
+
 $('.form_modal').on('hide.bs.modal', function () {
     console.log('event trigger hua');
     $(this).find('form')[0].reset();
@@ -39,6 +43,8 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
     if($show_error != undefined){
         $($show_error).html('');
     }
+
+    $('#show_success_message').html('');
     
     if(!$method){ $method = 'get'; }
     $.ajax({
@@ -70,6 +76,10 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
 
                         if($response.data.redirect_url){
                             window.location.href = $response.data.redirect_url;
+                        }
+                        if($response.message){
+                            $('#show_success_message').html($response.message);
+                            $('.success_message_div').css('display','block');
                         }
                     }
                 }

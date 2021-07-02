@@ -107,7 +107,7 @@ class IntegrationController extends Controller
 
                 // $json_array = ['close_modal' => true,'replace_html' => false,'html_view' => $html_view];
                 $json_array = ['close_modal' => true,'replace_html' => false];
-                return response()->data($json_array);
+                return response()->data($json_array,'Paypal OAuth Credentials Updated.');
             }
         }
 

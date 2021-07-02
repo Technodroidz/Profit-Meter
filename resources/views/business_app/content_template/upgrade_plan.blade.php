@@ -86,9 +86,11 @@
                                   </li>
                                 </ul>
                                 
-                                <!-- <a href="#" class="crntPlan">Upgrade Plan </a> -->
+                                @if($plan->subscription_active == true)
+                                <a href="javascript:void(0);" class="crntPlan" disabled>Current Plan</a>
+                                @else
                                 <a href="javascript:void(0);" class="crntPlan upgrade_plan_btn" data-toggle="modal" data-target="#exampleModalCenter" data-subscription_id = "{{$plan->id}}" data-subscription_cost="{{$plan->package_amount}}" data-subscription_name="{{$plan->package_name}}" >Upgrade Plan</a>
-
+                                @endif
                               </div>
                             </div>
                  

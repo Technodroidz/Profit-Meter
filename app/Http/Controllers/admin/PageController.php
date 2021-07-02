@@ -48,7 +48,6 @@ class PageController extends Controller
 
         return redirect('view_pages')->with('message', 'Page added  successfully'); 
     
-    
     }
 
   

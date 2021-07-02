@@ -8,8 +8,16 @@ use DB;
 
 class MultiTenantModel extends Model
 {
+    protected $connection ='';
+    protected $table = 'tenant_user';
+
+    public function __construct()
+    {
+        $this->connection = Auth::User()->database_name;
+    }
+
     public static function getTenantUser()
     {
-        // return DB::connection(Auth::User()->database_name)->table('tenant_user')->get();
+        return MultiTenantModel::get();
     }
 }

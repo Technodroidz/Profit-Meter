@@ -315,7 +315,20 @@
     </div>
     <!--/ menu  -->
     <div class="main_content_iner overly_inner ">
-
+        <div class="alert alert-success alert-dismissible fade show success_message_div" role="alert" style="display:none;">
+          <strong id="show_success_message">Success Message</strong>
+          <button type="button" class="close dismiss_alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        @if(session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+              <strong>{{ session()->get('success') }}</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        @endif
         @yield('content')
 
     </div>

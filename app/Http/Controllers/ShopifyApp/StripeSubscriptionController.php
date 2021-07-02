@@ -46,9 +46,9 @@ class StripeSubscriptionController extends Controller
 
                 $user_subscription = UserSubscription::where('user_id',Auth::User()->id)->where('plan_id',$subscription_plan->id)->where('subscription_status','active')->first();
 
-                // if(!empty($user_subscription)){
-                //     throw new AppException('User Is Already Subscribed to this Plan.');
-                // }
+                if(!empty($user_subscription)){
+                    throw new AppException('User Is Already Subscribed to this Plan.');
+                }
 
                 $publishableKey = 'pk_test_51HuWQHJRRrJp7PIAIkuAgvuEWXj9CwiwwVl9YPSBPZIp87M0WTFZD8VuAFIhb3thCG0hF5mF6poVsmlt3IEiOftq00CKI0k6WY';
                 $secreatekey    = env('STRIPE_SECRET');
@@ -215,7 +215,7 @@ class StripeSubscriptionController extends Controller
                     // pp($data);
                   
                     $json_array = ['close_modal' => true];
-                    return response()->data($json_array,'Subscription Payment Successfull.');
+                    return response()->data($json_array,'Subscription Payment Successful for Your Plan '.$subscription_plan->package_name);
                 }
             }
         }
