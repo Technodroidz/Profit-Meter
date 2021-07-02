@@ -136,7 +136,7 @@ class StripeSubscriptionController extends Controller
                                 ), 
                             ), 
                         ));
-                        // pp($subscription);
+                        
                         $user_subscription_array = [
                             'user_id'                   => Auth::User()->id,
                             'plan_id'                   => $subscription_plan->id,

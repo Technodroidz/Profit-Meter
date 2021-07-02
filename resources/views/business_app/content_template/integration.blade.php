@@ -257,8 +257,8 @@
                         </div> -->
                         <!-- <input name="mode" type="text" class="form-control" aria-describedby="basic-addon3"> -->
                         <select name="mode" class="form-control" id="cars" aria-describedby="basic-addon3">
-                          <option value="sandbox">Sandbox</option>
-                          <option value="live">Live</option>
+                          <option value="sandbox" {{ @$paypal_account->mode == 'sandbox' ? 'selected' : '' }}>Sandbox</option>
+                          <option value="live" {{ @$paypal_account->mode == 'live' ? 'selected' : '' }}>Live</option>
                         </select>
                     </div>
 
@@ -267,26 +267,26 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client ID</span>
                         </div>
-                        <input name="sandbox_client_id" type="text" class="form-control" aria-describedby="basic-addon3">
+                        <input name="sandbox_client_id" type="text" class="form-control" aria-describedby="basic-addon3" value="{{ @$paypal_account->sandbox_client_id  }}">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client Secret</span>
                         </div>
-                        <input name="sandbox_client_secret" type="text" class="form-control" aria-describedby="basic-addon3">
+                        <input name="sandbox_client_secret" type="text" class="form-control" aria-describedby="basic-addon3" value="{{ @$paypal_account->sandbox_client_secret  }}">
                     </div>
                     <label for="basic-url">Live</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client ID</span>
                         </div>
-                        <input name="live_client_id" type="text" class="form-control" aria-describedby="basic-addon3">
+                        <input name="live_client_id" type="text" class="form-control" aria-describedby="basic-addon3" value="{{ @$paypal_account->live_client_id  }}">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3" >Client Secret</span>
                         </div>
-                        <input name="live_client_secret" type="text" class="form-control" aria-describedby="basic-addon3">
+                        <input name="live_client_secret" type="text" class="form-control" aria-describedby="basic-addon3" value="{{ @$paypal_account->live_client_secret }}" >
                     </div>
                 </div>
                 <div class="modal-footer">

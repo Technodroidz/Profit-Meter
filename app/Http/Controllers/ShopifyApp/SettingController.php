@@ -165,7 +165,7 @@ class SettingController extends Controller
         foreach ($plans as $key => &$value) {
             $subscription_exists = UserSubscription::where('subscription_status','active')->where('plan_id',$value->id)->where('user_id',Auth::User()->id)->exists();
             if($subscription_exists){
-                session()->put('success', 'You are Currently Subscribed to '.$value->package_name);
+                session()->now('success', 'You are Currently Subscribed to '.$value->package_name);
                 $value->subscription_active = true;
             }else{
                 $value->subscription_active = false;
