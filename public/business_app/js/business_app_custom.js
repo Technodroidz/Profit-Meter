@@ -77,6 +77,11 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
                         if($response.data.redirect_url){
                             window.location.href = $response.data.redirect_url;
                         }
+
+                        if($response.reload){
+                            window.location.href = window.location;
+                        }
+
                         if($response.message){
                             $('#show_success_message').html($response.message);
                             $('.success_message_div').css('display','block');

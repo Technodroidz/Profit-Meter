@@ -176,5 +176,4 @@ class SettingController extends Controller
         return view('business_app/content_template/upgrade_plan',$data);
     }
 
-    
 }
