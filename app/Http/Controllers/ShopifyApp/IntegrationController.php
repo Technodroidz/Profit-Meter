@@ -108,7 +108,7 @@ class IntegrationController extends Controller
                 // $html_view = view('business_app/ajax_template/google_app_integration',$data)->render();
 
                 // $json_array = ['close_modal' => true,'replace_html' => false,'html_view' => $html_view];
-                $json_array = ['close_modal' => true,'replace_html' => false];
+                $json_array = ['close_modal' => true,'replace_html' => false,'redirect_url' => route('get_business_user_paypal_information')];
                 return response()->data($json_array,'Paypal OAuth Credentials Updated.');
             }
         }
