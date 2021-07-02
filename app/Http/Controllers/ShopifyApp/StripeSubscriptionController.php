@@ -211,10 +211,8 @@ class StripeSubscriptionController extends Controller
 
                     // OLD CODE/
                     
-
-                    // pp($data);
-                  
-                    $json_array = ['close_modal' => true];
+                    session()->put('success', 'You are Currently Subscribed to '.$value->package_name);
+                    $json_array = ['close_modal' => true,'reload'=>true];
                     return response()->data($json_array,'Subscription Payment Successful for Your Plan '.$subscription_plan->package_name);
                 }
             }
