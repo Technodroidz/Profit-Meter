@@ -15,7 +15,9 @@ class IntegrationController extends Controller
     public function integration(Request $request)
     {
         $google_account = UserGoogleAccount::getGoogleAccountByUserid(Auth::User()->id);
-        $data = ['current_link' => 'integration','google_account' => $google_account];
+        $paypal_account_creds = UserPaypalAccount::where('user_id',Auth::User()->id)->first();
+
+        $data = ['current_link' => 'integration','google_account' => $google_account,'paypal_account' => $paypal_account_creds];
         
         return view('business_app/content_template/integration',$data)->render();
         echo json_encode($html);
