@@ -78,13 +78,13 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
                             window.location.href = $response.data.redirect_url;
                         }
 
-                        if($response.reload){
-                            window.location.href = window.location;
-                        }
-
                         if($response.message){
                             $('#show_success_message').html($response.message);
                             $('.success_message_div').css('display','block');
+                        }
+                        
+                        if($response.data.reload){
+                            window.location.href = window.location;
                         }
                     }
                 }
