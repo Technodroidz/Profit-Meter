@@ -45,7 +45,7 @@ class GoogleController extends Controller
         ];
 
         UserGoogleAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
-        return redirect()->route('show_google_ads');
+        // return redirect()->route('show_google_ads');
 
         // $findUser = User::where('email',$user->getEmail())->first();
         // if ($findUser) {
