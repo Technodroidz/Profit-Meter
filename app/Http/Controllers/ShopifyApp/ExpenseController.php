@@ -21,7 +21,7 @@ class ExpenseController extends Controller
         $shopify    = new \PHPShopify\ShopifySDK($config);
         
         $products = $shopify->Product->get();
-        
+        pp($products);
         $data = ['current_link' => 'product_cost','products'=>$products];
 
         return view('business_app/content_template/product_cost',$data);
