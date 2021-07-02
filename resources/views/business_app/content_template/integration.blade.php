@@ -130,13 +130,13 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <button class="stBtn">Settings</button>
-                                                <!-- <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button> -->
-                                                <button id="my-login-button-target">Connect</button>
+                                                <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
+                                                <!-- <button id="my-login-button-target">Connect</button>
 
                                                 <div id="display_name"></div>
                                                 <img id="bitmoji" />
                                                 <div id="external_id"></div>
-                                                <hr />
+                                                <hr /> -->
                                                 <!-- <button class="contBtn">Connected</button> -->
                                             </div>
                                         </div>
@@ -167,7 +167,8 @@
                                                 @endif
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn">Settings</button>
+                                                <button class="stBtn" ><a href="{{route('google_ads_response')}}" style="color:inherit;" >Settings</a></button>
+                                                <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($google_account))
                                                     <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
                                                 @elseif (!empty($google_account) && $google_account->google_ads_developer_token == '' &&$google_account->google_ads_customer_id == '' )

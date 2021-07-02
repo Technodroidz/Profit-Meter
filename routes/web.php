@@ -163,7 +163,12 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 	Route::get('business/integration','ShopifyApp\IntegrationController@integration')->name('business_integration');
 	Route::post('business/integration/update-google-ads-setting','ShopifyApp\IntegrationController@updateGoogleAdsSettings')->name('update_google_ads_setting');
+
+	Route::get('business/integration/google-ads-response','ShopifyApp\GoogleController@fetchGoogleAds')->name('google_ads_response');
+
 	Route::post('business/integration/update-paypal-api-setting','ShopifyApp\IntegrationController@updatePaypalApiSettings')->name('update_paypal_api_settings');
+
+	Route::get('business/integration/paypal/paypal-information','ShopifyApp\PaypalController@getBusinessUserPaypalInformation')->name('get_business_user_paypal_information');
 
 	Route::match(['POST','GET'],'business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
