@@ -79,6 +79,7 @@ class SnapchatController extends Controller
                     'refresh_token' => $response['refresh_token'],
                     'expires_in'    => $response['expires_in'],
                     'scope'         => $response['scope'],
+                    'code'          => $request->code,
                     'created_at'    => date('Y-m-d H:i:s'),
                 ];
 
