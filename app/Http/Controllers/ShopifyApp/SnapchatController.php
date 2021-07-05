@@ -72,7 +72,7 @@ class SnapchatController extends Controller
 
                 curl_close($curl);
                 $response = json_decode($response,1);
-                
+
                 $snapchat_array = [
                     'user_id'       => Auth::User()->id,
                     'access_token'  => $response['access_token'],
@@ -107,9 +107,37 @@ class SnapchatController extends Controller
                     ));
 
                     $response = curl_exec($curl);
+                    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
                     curl_close($curl);
-                    $response = json_decode($response,1);
+
+                    if($httpcode == 401){
+                        $refresh_response = refresh_snapchat_access_token($refresh_token);
+
+                        UserSnapchatAccount::where('id',$id)->update(['access_token' => $refresh_response['access_token'],'refresh_token'=>$refresh_response['refresh_token'],'expires_in'=>$refresh_response['expires_in']]);
+
+                        $curl = curl_init();
+
+                        curl_setopt_array($curl, array(
+                          CURLOPT_URL => 'https://adsapi.snapchat.com/v1/me',
+                          CURLOPT_RETURNTRANSFER => true,
+                          CURLOPT_ENCODING => '',
+                          CURLOPT_MAXREDIRS => 10,
+                          CURLOPT_TIMEOUT => 0,
+                          CURLOPT_FOLLOWLOCATION => true,
+                          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                          CURLOPT_CUSTOMREQUEST => 'GET',
+                          CURLOPT_HTTPHEADER => array(
+                            'Authorization: Bearer '.$refresh_response['access_token']
+                          ),
+                        ));
+
+                        $response = curl_exec($curl);
+                        $response = json_decode($response,1);
+                        curl_close($curl);
+                    }else{
+                        $response = json_decode($response,1);
+                    }
 
                     $snapchat_update_array = [
                         'snapchat_id'     => $response['me']['email'],
@@ -135,5 +163,4 @@ class SnapchatController extends Controller
     {
         pp($api_name);
     }
-
 }
