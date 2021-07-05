@@ -36,6 +36,7 @@ class SnapchatController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
+        pp($request->code);
         if($request->code){
 
             $client_id      = '32e7c720-ba0d-40b1-b6b1-5ce6f446d3ae';
