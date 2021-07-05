@@ -36,7 +36,6 @@ class SnapchatController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-        pp($request->code);
         if($request->code){
 
             $client_id      = '32e7c720-ba0d-40b1-b6b1-5ce6f446d3ae';
@@ -57,7 +56,10 @@ class SnapchatController extends Controller
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS => array('client_id' => $client_id,'client_secret' => $client_secret,'code' => $request->code,'grant_type' => 'authorization_code','redirect_uri' => $redirect_uri),
+              CURLOPT_POSTFIELDS => 'client_id='.$client_id.'&client_secret='.$client_secret.'&code='.$request->code.'&grant_type=authorization_code&redirect_uri='.$redirect_uri,
+              CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+              ),
             ));
 
             $response = curl_exec($curl);
@@ -65,5 +67,6 @@ class SnapchatController extends Controller
             curl_close($curl);
             echo $response;
         }
+        
     }
 }
