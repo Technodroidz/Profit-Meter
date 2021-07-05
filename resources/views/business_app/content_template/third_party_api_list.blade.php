@@ -40,11 +40,11 @@
                                     <h3> Api List</h3>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="dashboard_breadcam text-right">
                                     <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i>  ThemeCard</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -64,9 +64,9 @@
                                 <h4 class="mb-2 nowrap ">Flat Card</h4>
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -76,9 +76,9 @@
                                 <h4 class="mb-2 nowrap ">Without shadow Card</h4>
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -89,9 +89,9 @@
                                 <p class="">Using the card component, you can extend the default collapse behavior to create an accordion.</p>
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -102,9 +102,9 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 text_white ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer">
                             <h6 class="text_white">Card Footer</h6>
                         </div>
@@ -118,9 +118,9 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 text_white ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer">
                             <h6 class="text_white">Card Footer</h6>
                         </div>
@@ -134,9 +134,9 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 text_white ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer">
                             <h6 class="text_white">Card Footer</h6>
                         </div>
@@ -150,9 +150,9 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer">
                             <h6 class="">Card Footer</h6>
                         </div>
@@ -166,9 +166,9 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer blue_bg">
                             <h6 class="text_white">Card Footer</h6>
                         </div>
@@ -182,42 +182,10 @@
                                 
                             </div>
                         </div>
-                        <div class="box_body">
+                        <!-- <div class="box_body">
                             <p class="f-w-400 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
+                        </div> -->
                         <div class="card_footer parpel_bg    ">
-                            <h6 class="text_white">Card Footer</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card_box position-relative  mb_30 white_bg orange_bg  ">
-                        <div class="white_box_tittle orange_bg    ">
-                            <div class="main-title2 ">
-                                <h4 class="mb-2 nowrap text_white">Blue Card</h4>
-                                
-                            </div>
-                        </div>
-                        <div class="box_body">
-                            <p class="f-w-400 text_white ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
-                        <div class="card_footer">
-                            <h6 class="text_white">Card Footer</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card_box position-relative  mb_30 white_bg green_bg  ">
-                        <div class="white_box_tittle green_bg">
-                            <div class="main-title2 ">
-                                <h4 class="mb-2 nowrap text_white">Blue Card</h4>
-                                
-                            </div>
-                        </div>
-                        <div class="box_body">
-                            <p class="f-w-400 text_white ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
-                        </div>
-                        <div class="card_footer">
                             <h6 class="text_white">Card Footer</h6>
                         </div>
                     </div>
