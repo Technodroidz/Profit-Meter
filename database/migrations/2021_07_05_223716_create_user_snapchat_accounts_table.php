@@ -16,6 +16,7 @@ class CreateUserSnapchatAccountsTable extends Migration
         Schema::create('user_snapchat_accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
+            $table->string('code')->nullable();
             $table->string('snapchat_id')->nullable();
             $table->string('organization_id')->nullable();
             $table->string('email')->nullable();
