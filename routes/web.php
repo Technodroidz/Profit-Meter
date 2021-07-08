@@ -199,14 +199,18 @@ Route::get('/facebook/callback','ShopifyApp\FacebookController@facebookCallback'
 Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
 Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
 Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->name('show_google_ads');
+Route::get('google-ads-api-list', 'ShopifyApp\GoogleController@googleAdsApiList')->name('google_ads_api_list');
+Route::match(['POST','GET'],'google-ads-api-detail', 'ShopifyApp\GoogleController@googleAdsApiDetail')->name('google_ads_api_detail');
 
 Route::get('login/snapchat', 'ShopifyApp\SnapchatController@redirectToProvider')->name('connect_snapchat');
 Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProviderCallback')->name('snapchat_callback');
 Route::get('snapchat/snapchat-api-list', 'ShopifyApp\SnapchatController@snapchatApiList')->name('snapchat_api_list');
-Route::get('snapchat/snapchat-api-detail/{api_name}', 'ShopifyApp\SnapchatController@snapchatApiDetail')->name('snapchat_api_detail');
+Route::match(['POST','GET'],'snapchat/snapchat-api-detail', 'ShopifyApp\SnapchatController@snapchatApiDetail')->name('snapchat_api_detail');
 
 Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
 Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');
+Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
+Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
 
 
 

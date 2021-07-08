@@ -24,6 +24,7 @@ class SnapchatController extends Controller
         // $parameters = ['access_type' => 'offline'];
         // return Socialite::driver('snapchat')->scopes($scopes)->with($parameters)->redirect();
         // pp('aya');
+
         $client_id      = env('SNAPCHAT_CLIENT_ID');
         $redirect_uri   = env('SNAPCHAT_REDIRECT_URL');
         $response_type  = 'code';
@@ -157,11 +158,70 @@ class SnapchatController extends Controller
 
     public function snapchatApiList()
     {
-        return view('business_app/content_template/third_party_api_list');
+        return view('business_app/content_template/snapchat_api_list');
     }
 
-    public function snapchatApiDetail($api_name)
+    public function snapchatApiDetail(Request $request)
     {
-        pp($api_name);
+        if($request->isMethod('post')){
+            
+            $paypal_account = UserSnapchatAccount::where('user_id',Auth::User()->id)->first();
+            if(isset($paypal_account->access_token) && isset($paypal_account->refresh_token)){
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => $request->api_url,
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => '',
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 0,
+                  CURLOPT_FOLLOWLOCATION => true,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => 'GET',
+                  CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer '.$paypal_account->access_token
+                  ),
+                ));
+
+                $response = curl_exec($curl);
+                $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+                curl_close($curl);
+
+                if($httpcode == 401){
+
+                    $refresh_response = refresh_snapchat_access_token($paypal_account->refresh_token);
+
+                    UserSnapchatAccount::where('id',$paypal_account->id)->update(['access_token' => $refresh_response['access_token'],'refresh_token'=>$refresh_response['refresh_token'],'expires_in'=>$refresh_response['expires_in']]);
+
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                      CURLOPT_URL => $request->api_url,
+                      CURLOPT_RETURNTRANSFER => true,
+                      CURLOPT_ENCODING => '',
+                      CURLOPT_MAXREDIRS => 10,
+                      CURLOPT_TIMEOUT => 0,
+                      CURLOPT_FOLLOWLOCATION => true,
+                      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                      CURLOPT_CUSTOMREQUEST => 'GET',
+                      CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer '.$refresh_response['access_token']
+                      ),
+                    ));
+
+                    $response = curl_exec($curl);
+                    $response = json_decode($response,1);
+                    curl_close($curl);
+                }else{
+                    $response = json_decode($response,1);
+                }
+                echo 'Api Url === >>>>> '.$request->api_url;
+                pp($response);
+            }else{
+                return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
+            }
+        }
+        return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
     }
 }
