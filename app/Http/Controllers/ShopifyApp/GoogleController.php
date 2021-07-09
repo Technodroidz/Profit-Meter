@@ -45,7 +45,7 @@ class GoogleController extends Controller
         ];
 
         UserGoogleAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
-        return redirect()->route('business_integration');
+        return redirect()->route('business_integration')->with('success','Google user added.Please add your google ads creds to check the apis');
 
         // $findUser = User::where('email',$user->getEmail())->first();
         // if ($findUser) {
@@ -136,7 +136,7 @@ class GoogleController extends Controller
 
                     // Iterates over all rows in all messages and prints the requested field values for
                     // the campaign in each row.
-                    dd($stream);
+                    // dd($stream);
                     foreach ($stream->iterateAllElements() as $googleAdsRow) {
                         /** @var GoogleAdsRow $googleAdsRow */
                         printf(

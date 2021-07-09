@@ -54,42 +54,7 @@ class SettingSeeder extends Seeder
                 'option_name'  => 'paypal_status',
                 'option_value' => '1',
                 'setting_type' => 'PAYPAL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'smtp_server_host',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'smtp_port_number',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'stripe_status',
-                'option_value' => '1',
-                'setting_type' => 'STRIPE',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'smtp_username',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'smtp_password',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'email_driver',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'email_encryption_type',
-                'option_value' => '',
-                'setting_type' => 'MAIL',
-            ],
+            ]
         ];
         Setting::insert($data);
     }
