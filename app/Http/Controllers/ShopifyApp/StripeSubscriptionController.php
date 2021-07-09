@@ -70,6 +70,13 @@ class StripeSubscriptionController extends Controller
                         $customer=\Stripe\Customer::create(array(
                             "email"     => $user->email,
                             "name"      => $user->name.' '.$user->last_name,
+                            'address' => [
+                                'line1' => '510 Townsend St',
+                                'postal_code' => '98140',
+                                'city' => 'San Francisco',
+                                'state' => 'CA',
+                                'country' => 'US',
+                            ],
                             "source"    => $token,
                             "metadata"  => ['user_id' => $user->id,'shopify_url'=> $user->shopify_url, 'subscription_id' => $request->subscription_id, 'user_details'=>'User Created While subscribing to plan "'.$request->subscription_name.'"']
                         ));
