@@ -21,7 +21,8 @@
                 @endif
             </p>
             <div class="text-right btm">
-                <button class="stBtn">Settings</button>
+                <!-- <button class="stBtn">Settings</button> -->
+                <button class="stBtn" ><a href="{{route('google_ads_api_list')}}" style="color:inherit;" >Check Apis</a></button>
                 @if(empty($google_account))
                     <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
                 @elseif (!empty($google_account) && $google_account->google_ads_developer_token == '' &&$google_account->google_ads_customer_id == '' )
