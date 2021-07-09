@@ -37,9 +37,11 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'https://citrixcrm.club/login/google/callback'
+        'redirect' => env('GOOGLE_REDIRECT_URL')
     ],
 
+
+    // Not used in active code
     'snapchat' => [
         'client_id' => env('SNAPCHAT_CLIENT_ID'),
         'client_secret' => env('SNAPCHAT_CLIENT_SECRET'),
@@ -57,5 +59,6 @@ return [
         'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
         'redirect'      => 'http://127.0.0.1/Profit-Meter/login/paypal/callback'
     ],
+    // Not Used in active code /
 
 ];

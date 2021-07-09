@@ -39,7 +39,7 @@ class AuthController extends Controller
             if($validator->fails()){
                 return back()->with('error', $validation_message);       
             }else{
-
+                
                 $credentials = $request->only('email', 'password');
                 if(Auth::attempt($credentials)){
                     

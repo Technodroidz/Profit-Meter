@@ -105,7 +105,8 @@
                                                 Connect Paypal to your Profitario account to integrate disputes into your profit calculations.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn">Settings</button>
+                                                <!-- <button class="stBtn">Settings</button> -->
+                                                <button class="stBtn" ><a href="{{route('paypal_api_list')}}" style="color:inherit;" >Check Apis</a></button>
                                                 <!-- <button class="contBtn">Connected</button> -->
                                                 <button class="contBtn" data-toggle="modal" data-target="#paypalConnect"><a href="javascript:void(0);" style="color:inherit;">Connect</a></button>
 
@@ -129,7 +130,7 @@
                                                 Connect Snapchat to your Profitario account to integrate Session information. Conversion Data and Customer Aqusition Cost.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn">Settings</button>
+                                                <button class="stBtn" ><a href="{{route('snapchat_api_list')}}" style="color:inherit;" >Check Apis</a></button>
                                                 <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
                                                 <!-- <button id="my-login-button-target">Connect</button>
 
@@ -167,7 +168,9 @@
                                                 @endif
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn" ><a href="{{route('google_ads_response')}}" style="color:inherit;" >Settings</a></button>
+                                                <!-- <button class="stBtn" ><a href="{{route('google_ads_response')}}" style="color:inherit;" >Settings</a></button> -->
+                                                <button class="stBtn" ><a href="{{route('google_ads_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                
                                                 <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($google_account))
                                                     <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
