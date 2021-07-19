@@ -192,9 +192,11 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 
 // Generate a login URL
-Route::get('/facebook/login','ShopifyApp\FacebookController@facebookLogin');
+Route::get('facebook/login','ShopifyApp\FacebookController@facebookLogin')->name('facebook_login');
 // Endpoint that is redirected to after an authentication attempt
-Route::get('/facebook/callback','ShopifyApp\FacebookController@facebookCallback');
+Route::get('facebook/callback','ShopifyApp\FacebookController@facebookCallback')->name('facebook_callback');
+Route::get('facebook-ads-api-list','ShopifyApp\FacebookController@facebookApiList')->name('facebook_ads_api_list');
+Route::match(['POST','GET'],'facebook-ads-api-detail','ShopifyApp\FacebookController@facebookApiDetail')->name('facebook_ads_api_detail');
 
 Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
 Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');

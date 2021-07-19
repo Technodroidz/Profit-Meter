@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "634bceef6fb721a59c71c2ea71ed839b",
+    "content-hash": "f0bf7dea85e14e05a8f03fb5f7a04cb5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -995,16 +996,16 @@
         },
         {
             "name": "facebook/php-business-sdk",
-            "version": "10.0.1",
+            "version": "11.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-business-sdk.git",
-                "reference": "a4b73f96770c28012a84736c75bc87e52d6948b9"
+                "reference": "bd11628ea43903a95a656b8a5ea2789e4613b859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/a4b73f96770c28012a84736c75bc87e52d6948b9",
-                "reference": "a4b73f96770c28012a84736c75bc87e52d6948b9",
+                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/bd11628ea43903a95a656b8a5ea2789e4613b859",
+                "reference": "bd11628ea43903a95a656b8a5ea2789e4613b859",
                 "shasum": ""
             },
             "require": {
@@ -1033,9 +1034,9 @@
                 "sdk"
             ],
             "support": {
-                "source": "https://github.com/facebook/facebook-php-business-sdk/tree/10.0.1"
+                "source": "https://github.com/facebook/facebook-php-business-sdk/tree/11.0.0"
             },
-            "time": "2021-04-28T21:23:27+00:00"
+            "time": "2021-06-10T18:59:41+00:00"
         },
         {
             "name": "fideloper/proxy",

@@ -6,96 +6,67 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Scottybo\LaravelFacebookSdk\LaravelFacebookSdk;
 use Illuminate\Support\Facades\Session;
+use Laravel\Socialite\Facades\Socialite;
+use FacebookAds\Api;
+// use FacebookAds\Object\AdUser;
+use FacebookAds\Object\AdAccount;
+use FacebookAds\Object\Fields\AdAccountFields;
+
+use Illuminate\Support\Facades\Auth;
+use App\Model\UserFacebookAccount;
 
 class FacebookController extends Controller
 {
-    public function facebookLogin(Request $request,LaravelFacebookSdk $fb)
+    public function facebookLogin(Request $request)
     {
-        if (!session_id()) {
-            session_start();
-        }
-        // $fb = new LaravelFacebookSdk();
-        // Send an array of permissions to request
-        $login_url = $fb->getLoginUrl(['email']);
-
-        // Obviously you'd do this in blade :)
-        echo '<a href="' . $login_url . '">Login with Facebook</a>';
+        $parameters = ['access_type' => 'offline'];
+        return Socialite::driver('facebook')->with($parameters)->redirect();
     }
 
-    public function facebookCallback(Request $request,LaravelFacebookSdk $fb)
+    public function facebookCallback(Request $request)
     {
-        if (!session_id()) {
-            session_start();
-        }
-        // Obtain an access token.
+        $user = Socialite::driver('facebook')->user();
         
-        try {
-            $token = $fb->getAccessTokenFromRedirect();
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
-            dd($e->getMessage());
-        }
+        $user_object = $user->user;
+        $insert_array = [
+            'user_id'          => Auth::User()->id,
+            'token'            => $user->token,
+            'refresh_token'    => $user->refreshToken,
+            'expires_in'       => $user->expiresIn,
+            'facebook_id'      => $user->id,
+            'name'             => $user->name,
+            'email'            => $user->email,
+            'avatar'           => $user->avatar,
+            'gender'           => $user_object['gender']
+        ];
 
-        // Access token will be null if the user denied the request
-        // or if someone just hit this URL outside of the OAuth flow.
-        if (! $token) {
+        UserFacebookAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
+        return redirect()->route('facebook_ads_api_list');
+    }
 
-            // Get the redirect helper
-            $helper = $fb->getRedirectLoginHelper();
+    public function facebookApiList()
+    {
+        return view('business_app/content_template/facebook_ads_api_list');
+    }
 
-            $_SESSION['FBRLH_state']=$_GET['state'];
+    public function facebookApiDetail(Request $request)
+    {
+        $facebook_account = UserFacebookAccount::where('user_id',Auth::User()->id)->first();
+        // Initialize a new Session and instantiate an Api object
+        Api::init(env('FACEBOOK_APP_ID'),env('FACEBOOK_APP_SECRET'),$facebook_account->token);
 
-            if (isset($_GET['state'])) {
-                $helper->getPersistentDataHandler()->set('state', $_GET['state']);
-            }
+        // The Api object is now available through singleton
+        $api = Api::instance();
 
-            if (! $helper->getError()) {
-                abort(403, 'Unauthorized action.');
-            }
+        $fields = array(
+            AdAccountFields::ID,
+            AdAccountFields::NAME,
+        );
 
-            // User denied the request
-            dd(
-                $helper->getError(),
-                $helper->getErrorCode(),
-                $helper->getErrorReason(),
-                $helper->getErrorDescription()
-            );
-        }
-
-        if (! $token->isLongLived()) {
-            // OAuth 2.0 client handler
-            $oauth_client = $fb->getOAuth2Client();
-
-            // Extend the access token.
-            try {
-                $token = $oauth_client->getLongLivedAccessToken($token);
-            } catch (Facebook\Exceptions\FacebookSDKException $e) {
-                dd($e->getMessage());
-            }
-        }
-
-        $fb->setDefaultAccessToken($token);
-
-        // Save for later
-        Session::put('fb_user_access_token', (string) $token);
-
-        // Get basic info on the user from Facebook.
-        try {
-            $response = $fb->get('/me?fields=id,name,email');
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
-            dd($e->getMessage());
-        }
-
-        // Convert the response to a `Facebook/GraphNodes/GraphUser` collection
-        $facebook_user = $response->getGraphUser();
-        pp($facebook_user);
-
-        // Create the user if it does not exist or update the existing entry.
-        // This will only work if you've added the SyncableGraphNodeTrait to your User model.
-        // $user = App\User::createOrUpdateGraphNode($facebook_user);
-
-        // // Log the user into Laravel
-        // Auth::login($user);
-
-        return redirect('/')->with('message', 'Successfully logged in with Facebook');
+        $account = (new AdAccount($facebook_account->facebook_id))->getSelf($fields);
+        pp($account);
+        // $me = new AdUser('me');
+        // $my_adaccount = $me->getAdAccounts()->current();
+        // pp($my_adaccount);
     }
 }
