@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\UserGoogleAccount;
 use App\Model\UserPaypalAccount;
 use App\Model\UserFacebookAccount;
+use App\Model\UserSnapchatAccount;
 use App\Exceptions\AppException;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -18,8 +19,9 @@ class IntegrationController extends Controller
         $google_account = UserGoogleAccount::getGoogleAccountByUserid(Auth::User()->id);
         $paypal_account_creds = UserPaypalAccount::where('user_id',Auth::User()->id)->first();
         $facebook_account = UserFacebookAccount::where('user_id',Auth::User()->id)->first();
+        $snapchat_account = UserSnapchatAccount::where('user_id',Auth::User()->id)->first();
 
-        $data = ['current_link' => 'integration','google_account' => $google_account,'paypal_account' => $paypal_account_creds,'facebook_account' => $facebook_account];
+        $data = ['current_link' => 'integration','google_account' => $google_account,'paypal_account' => $paypal_account_creds,'facebook_account' => $facebook_account,'snapchat_account' => $snapchat_account];
         
         return view('business_app/content_template/integration',$data);
     }
