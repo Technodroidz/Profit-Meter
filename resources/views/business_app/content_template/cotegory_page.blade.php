@@ -52,8 +52,8 @@
                                                 <input type="checkbox" data-status="{{$list['id']}}" class="statusSwitch" @if($list['status']==1) checked @endif id="customSwitch{{$list['id']}}">
                                                 </td>
                                                 <td>
-                                                <a href="#" class="greenBtn data_edit" data-value="{{$list}}"><i class="fa fa-edit"></i></a>
-                                                <a href="{{ URL('business/category/delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete {{$list['package_name']}} ?');"><i class="fa fa-trash"></i></a>
+                                                <a href="#" class="greenBtn data_edit" data-value="{{json_encode($list)}}"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ URL('business/category/delete', $list['id']) }}" data-toggle='confirmation' id='deleteadd' data-placement='left' class="redBtn" onclick="return confirm('Are you sure you want to Delete  ?');"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach

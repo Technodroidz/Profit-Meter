@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\ShopifyApp;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,9 +19,8 @@ class BusinesCotegoryController extends Controller
     public function index(Request $request)
     {
         
-      
         $data = ['current_link' => 'cotegory'];
-        $getCategorylist=BusinessCategory::all();
+        $getCategorylist=BusinessCategory::where('deleted_at',null)->get();
         $result=[
           "data" => $data,
           'getCategorylist'=>$getCategorylist,
@@ -38,15 +37,10 @@ class BusinesCotegoryController extends Controller
         ]);
 
         $currentPackegName=Str::slug($request['name']);
-        @$getDublicateData = BusinessCategory::where('slug_name',$currentPackegName)->withTrashed()->get();
-       
-        // $getInsertedData = BusinessCategory::updateOrCreate(['id'=>$request['id']],[
-        //     "category_name" => $request['name'],
-        //     "slug_name"=>str::slug($request['name']),
-        // ]);
+        @$getDublicateData = BusinessCategory::where('slug_name',$currentPackegName)->get();
 
         if(@$getDublicateData['0']['slug_name']==$currentPackegName){
-          $product = BusinessCategory::withTrashed()->find(@$getDublicateData['0']['id']); //get the object of product you want to update
+          $product = BusinessCategory::find(@$getDublicateData['0']['id']); //get the object of product you want to update
           $product->category_name =  $request['name'];
           $product->deleted_at = null;
           $product->save();
@@ -91,7 +85,7 @@ class BusinesCotegoryController extends Controller
       try{
         
         $userDelete=BusinessCategory::findOrFail($id);
-        $userDelete->delete();
+        $userDelete->update(['deleted_at'=>date('Y-m-d H:i:s')]);
         } catch(\Exception $e) {
     //return response($e->getMessage(), 422);
         }
