@@ -20,3 +20,5 @@ yarn-error.log
 /backup
 error_log
 php.ini
+.htaccess
+profit_backup.zip
