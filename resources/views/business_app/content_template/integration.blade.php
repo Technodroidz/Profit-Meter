@@ -63,8 +63,13 @@
                                                 The Facebook Ads Extension imports all your campaigns and adsets into Profitario to give you clear pictre of your overall adspend.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn">Settings</button>
+                                                <button class="stBtn" ><a href="{{route('facebook_ads_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                <!-- <button class="stBtn">Settings</button> -->
+                                                @if(empty($facebook_account))
+                                                <button class="contBtn"><a href="{{route('facebook_login')}}" style="color:inherit;">Connect</a></button>
+                                                @else
                                                 <button class="contBtn">Connected</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

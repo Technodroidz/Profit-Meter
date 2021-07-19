@@ -136,7 +136,7 @@ class GoogleController extends Controller
 
                     // Iterates over all rows in all messages and prints the requested field values for
                     // the campaign in each row.
-                    // dd($stream);
+                    dd($stream);
                     foreach ($stream->iterateAllElements() as $googleAdsRow) {
                         /** @var GoogleAdsRow $googleAdsRow */
                         printf(
