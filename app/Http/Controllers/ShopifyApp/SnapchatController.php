@@ -161,16 +161,41 @@ class SnapchatController extends Controller
         return view('business_app/content_template/snapchat_api_list');
     }
 
-    public function snapchatApiDetail(Request $request)
+    public function snapchatApiDetail($api_url)
     {
-        if($request->isMethod('post')){
-            
-            $paypal_account = UserSnapchatAccount::where('user_id',Auth::User()->id)->first();
-            if(isset($paypal_account->access_token) && isset($paypal_account->refresh_token)){
+        $snapchat_account = UserSnapchatAccount::where('user_id',Auth::User()->id)->first();
+        if(isset($snapchat_account->access_token) && isset($snapchat_account->refresh_token)){
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => $api_url,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'GET',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$snapchat_account->access_token
+              ),
+            ));
+
+            $response = curl_exec($curl);
+            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            curl_close($curl);
+
+            if($httpcode == 401){
+
+                $refresh_response = refresh_snapchat_access_token($snapchat_account->refresh_token);
+
+                UserSnapchatAccount::where('id',$snapchat_account->id)->update(['access_token' => $refresh_response['access_token'],'refresh_token'=>$refresh_response['refresh_token'],'expires_in'=>$refresh_response['expires_in']]);
+
                 $curl = curl_init();
 
                 curl_setopt_array($curl, array(
-                  CURLOPT_URL => $request->api_url,
+                  CURLOPT_URL => $api_url,
                   CURLOPT_RETURNTRANSFER => true,
                   CURLOPT_ENCODING => '',
                   CURLOPT_MAXREDIRS => 10,
@@ -179,49 +204,63 @@ class SnapchatController extends Controller
                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                   CURLOPT_CUSTOMREQUEST => 'GET',
                   CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer '.$paypal_account->access_token
+                    'Authorization: Bearer '.$refresh_response['access_token']
                   ),
                 ));
 
                 $response = curl_exec($curl);
-                $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
+                $response = json_decode($response,1);
                 curl_close($curl);
-
-                if($httpcode == 401){
-
-                    $refresh_response = refresh_snapchat_access_token($paypal_account->refresh_token);
-
-                    UserSnapchatAccount::where('id',$paypal_account->id)->update(['access_token' => $refresh_response['access_token'],'refresh_token'=>$refresh_response['refresh_token'],'expires_in'=>$refresh_response['expires_in']]);
-
-                    $curl = curl_init();
-
-                    curl_setopt_array($curl, array(
-                      CURLOPT_URL => $request->api_url,
-                      CURLOPT_RETURNTRANSFER => true,
-                      CURLOPT_ENCODING => '',
-                      CURLOPT_MAXREDIRS => 10,
-                      CURLOPT_TIMEOUT => 0,
-                      CURLOPT_FOLLOWLOCATION => true,
-                      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                      CURLOPT_CUSTOMREQUEST => 'GET',
-                      CURLOPT_HTTPHEADER => array(
-                        'Authorization: Bearer '.$refresh_response['access_token']
-                      ),
-                    ));
-
-                    $response = curl_exec($curl);
-                    $response = json_decode($response,1);
-                    curl_close($curl);
-                }else{
-                    $response = json_decode($response,1);
-                }
-                echo 'Api Url === >>>>> '.$request->api_url;
-                pp($response);
             }else{
-                return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
+                $response = json_decode($response,1);
             }
+            return $response;
+        }else{
+            return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
         }
-        return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
+    }
+
+    public function organisationList(Request $request)
+    {
+        $api_url    = 'https://adsapi.snapchat.com/v1/me/organizations';
+        $response   = $this->snapchatApiDetail($api_url);
+        return view('business_app/content_template/snapchat_organisation_account_list',$response);
+        
+    }
+
+    public function adAccountList(Request $request,$organization_id)
+    {
+        $api_url    = 'https://adsapi.snapchat.com/v1/organizations/'.$organization_id.'/adaccounts';
+        $response   = $this->snapchatApiDetail($api_url);
+        // pp($response);
+        return view('business_app/content_template/snapchat_ad_account_list',$response);
+        
+    }
+
+    public function adAccountInvoiceList(Request $request,$ad_account_id)
+    {
+        $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/invoices';
+        $response   = $this->snapchatApiDetail($api_url);
+        // pp($response);
+        return view('business_app/content_template/snapchat_ad_account_invoice_list',$response);
+        
+    }
+
+    public function campaignList(Request $request,$ad_account_id)
+    {
+        $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/campaigns';
+        $response   = $this->snapchatApiDetail($api_url);
+        // pp($response);
+        return view('business_app/content_template/snapchat_campaign_list',$response);
+        
+    }
+
+    public function adsList(Request $request,$campaign_id)
+    {
+        $api_url    = 'https://adsapi.snapchat.com/v1/campaigns/'.$campaign_id.'/ads';
+        $response   = $this->snapchatApiDetail($api_url);
+        // pp($response);
+        return view('business_app/content_template/snapchat_ads_list',$response);
+        
     }
 }

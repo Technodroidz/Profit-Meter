@@ -17,6 +17,8 @@ use App\Model\UserSubscription;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Exception\ExceptionInterface;
 
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
 class StripeSubscriptionController extends Controller
 {
     public function payment(Request $request){
@@ -50,18 +52,58 @@ class StripeSubscriptionController extends Controller
                     throw new AppException('User Is Already Subscribed to this Plan.');
                 }
 
+
                 $publishableKey = 'pk_test_51HuWQHJRRrJp7PIAIkuAgvuEWXj9CwiwwVl9YPSBPZIp87M0WTFZD8VuAFIhb3thCG0hF5mF6poVsmlt3IEiOftq00CKI0k6WY';
                 $secreatekey    = env('STRIPE_SECRET');
                 
                 \Stripe\Stripe::setApiKey($secreatekey);
+
+                $user = Auth::User();
+                \Stripe\Stripe::setVerifySslCerts(false);
+        
+                $token  = $_POST['stripeToken'];
+                
+                $stripe = new \Stripe\StripeClient($secreatekey);
+
+                
+                $another_subscription = UserSubscription::where('user_id',Auth::User()->id)->where('plan_id','!=',$subscription_plan->id)->where('subscription_status','active')->first();
+
+                if(!empty($another_subscription)){
+                    if($another_subscription->payment_gateway == 'stripe'){
+                        $stripe->subscriptions->cancel(
+                          $another_subscription->stripe_subscription_id,
+                          []
+                        );
+
+                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','stripe_subscription_status','cancelled']);
+                    }elseif($another_subscription->payment_gateway == 'paypal'){
+                        $provider = new PayPalClient;
+                        $provider = \PayPal::setProvider();
+                        $config = [
+                            'mode'             => 'sandbox',
+                            'sandbox'          => [
+                                'client_id'    => env('PAYPAL_SANDBOX_CLIENT_ID'),
+                                'client_secret'=> env('PAYPAL_SANDBOX_CLIENT_SECRET'),
+                                'app_id'       => 'APP-80W284485P519543T',
+                            ],
+
+                            'payment_action'   => 'Sale',
+                            'currency'         => 'USD',
+                            'notify_url'       => env('PAYPAL_NOTIFY_URL'),
+                            'locale'           => 'en_US',
+                            'validate_ssl'     => true,
+                        ];
+
+                        $provider->setApiCredentials($config);
+                        $provider->getAccessToken();
+
+                        $provider->cancelSubscription($another_subscription->paypal_subscription_id,'Upgrading Plan');
+                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','paypal_subscription_status'=>'CANCELLED']);
+                    }
+
+                }
             
                 if(isset($_POST['stripeToken'])){
-                    $user = Auth::User();
-                    \Stripe\Stripe::setVerifySslCerts(false);
-            
-                    $token  = $_POST['stripeToken'];
-                    
-                    $stripe = new \Stripe\StripeClient($secreatekey);
 
                     $user = User::getUserById($user->id);
 

@@ -209,6 +209,12 @@ Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProvi
 Route::get('snapchat/snapchat-api-list', 'ShopifyApp\SnapchatController@snapchatApiList')->name('snapchat_api_list');
 Route::match(['POST','GET'],'snapchat/snapchat-api-detail', 'ShopifyApp\SnapchatController@snapchatApiDetail')->name('snapchat_api_detail');
 
+Route::get('snapchat/organisation-list', 'ShopifyApp\SnapchatController@organisationList')->name('organisation_list');
+Route::get('snapchat/ad-accounts/{organization_id}', 'ShopifyApp\SnapchatController@adAccountList')->name('ad_account_list');
+Route::get('snapchat/campaign-list/{ad_account_id}', 'ShopifyApp\SnapchatController@campaignList')->name('campaign_list');
+Route::get('snapchat/ads-list/{campaign_id}', 'ShopifyApp\SnapchatController@adsList')->name('ads_list');
+Route::get('snapchat/ad-account-invoice-list/{ad_account_id}', 'ShopifyApp\SnapchatController@adAccountInvoiceList')->name('ad_account_invoice_list');
+
 Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
 Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');
 Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');

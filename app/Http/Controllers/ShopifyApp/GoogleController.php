@@ -103,10 +103,23 @@ class GoogleController extends Controller
 
                 $googleAdsClient = (new GoogleAdsClientBuilder())
                     ->withOAuth2Credential($oAuth2Credential)
-                    ->withDeveloperToken($google_account->google_ads_developer_token)
+                    ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
                     // ...
                     ->build();
-                $customer_id = $google_account->google_ads_customer_id;
+                // $customer_id = $google_account->google_ads_customer_id;
+
+                $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
+
+                // Issues a request for listing all accessible customers.
+                $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
+                print 'Total results: ' . count($accessibleCustomers->getResourceNames()) . PHP_EOL;
+
+                // Iterates over all accessible customers' resource names and prints them.
+                foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
+                    /** @var string $resourceName */
+                    printf("Customer resource name: '%s'%s", $resourceName, PHP_EOL);
+                }
+                die;
 
                 if($request->api_url == 'get/customer'){
                     $customerServiceClient = $googleAdsClient->getCustomerServiceClient();

@@ -14,6 +14,8 @@ use FacebookAds\Object\Fields\AdAccountFields;
 
 use Illuminate\Support\Facades\Auth;
 use App\Model\UserFacebookAccount;
+use FacebookAds\Object\Ad;
+use FacebookAds\Object\Fields\AdFields;
 
 class FacebookController extends Controller
 {
@@ -58,12 +60,23 @@ class FacebookController extends Controller
         // The Api object is now available through singleton
         $api = Api::instance();
 
+
+        // $ad = new Ad('130130937619407');
+        // $ad->getSelf(array(
+        //     AdAccountFields::ID,
+        //     AdAccountFields::NAME,
+        // ));
+        // pp($ad);
+
+        // die;
+
         $fields = array(
             AdAccountFields::ID,
             AdAccountFields::NAME,
         );
-
+        
         $account = (new AdAccount($facebook_account->facebook_id))->getSelf($fields);
+
         pp($account);
         // $me = new AdUser('me');
         // $my_adaccount = $me->getAdAccounts()->current();

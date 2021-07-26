@@ -135,7 +135,7 @@
                                                 Connect Snapchat to your Profitario account to integrate Session information. Conversion Data and Customer Aqusition Cost.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn" ><a href="{{route('snapchat_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                <button class="stBtn" ><a href="{{route('organisation_list')}}" style="color:inherit;" >Ads data</a></button>
                                                 @if(empty($snapchat_account))
                                                 <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
                                                 @else

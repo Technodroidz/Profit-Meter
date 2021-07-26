@@ -13,6 +13,11 @@ use App\Model\PaypalProduct;
 use App\Model\SubscriptionPlan;
 use App\Model\UserSubscription;
 use App\Model\User;
+use Stripe\Stripe;
+use Stripe\Customer;
+use Stripe\Charge;
+use Stripe\Products;
+use Stripe\Exception\ExceptionInterface;
 
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -223,6 +228,8 @@ class PaypalSubscriptionController extends Controller
                     ]
                 ];
 
+                
+
                 $pending_subscription = UserSubscription::where('paypal_plan_id',$paypal_plan_id)->where('user_id',Auth::User()->id)->where('paypal_subscription_status','APPROVAL_PENDING')->first();
                 
                 $redirect_url = '';
@@ -305,7 +312,32 @@ class PaypalSubscriptionController extends Controller
                 // $capture_subscription = $provider->captureSubscriptionPayment($request->subscription_id, 'Charge Subscribe Payment',$user_subscription->plan_amount);
                 // pp($capture_subscription);
                 $subscription_detail = $provider->showSubscriptionDetails($request->subscription_id);
-                // pp($subscription_detail);
+
+                $another_subscription = UserSubscription::where('user_id',Auth::User()->id)->where('plan_id','!=',$user_subscription->id)->where('subscription_status','active')->first();
+
+                if(!empty($another_subscription)){
+                    if($another_subscription->payment_gateway == 'stripe'){
+                        $secreatekey    = env('STRIPE_SECRET');
+                
+                        \Stripe\Stripe::setApiKey($secreatekey);
+
+                        \Stripe\Stripe::setVerifySslCerts(false);
+                        
+                        $stripe = new \Stripe\StripeClient($secreatekey);
+
+                        $stripe->subscriptions->cancel(
+                          $another_subscription->stripe_subscription_id,
+                          []
+                        );
+
+                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','stripe_subscription_status','cancelled']);
+                    }elseif($another_subscription->payment_gateway == 'paypal'){
+
+                        $provider->cancelSubscription($another_subscription->paypal_subscription_id,'Upgrading Plan');
+                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','paypal_subscription_status'=>'CANCELLED']);
+                    }
+
+                }
 
                 $update_array = [
                     'paypal_subscription_status' => $subscription_detail['status'],
