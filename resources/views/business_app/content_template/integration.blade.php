@@ -111,11 +111,16 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <!-- <button class="stBtn">Settings</button> -->
-                                                <button class="stBtn" ><a href="{{route('paypal_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                <button class="stBtn" ><a href="{{route('paypal_dispute_list')}}" style="color:inherit;" >Check Dispute</a></button>
                                                 <!-- <button class="contBtn">Connected</button> -->
-                                                <button class="contBtn" data-toggle="modal" data-target="#paypalConnect"><a href="javascript:void(0);" style="color:inherit;">Connect</a></button>
+                                                <!-- <button class="contBtn" data-toggle="modal" data-target="#paypalConnect"><a href="javascript:void(0);" style="color:inherit;">Connect</a></button> -->
 
-                                                <!-- <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button> -->
+                                                @if(empty($paypal_account))
+                                                <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button>
+                                                
+                                                @else
+                                                <button class="contBtn">Connected</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -178,14 +183,14 @@
                                             </p>
                                             <div class="text-right btm">
                                                 <!-- <button class="stBtn" ><a href="{{route('google_ads_response')}}" style="color:inherit;" >Settings</a></button> -->
-                                                <button class="stBtn" ><a href="{{route('google_ads_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                <button class="stBtn" ><a href="{{route('customer_id_list')}}" style="color:inherit;" >Ads data</a></button>
                                                 
                                                 <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($google_account))
                                                     <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
-                                                @elseif (!empty($google_account) && $google_account->google_ads_developer_token == '' &&$google_account->google_ads_customer_id == '' )
-                                                    <button class="contBtn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0);" style="color:inherit;">Configure Ads</a></button>
-                                                @elseif (!empty($google_account) && $google_account->google_ads_developer_token != '' &&$google_account->google_ads_customer_id != '' )
+                                                
+                                                    <!-- <button class="contBtn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0);" style="color:inherit;">Configure Ads</a></button> -->
+                                                @else
                                                     <button class="contBtn"><a href="javascript:void(0);" style="color:inherit;">Connected</a></button>
                                                 @endif
                                             </div>

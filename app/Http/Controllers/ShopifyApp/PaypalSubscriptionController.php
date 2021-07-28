@@ -330,7 +330,7 @@ class PaypalSubscriptionController extends Controller
                           []
                         );
 
-                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','stripe_subscription_status','cancelled']);
+                        UserSubscription::where('id',$another_subscription->id)->update(['subscription_status'=>'cancelled','stripe_subscription_status'=>'cancelled']);
                     }elseif($another_subscription->payment_gateway == 'paypal'){
 
                         $provider->cancelSubscription($another_subscription->paypal_subscription_id,'Upgrading Plan');

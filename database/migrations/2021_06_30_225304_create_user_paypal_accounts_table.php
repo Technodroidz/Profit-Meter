@@ -15,19 +15,17 @@ class CreateUserPaypalAccountsTable extends Migration
     {
         Schema::create('user_paypal_accounts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->enum('mode',['sandbox','live'])->default('sandbox');
-            $table->string('sandbox_client_id')->nullable();
-            $table->string('sandbox_client_secret')->nullable();
-            $table->string('live_client_id')->nullable();
-            $table->string('live_client_secret')->nullable();
-            $table->string('payment_action')->nullable();
-            $table->string('currency')->nullable();
-            $table->string('notify_url')->nullable();
-            $table->string('locale')->nullable();
-            $table->string('invoice_prefix')->nullable();
 
-            $table->tinyInteger('connected_status')->default(1);
+            $table->unsignedInteger('user_id');
+            $table->text('paypal_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->text('token')->nullable();
+            $table->text('refresh_token')->nullable();
+            $table->text('expires_in')->nullable();
+            $table->text('sub')->nullable();
+            $table->string('paypal_email_verified')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

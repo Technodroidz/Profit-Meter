@@ -108,18 +108,18 @@ class GoogleController extends Controller
                     ->build();
                 // $customer_id = $google_account->google_ads_customer_id;
 
-                $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
+                // $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
 
-                // Issues a request for listing all accessible customers.
-                $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
-                print 'Total results: ' . count($accessibleCustomers->getResourceNames()) . PHP_EOL;
+                // // Issues a request for listing all accessible customers.
+                // $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
+                // print 'Total results: ' . count($accessibleCustomers->getResourceNames()) . PHP_EOL;
 
-                // Iterates over all accessible customers' resource names and prints them.
-                foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
-                    /** @var string $resourceName */
-                    printf("Customer resource name: '%s'%s", $resourceName, PHP_EOL);
-                }
-                die;
+                // // Iterates over all accessible customers' resource names and prints them.
+                // foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
+                //     /** @var string $resourceName */
+                //     printf("Customer resource name: '%s'%s", $resourceName, PHP_EOL);
+                // }
+                // die;
 
                 if($request->api_url == 'get/customer'){
                     $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
@@ -145,11 +145,11 @@ class GoogleController extends Controller
                     // Issues a search stream request.
                     /** @var GoogleAdsServerStreamDecorator $stream */
 
-                    $stream = $googleAdsServiceClient->searchStream($customer_id, $query);
+                    $stream = $googleAdsServiceClient->searchStream('9957336839', $query);
 
                     // Iterates over all rows in all messages and prints the requested field values for
                     // the campaign in each row.
-                    dd($stream);
+                    // dd($stream);
                     foreach ($stream->iterateAllElements() as $googleAdsRow) {
                         /** @var GoogleAdsRow $googleAdsRow */
                         printf(
@@ -166,5 +166,90 @@ class GoogleController extends Controller
             }
         }
         return redirect()->route('google_ads_api_list');
+    }
+
+    public function getCustomerIdList($value='')
+    {
+        $google_account = UserGoogleAccount::where('user_id',Auth::User()->id)->first();
+        $customer_list = [];
+        if(!empty($google_account)){
+            $oAuth2Credential = (new OAuth2TokenBuilder())
+                ->withClientId(env('GOOGLE_CLIENT_ID'))
+                ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
+                ->withRefreshToken($google_account->refresh_token)
+                // ...
+                ->build();
+
+            $googleAdsClient = (new GoogleAdsClientBuilder())
+                ->withOAuth2Credential($oAuth2Credential)
+                ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+                // ...
+                ->build();
+            // $customer_id = $google_account->google_ads_customer_id;
+
+            $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
+
+            // Issues a request for listing all accessible customers.
+            $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
+
+            // Iterates over all accessible customers' resource names and prints them.
+            foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
+                /** @var string $resourceName */
+                
+                $customer_id = str_replace("customers/","",$resourceName);
+                if($customer_id == '9957336839' ){
+                    $customer    = $customerServiceClient->getCustomer(ResourceNames::forCustomer($customer_id));
+                }
+
+                $customer_list[] = [
+                    'customer_id'       => $customer_id,
+                    'descriptive_name'  => isset($customer)?$customer->getDescriptiveName():'',
+                ];
+            }
+            $response['customer_list'] = $customer_list;
+            return view('business_app/content_template/google_ads_customer_list',$response);
+        }
+    }
+
+    public function getCampaignList(Request $request,$customer_id)
+    {
+        // pp($customer_id);
+        $google_account = UserGoogleAccount::where('user_id',Auth::User()->id)->first();
+        if(!empty($google_account)){
+            $oAuth2Credential = (new OAuth2TokenBuilder())
+                ->withClientId(env('GOOGLE_CLIENT_ID'))
+                ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
+                ->withRefreshToken($google_account->refresh_token)
+                // ...
+                ->build();
+
+            $googleAdsClient = (new GoogleAdsClientBuilder())
+                ->withOAuth2Credential($oAuth2Credential)
+                ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+                // ...
+                ->build();
+
+            $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+            // Creates a query that retrieves all campaigns.
+            $query = 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id';
+            // Issues a search stream request.
+            /** @var GoogleAdsServerStreamDecorator $stream */
+
+            $stream = $googleAdsServiceClient->searchStream((int)$customer_id, $query);
+
+            // Iterates over all rows in all messages and prints the requested field values for
+            // the campaign in each row.
+            pp($stream);
+            foreach ($stream->iterateAllElements() as $googleAdsRow) {
+                pp($googleAdsRow);
+                /** @var GoogleAdsRow $googleAdsRow */
+                printf(
+                    "Campaign with ID %d and name '%s' was found.%s",
+                    $googleAdsRow->getCampaign()->getId(),
+                    $googleAdsRow->getCampaign()->getName(),
+                    PHP_EOL
+                );
+            }
+        }
     }
 }

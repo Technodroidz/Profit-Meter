@@ -13,7 +13,6 @@ class PaypalController extends Controller
 {
     public function redirectToProvider()
     {
-
         // $scopes = [
         //     'https://auth.snapchat.com/oauth2/api/user.display_name',
         //     'https://auth.snapchat.com/oauth2/api/user.bitmoji.avatar',
@@ -21,14 +20,68 @@ class PaypalController extends Controller
         // ];
 
         // $parameters = ['access_type' => 'offline'];
+
+        $scopes = [
+            'https://uri.paypal.com/services/disputes/read-buyer',
+
+        ];
         
-        return Socialite::driver('paypal_sandbox')->redirect();
+        return Socialite::driver('paypal_sandbox')->scopes($scopes)->redirect();
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
+        if(!empty($request->error_description)){
+            return redirect()->route('business_integration')->with('error',$request->error_description);
+        }
         $user = Socialite::driver('paypal_sandbox')->user();
-        dd($user);
+        $insert_array = [
+            'user_id'          => Auth::User()->id,
+            'paypal_id'        => $user->id,
+            'token'            => $user->token,
+            'refresh_token'    => $user->refreshToken,
+            'expires_in'       => $user->expiresIn,
+            'name'             => $user->name,
+            'email'            => $user->email,
+            'sub'              => $user->user['sub'],
+            'paypal_email_verified' => $user->user['email_verified'],
+        ];
+
+        UserPaypalAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
+        return redirect()->route('business_integration')->with('success',$user->name.' - Paypal user added.');
+    }
+
+    public function disputeList()
+    {
+        $paypal_account = UserPaypalAccount::where('user_id',Auth::User()->id)->first();
+        $response['paypal_account'] = $paypal_account;
+        $token_array = [
+            'access_token' => $paypal_account->token,
+            'token_type'   => 'Bearer',
+        ];
+        $provider = new PayPalClient;
+        $provider = \PayPal::setProvider();
+        $config = [
+            'mode'             => 'sandbox',
+            'sandbox'          => [
+                'client_id'    => '',
+                'client_secret'=> '',
+                // 'app_id'       => 'APP-80W284485P519543T',
+                'app_id'       => '',
+            ],
+
+            'payment_action'   => 'Authorization',
+            'currency'         => 'USD',
+            'notify_url'       => env('PAYPAL_NOTIFY_URL'),
+            'locale'           => 'en_US',
+            'validate_ssl'     => false,
+        ];
+
+        $provider->setApiCredentials($config);
+        $provider->setAccessToken($token_array);
+        $disputes = $provider->listDisputes();
+        pp($disputes);
+        return view('business_app/content_template/paypal_disputes_list',$response);
     }
 
     public function getBusinessUserPaypalInformation()
@@ -37,10 +90,10 @@ class PaypalController extends Controller
         $provider = new PayPalClient;
         $provider = \PayPal::setProvider();
         $config = [
-            'mode'             => $paypal_account->mode,
+            'mode'             => 'sandbox',
             'sandbox'          => [
-                'client_id'    => $paypal_account->sandbox_client_id,
-                'client_secret'=> $paypal_account->sandbox_client_secret,
+                'client_id'    => env('PAYPAL_SANDBOX_CLIENT_ID'),
+                'client_secret'=> env('PAYPAL_SANDBOX_CLIENT_SECRET'),
                 // 'app_id'       => 'APP-80W284485P519543T',
                 'app_id'       => '',
             ],
@@ -75,10 +128,10 @@ class PaypalController extends Controller
                 $provider = new PayPalClient;
                 $provider = \PayPal::setProvider();
                 $config = [
-                    'mode'             => $paypal_account->mode,
+                    'mode'             => 'sandbox',
                     'sandbox'          => [
-                        'client_id'    => $paypal_account->sandbox_client_id,
-                        'client_secret'=> $paypal_account->sandbox_client_secret,
+                        'client_id'    => env('PAYPAL_SANDBOX_CLIENT_ID'),
+                        'client_secret'=> env('PAYPAL_SANDBOX_CLIENT_SECRET'),
                         // 'app_id'       => 'APP-80W284485P519543T',
                         'app_id'       => '',
                     ],

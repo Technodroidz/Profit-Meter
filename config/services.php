@@ -45,13 +45,6 @@ return [
         'redirect'      => 'http://localhost/Profit-Meter/facebook/callback',
     ],
 
-    // Not used in active code
-    'snapchat' => [
-        'client_id' => env('SNAPCHAT_CLIENT_ID'),
-        'client_secret' => env('SNAPCHAT_CLIENT_SECRET'),
-        'redirect' => 'http://127.0.0.1/Profit-Meter/login/snapchat/callback',
-    ],
-
     'paypal' => [    
         'client_id' => env('PAYPAL_SANDBOX_CLIENT_ID'),
         'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
@@ -63,6 +56,14 @@ return [
         'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET'),
         'redirect'      => 'http://127.0.0.1/Profit-Meter/login/paypal/callback'
     ],
+    
+    // Not used in active code
+    'snapchat' => [
+        'client_id' => env('SNAPCHAT_CLIENT_ID'),
+        'client_secret' => env('SNAPCHAT_CLIENT_SECRET'),
+        'redirect' => 'http://127.0.0.1/Profit-Meter/login/snapchat/callback',
+    ],
+
     // Not Used in active code /
 
 ];

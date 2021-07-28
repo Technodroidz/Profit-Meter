@@ -188,37 +188,42 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	Route::get('business/category/delete/{id}','ShopifyApp\BusinesCotegoryController@deleteCategory')->name('business_category_delete');
 	Route::post('business/category/submit','ShopifyApp\BusinesCotegoryController@submitCategory')->name('business_category_submit');
 	
+	// Generate a login URL
+	Route::get('facebook/login','ShopifyApp\FacebookController@facebookLogin')->name('facebook_login');
+	// Endpoint that is redirected to after an authentication attempt
+	Route::get('facebook/callback','ShopifyApp\FacebookController@facebookCallback')->name('facebook_callback');
+	Route::get('facebook-ads-api-list','ShopifyApp\FacebookController@facebookApiList')->name('facebook_ads_api_list');
+	Route::match(['POST','GET'],'facebook-ads-api-detail','ShopifyApp\FacebookController@facebookApiDetail')->name('facebook_ads_api_detail');
+
+	Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
+	Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
+	Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->name('show_google_ads');
+	Route::get('google-ads-api-list', 'ShopifyApp\GoogleController@googleAdsApiList')->name('google_ads_api_list');
+	Route::match(['POST','GET'],'google-ads-api-detail', 'ShopifyApp\GoogleController@googleAdsApiDetail')->name('google_ads_api_detail');
+	Route::get('google/customer-id-list', 'ShopifyApp\GoogleController@getCustomerIdList')->name('customer_id_list');
+	Route::get('google/campaign-list/{customer_id}', 'ShopifyApp\GoogleController@getCampaignList')->name('google_ads_campaign_list');
+
+	Route::get('login/snapchat', 'ShopifyApp\SnapchatController@redirectToProvider')->name('connect_snapchat');
+	Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProviderCallback')->name('snapchat_callback');
+	Route::get('snapchat/snapchat-api-list', 'ShopifyApp\SnapchatController@snapchatApiList')->name('snapchat_api_list');
+	Route::match(['POST','GET'],'snapchat/snapchat-api-detail', 'ShopifyApp\SnapchatController@snapchatApiDetail')->name('snapchat_api_detail');
+
+	Route::get('snapchat/organisation-list', 'ShopifyApp\SnapchatController@organisationList')->name('organisation_list');
+	Route::get('snapchat/ad-accounts/{organization_id}', 'ShopifyApp\SnapchatController@adAccountList')->name('ad_account_list');
+	Route::get('snapchat/campaign-list/{ad_account_id}', 'ShopifyApp\SnapchatController@campaignList')->name('campaign_list');
+	Route::get('snapchat/ads-list/{campaign_id}', 'ShopifyApp\SnapchatController@adsList')->name('ads_list');
+	Route::get('snapchat/ad-account-invoice-list/{ad_account_id}', 'ShopifyApp\SnapchatController@adAccountInvoiceList')->name('ad_account_invoice_list');
+
+	Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
+	Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');
+	Route::get('paypal/diputes-list', 'ShopifyApp\PaypalController@disputeList')->name('paypal_dispute_list');
+	
+	Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
+	Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
+
 });
 
 
-// Generate a login URL
-Route::get('facebook/login','ShopifyApp\FacebookController@facebookLogin')->name('facebook_login');
-// Endpoint that is redirected to after an authentication attempt
-Route::get('facebook/callback','ShopifyApp\FacebookController@facebookCallback')->name('facebook_callback');
-Route::get('facebook-ads-api-list','ShopifyApp\FacebookController@facebookApiList')->name('facebook_ads_api_list');
-Route::match(['POST','GET'],'facebook-ads-api-detail','ShopifyApp\FacebookController@facebookApiDetail')->name('facebook_ads_api_detail');
-
-Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
-Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
-Route::get('google-ads-data', 'ShopifyApp\GoogleController@fetchGoogleAds')->name('show_google_ads');
-Route::get('google-ads-api-list', 'ShopifyApp\GoogleController@googleAdsApiList')->name('google_ads_api_list');
-Route::match(['POST','GET'],'google-ads-api-detail', 'ShopifyApp\GoogleController@googleAdsApiDetail')->name('google_ads_api_detail');
-
-Route::get('login/snapchat', 'ShopifyApp\SnapchatController@redirectToProvider')->name('connect_snapchat');
-Route::get('login/snapchat/callback', 'ShopifyApp\SnapchatController@handleProviderCallback')->name('snapchat_callback');
-Route::get('snapchat/snapchat-api-list', 'ShopifyApp\SnapchatController@snapchatApiList')->name('snapchat_api_list');
-Route::match(['POST','GET'],'snapchat/snapchat-api-detail', 'ShopifyApp\SnapchatController@snapchatApiDetail')->name('snapchat_api_detail');
-
-Route::get('snapchat/organisation-list', 'ShopifyApp\SnapchatController@organisationList')->name('organisation_list');
-Route::get('snapchat/ad-accounts/{organization_id}', 'ShopifyApp\SnapchatController@adAccountList')->name('ad_account_list');
-Route::get('snapchat/campaign-list/{ad_account_id}', 'ShopifyApp\SnapchatController@campaignList')->name('campaign_list');
-Route::get('snapchat/ads-list/{campaign_id}', 'ShopifyApp\SnapchatController@adsList')->name('ads_list');
-Route::get('snapchat/ad-account-invoice-list/{ad_account_id}', 'ShopifyApp\SnapchatController@adAccountInvoiceList')->name('ad_account_invoice_list');
-
-Route::get('login/paypal', 'ShopifyApp\PaypalController@redirectToProvider')->name('connect_paypal');
-Route::get('login/paypal/callback', 'ShopifyApp\PaypalController@handleProviderCallback')->name('paypal_callback');
-Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
-Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
 
 
 
