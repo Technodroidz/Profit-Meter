@@ -35,9 +35,11 @@ class PaypalController extends Controller
             return redirect()->route('business_integration')->with('error',$request->error_description);
         }
         $user = Socialite::driver('paypal_sandbox')->user();
+        
         $insert_array = [
             'user_id'          => Auth::User()->id,
             'paypal_id'        => $user->id,
+            'token_id'         => $user->accessTokenResponseBody['id_token'],
             'token'            => $user->token,
             'refresh_token'    => $user->refreshToken,
             'expires_in'       => $user->expiresIn,
@@ -80,7 +82,44 @@ class PaypalController extends Controller
         $provider->setApiCredentials($config);
         $provider->setAccessToken($token_array);
         $disputes = $provider->listDisputes();
-        pp($disputes);
+        if(isset($disputes['type']) && $disputes['type'] == 'error'){
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://api-m.sandbox.paypal.com/v1/oauth2/token',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'GET',
+              CURLOPT_POSTFIELDS => 'grantType=refreshToken&refreshToken='.$paypal_account->token,
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$paypal_account->token_id,
+                'Content-Type: application/x-www-form-urlencoded'
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $response = json_decode($response,1);
+            if(isset($response['access_token'])){
+                UserPaypalAccount::where('user_id',Auth::User()->id)->update(['token'=>$response['access_token']]);
+                $token_array = [
+                    'access_token' => $response['access_token'],
+                    'token_type'   => 'Bearer',
+                ];
+                $provider->setAccessToken($token_array);
+                $disputes = $provider->listDisputes();
+                $response['disputes'] = $disputes;
+            }
+        }else{
+            $response['disputes'] = $disputes;
+        }
+        // pp($response);
         return view('business_app/content_template/paypal_disputes_list',$response);
     }
 

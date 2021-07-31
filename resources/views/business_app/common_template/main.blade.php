@@ -350,8 +350,13 @@
             </div>
         </div>
     </div>
+<!-- Loader html -->
+    
+
+<!-- Loader Html Ends -->
 </section>
 <!-- main content part end -->
+
 
 <!-- ### CHAT_MESSAGE_BOX   ### -->
 
@@ -604,6 +609,8 @@ $(function() {
 @yield('script')
 
 </body>
+
+<div class="se-pre-con"></div>
 
 <!-- Mirrored from demo.dashboardpack.com/cryptocurrency-html/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 09:53:00 GMT -->
 </html>

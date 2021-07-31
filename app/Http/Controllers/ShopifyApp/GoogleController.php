@@ -188,22 +188,58 @@ class GoogleController extends Controller
             // $customer_id = $google_account->google_ads_customer_id;
 
             $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
-
+            
             // Issues a request for listing all accessible customers.
             $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
-
+            
+            
             // Iterates over all accessible customers' resource names and prints them.
             foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
                 /** @var string $resourceName */
                 
                 $customer_id = str_replace("customers/","",$resourceName);
-                if($customer_id == '9957336839' ){
+                if($customer_id == '4795273194' ){
                     $customer    = $customerServiceClient->getCustomer(ResourceNames::forCustomer($customer_id));
+
+                    // $query = 'SELECT customer_client.client_customer, customer_client.level,'
+                    //     . ' customer_client.manager, customer_client.descriptive_name,'
+                    //     . ' customer_client.currency_code, customer_client.time_zone,'
+                    //     . ' customer_client.id FROM customer_client WHERE customer_client.level <= 1';
+
+                    // // Adds the root customer ID to the list of IDs to be processed.
+
+                    // // Performs a breadth-first search algorithm to build an associative array mapping
+                    // // managers to their child accounts ($customerIdsToChildAccounts).
+
+                    // // Issues a search request by specifying page size.
+                    // /** @var GoogleAdsServerStreamDecorator $stream */
+                    // $googleAdsClient = (new GoogleAdsClientBuilder())
+                    // ->withOAuth2Credential($oAuth2Credential)
+                    // ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+                    // ->withLoginCustomerId('4795273194')
+                    // // ...
+                    // ->build();
+
+                    // $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+
+                    // $stream = $googleAdsServiceClient->searchStream(
+                    //     $customer_id,
+                    //     $query
+                    // );
+                    // pp($stream);
+                    // // Iterates over all elements to get all customer clients under the specified customer's
+                    // // hierarchy.
+
+                    // foreach ($stream->iterateAllElements() as $googleAdsRow) {
+                    //     /** @var GoogleAdsRow $googleAdsRow */
+                    //     $customerClient = $googleAdsRow->getCustomerClient();
+                    // }
                 }
 
                 $customer_list[] = [
                     'customer_id'       => $customer_id,
                     'descriptive_name'  => isset($customer)?$customer->getDescriptiveName():'',
+                    'client_customer_id' => ''
                 ];
             }
             $response['customer_list'] = $customer_list;
@@ -213,42 +249,100 @@ class GoogleController extends Controller
 
     public function getCampaignList(Request $request,$customer_id)
     {
-        // pp($customer_id);
         $google_account = UserGoogleAccount::where('user_id',Auth::User()->id)->first();
         if(!empty($google_account)){
-            $oAuth2Credential = (new OAuth2TokenBuilder())
-                ->withClientId(env('GOOGLE_CLIENT_ID'))
-                ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
-                ->withRefreshToken($google_account->refresh_token)
-                // ...
-                ->build();
+            // $oAuth2Credential = (new OAuth2TokenBuilder())
+            //     ->withClientId(env('GOOGLE_CLIENT_ID'))
+            //     ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
+            //     ->withRefreshToken($google_account->refresh_token)
+            //     // ...
+            //     ->build();
 
-            $googleAdsClient = (new GoogleAdsClientBuilder())
-                ->withOAuth2Credential($oAuth2Credential)
-                ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
-                // ...
-                ->build();
+            // $googleAdsClient = (new GoogleAdsClientBuilder())
+            //     ->withOAuth2Credential($oAuth2Credential)
+            //     ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+            //     ->withLoginCustomerId($customer_id)
+            //     // ...
+            //     ->build();
 
-            $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
-            // Creates a query that retrieves all campaigns.
-            $query = 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id';
-            // Issues a search stream request.
-            /** @var GoogleAdsServerStreamDecorator $stream */
+            // $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+            // // Creates a query that retrieves all campaigns.
+            // $query = 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id';
+            // // Issues a search stream request.
+            // /** @var GoogleAdsServerStreamDecorator $stream */
 
-            $stream = $googleAdsServiceClient->searchStream((int)$customer_id, $query);
+            // $stream = $googleAdsServiceClient->searchStream('6325332442', $query);
 
-            // Iterates over all rows in all messages and prints the requested field values for
-            // the campaign in each row.
-            pp($stream);
-            foreach ($stream->iterateAllElements() as $googleAdsRow) {
-                pp($googleAdsRow);
-                /** @var GoogleAdsRow $googleAdsRow */
-                printf(
-                    "Campaign with ID %d and name '%s' was found.%s",
-                    $googleAdsRow->getCampaign()->getId(),
-                    $googleAdsRow->getCampaign()->getName(),
-                    PHP_EOL
-                );
+            // // Iterates over all rows in all messages and prints the requested field values for
+            // // the campaign in each row.
+            // pp($stream);
+            // foreach ($stream->iterateAllElements() as $googleAdsRow) {
+            //     pp($googleAdsRow);
+            //     /** @var GoogleAdsRow $googleAdsRow */
+            //     printf(
+            //         "Campaign with ID %d and name '%s' was found.%s",
+            //         $googleAdsRow->getCampaign()->getId(),
+            //         $googleAdsRow->getCampaign()->getName(),
+            //         PHP_EOL
+            //     );
+            // }
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.googleapis.com/oauth2/v3/token',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS => 'grant_type=refresh_token&client_id='.env('GOOGLE_CLIENT_ID').'&client_secret='.env('GOOGLE_CLIENT_SECRET').'&refresh_token='.$google_account->refresh_token,
+              CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $response = json_decode($response,1);
+
+            if(isset($response['access_token'])){
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => 'https://googleads.googleapis.com/v8/customers/6325332442/googleAds:searchStream',
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => '',
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 0,
+                  CURLOPT_FOLLOWLOCATION => true,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => 'POST',
+                  CURLOPT_POSTFIELDS =>'{
+                    "query":"SELECT campaign.id, campaign.name,campaign.status,metrics.clicks,metrics.impressions,metrics.cost_micros FROM campaign ORDER BY campaign.id"
+                }',
+                  CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer '.$response['access_token'],
+                    'developer-token: '.env('GOOGLE_ADS_DEVELOPER_TOKEN'),
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                    'login-customer-id: '.$customer_id
+                  ),
+                ));
+
+                $campaign_response = curl_exec($curl);
+
+                curl_close($curl);
+                $campaign_response = json_decode($campaign_response,1);
+                
+                $response['customer_id'] = $customer_id;
+                $response['campaign_list'] = $campaign_response[0]['results'];
+                // pp($response);
+                return view('business_app/content_template/google_ads_campaign_list',$response);
+
             }
         }
     }

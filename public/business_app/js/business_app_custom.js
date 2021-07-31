@@ -11,6 +11,8 @@ $(document).on('click','.dismiss_alert',function(){
 
 $('.form_modal').on('hide.bs.modal', function () {
     console.log('event trigger hua');
+    $(this).find('button').attr('disabled',false);
+    $(this).find('.ajax_loader').css('display','none');
     $(this).find('form')[0].reset();
     $(this).find('.error_div').css('display','none');
 });
@@ -29,6 +31,18 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
     $modal              = $this.data('modal');
     var skip_id         = $this.data('enable_element');
     var skip            = $this.data('skip');
+
+    var disable_element_class = $this.data('disable_element_class');
+    var loader = $this.data('loader');
+
+    if(loader != undefined){
+        $(loader).css('display','block');
+    }
+
+    if(disable_element_class != undefined){
+        $(disable_element_class).attr('disabled',true);
+    }
+
     if(skip != undefined){
         if(skip == false ){
             $(skip_id).attr('disabled',true);

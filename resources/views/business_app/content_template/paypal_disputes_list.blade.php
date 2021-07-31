@@ -32,110 +32,37 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Dispute ID</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Reason</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Dispute State</th>
+                                        <th scope="col">Dispute Amount Currency</th>
+                                        <th scope="col">Dispute Amount Value</th>
+                                        <th scope="col">Dispute Life Cycle Stage</th>
+                                        <th scope="col">Created At</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    <!-- <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
+                                    @foreach ($disputes['items'] as $value)
+
                                     <tr>
                                         <td>
                                             <div class="trade d-flex align-items-center">
                                                
-                                                <span class="ml-3">55612</span>
+                                                <span class="ml-3">{{$value['dispute_id']}}</span>
                                             </div>
                                         </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
+                                        <td> {{$value['reason']}} </td>
+                                        <td> {{$value['status']}} </td>
+                                        <td> {{$value['dispute_state']}} </td>
+                                        <td> {{$value['dispute_amount']['currency_code']}} </td>
+                                        <td> {{$value['dispute_amount']['value']}}</td>
+                                        <td> {{$value['dispute_life_cycle_stage']}}</td>
+                                        <td> {{$value['create_time']}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr>
-                                     <tr>
-                                        <td>
-                                            <div class="trade d-flex align-items-center">
-                                               
-                                                <span class="ml-3">55612</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            Bathing Shampoo</td>
-                                        <td>451</td>
-                                        <td>5654</td>
-                                        <td>5624</td>
-                                        
-                                    </tr> -->
+
+                                    @endforeach
                                    
                                 </tbody>
                             </table>

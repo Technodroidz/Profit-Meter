@@ -181,9 +181,13 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="generate_stripe_token" >Pay</button>
-                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=subscribe_stripe_payment]" data-show_error="#show_stripe_error" style="display:none;">Pay</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button id = "stripe_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span class="sr-only">Loading...</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary stripe_btn" id="generate_stripe_token" >Pay</button>
+                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=subscribe_stripe_payment]" data-show_error="#show_stripe_error" style="display:none;" data-disable_element_class=".stripe_btn" data-loader="#stripe_loader" >Pay</button>
+                    <button type="button" class="btn btn-primary stripe_btn" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -227,8 +231,12 @@
                     <p><strong>Click on "Initiate Payment" to pay with your paypal account.</strong></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=subscribe_paypal_payment]" data-show_error="#show_paypal_error" >Initiate Payment</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button id = "paypal_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span class="sr-only">Loading...</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary paypal_btn" data-request="web-ajax-submit" data-target="[role=subscribe_paypal_payment]" data-show_error="#show_paypal_error" data-disable_element_class=".paypal_btn" data-loader="#paypal_loader" >Initiate Payment</button>
+                    <button type="button" class="btn btn-primary paypal_btn" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
