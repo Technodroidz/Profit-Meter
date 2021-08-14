@@ -24,16 +24,17 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
 
     var $this           = $(this);
     var $target         = $this.data('target');
-    var $replace_element= $this.attr('data-replace_element');
+    var $replace_element           = $this.attr('data-replace_element');
+    var add_more_append_element    = $this.attr('data-add_more_append_element');
     var $url            = $($target).attr('action');
     var $method         = $($target).attr('method');
-    var $show_error     = $this.data('show_error');
     $modal              = $this.data('modal');
     var skip_id         = $this.data('enable_element');
     var skip            = $this.data('skip');
 
-    var disable_element_class = $this.data('disable_element_class');
-    var loader = $this.data('loader');
+    var $show_error             = $($target).find('.show_error_msg');
+    var disable_element_class   = $($target).find('.disable_btn_class');
+    var loader                  = $($target).find('.ajax_loader');
 
     if(loader != undefined){
         $(loader).css('display','block');
@@ -51,8 +52,7 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
         }
     }
     
-    
-    $data               = new FormData($($target)[0]);
+    $data = new FormData($($target)[0]);
 
     if($show_error != undefined){
         $($show_error).html('');
@@ -70,7 +70,8 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
         contentType: false, 
         processData: false,
         success: function($response){
-            // console.log($response);
+            
+
             if($response.success == false){
                 if($show_error != undefined){
                     $($show_error).html($response.message);
@@ -78,11 +79,17 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
                 }
             }else{
                 if($response.success == true){
+                    if($response.message){
+                        $('#show_success_message').html($response.message);
+                        $('.success_message_div').css('display','block');
+                    }
+
                     if($response.data){
                         if($response.data.replace_html == true && $replace_element != undefined){
                             console.log($response.data.html_view);
                             $($replace_element).html($response.data.html_view);
                         }
+
 
                         if($response.data.close_modal == true){
                             $('.modal').modal('hide');
@@ -92,16 +99,30 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
                             window.location.href = $response.data.redirect_url;
                         }
 
-                        if($response.message){
-                            $('#show_success_message').html($response.message);
-                            $('.success_message_div').css('display','block');
-                        }
                         
                         if($response.data.reload){
                             window.location.href = window.location;
                         }
+
+                        if(add_more_append_element){
+
+                            if($response.data.append_html){
+                                $(add_more_append_element).find('form').before($response.data.append_html);
+                                $($target)[0].reset();
+                            }
+                        }
+
                     }
+                    
                 }
+            }
+            
+            if(loader != undefined){
+                $(loader).css('display','none');
+            }
+
+            if(disable_element_class != undefined){
+                $(disable_element_class).attr('disabled',false);
             }
 
             // if($response.status == 'success'){
@@ -344,6 +365,117 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
             // }
         }
     }); 
+});
+
+$(document).on('click','[data-request="inline-post-ajax"]',function(){
+
+    var $_this              = $(this);
+    var $url                = $_this.data('url');
+    var $target             = $_this.data('target');
+    var $variable           = $_this.data('variable');
+    var $variable_value     = $_this.data($variable);
+    var $show_error         = $_this.data('show_error');
+    var $swal_message       = $_this.data('swal_message');
+        
+    var $data               = {};
+    
+    // if($variable){
+    //     $data[$variable]        = $variable_value;
+    //     $data['_token']         = $('input[name="_token"]').val();
+    // }
+
+    let formData = new FormData();
+    if($variable){
+        formData.append($variable, $variable_value);
+        formData.append('_token', $('input[name="_token"]').val());
+    }
+
+    var $method         = $_this.data('method');
+    
+    var disable_element_class = $_this.data('disable_element_class');
+    var loader = $_this.data('loader');
+
+    if($show_error != undefined){
+        $($show_error).html('');
+    }
+
+    $('#show_success_message').html('');
+
+    if(!$method){ $method = 'get'; }
+
+    swal({
+      title: $swal_message ? $swal_message : 'Are You Sure',
+      // text: "Once deleted, you will not be able to recover this file!",
+      //icon: "warning",
+      buttons: true,
+      successMode: true,
+    })
+    .then(function(willDelete) {
+        if (willDelete) {   //end
+            if(loader != undefined){
+                $(loader).css('display','block');
+            }
+
+            if(disable_element_class != undefined){
+                $(disable_element_class).attr('disabled',true);
+            }
+
+            $.ajax({
+                url: $url, 
+                data: formData,
+                cache: false, 
+                type: $method, 
+                dataType: 'json',
+                contentType: false, 
+                processData: false,
+                success: function($response){
+                    if($response.success == false){
+                        if($show_error != undefined){
+                            $($show_error).html($response.message);
+                            $('.error_div').css('display','block');
+                        }
+                    }else{
+                        if($response.success == true){
+                            if($response.message){
+                                $('#show_success_message').html($response.message);
+                                $('.success_message_div').css('display','block');
+                            }
+
+                            if($response.data){
+                                if($response.data.replace_html == true && $replace_element != undefined){
+                                    console.log($response.data.html_view);
+                                    $($replace_element).html($response.data.html_view);
+                                }
+
+                                if($response.data.close_modal == true){
+                                    $('.modal').modal('hide');
+                                }
+
+                                if($response.data.redirect_url){
+                                    window.location.href = $response.data.redirect_url;
+                                }
+
+                                
+                                if($response.data.reload){
+                                    window.location.href = window.location;
+                                }
+                            }
+                        }
+                    }
+
+                    if(loader != undefined){
+                        $(loader).css('display','none');
+                    }
+
+                    if(disable_element_class != undefined){
+                        $(disable_element_class).attr('disabled',false);
+                    }
+                }
+                
+            });
+        }
+    });
+    
 });
 
 function show_validation_error(msg) {

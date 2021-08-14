@@ -133,7 +133,7 @@
             <ul>
                 <li><a href="{{route('business_expenses_product_cost')}}" data-link="product_cost">Product Costs</a></li>
                 <li><a href="{{route('business_expenses_shipping_cost')}}" data-link="shipping_cost">Shipping Costs</a></li>
-                <li><a href="{{route('business_expenses_handling_cost')}}" data-link="handling_cost">Handling Costs</a></li>
+                <!-- <li><a href="{{route('business_expenses_handling_cost')}}" data-link="handling_cost">Handling Costs</a></li> -->
                 <li><a href="{{route('business_expenses_transaction_cost')}}" data-link="transaction_cost">Transaction Costs</a></li>
                 <li><a href="{{route('business_category')}}" data-link="business_category">Category</a></li>
                 <li><a href="{{route('business_expenses_custom_cost')}}" data-link="custom_cost">Custom Costs</a></li>
@@ -340,7 +340,7 @@
         @yield('content')
 
     </div>
-
+    @yield('modal')
     <!-- footer part -->
     <div class="container-fluid">
         <div class="row">

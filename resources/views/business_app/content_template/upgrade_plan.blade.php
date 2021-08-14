@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
-                      <strong id="show_stripe_error">Error</strong>
+                      <strong id="show_stripe_error" class="show_error_msg">Error</strong>
                       <button type="button" class="close dismiss_alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -185,9 +185,9 @@
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                       <span class="sr-only">Loading...</span>
                     </button>
-                    <button type="button" class="btn btn-secondary stripe_btn" id="generate_stripe_token" >Pay</button>
-                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=subscribe_stripe_payment]" data-show_error="#show_stripe_error" style="display:none;" data-disable_element_class=".stripe_btn" data-loader="#stripe_loader" >Pay</button>
-                    <button type="button" class="btn btn-primary stripe_btn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary disable_btn_class" id="generate_stripe_token" >Pay</button>
+                    <button type="button" class="btn btn-secondary" data-request="web-ajax-submit" data-target="[role=subscribe_stripe_payment]" data-show_error="#show_stripe_error" style="display:none;" data-disable_element_class=".disable_btn_class" data-loader="#stripe_loader" >Pay</button>
+                    <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -207,7 +207,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
-                      <strong id="show_paypal_error">Error</strong>
+                      <strong id="show_paypal_error" class="show_error_msg">Error</strong>
                       <button type="button" class="close dismiss_alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -235,8 +235,8 @@
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                       <span class="sr-only">Loading...</span>
                     </button>
-                    <button type="button" class="btn btn-secondary paypal_btn" data-request="web-ajax-submit" data-target="[role=subscribe_paypal_payment]" data-show_error="#show_paypal_error" data-disable_element_class=".paypal_btn" data-loader="#paypal_loader" >Initiate Payment</button>
-                    <button type="button" class="btn btn-primary paypal_btn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=subscribe_paypal_payment]" data-show_error="#show_paypal_error" data-disable_element_class=".disable_btn_class" data-loader="#paypal_loader" >Initiate Payment</button>
+                    <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>

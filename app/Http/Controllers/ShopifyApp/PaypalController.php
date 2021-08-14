@@ -56,6 +56,7 @@ class PaypalController extends Controller
     public function disputeList()
     {
         $paypal_account = UserPaypalAccount::where('user_id',Auth::User()->id)->first();
+        $response = [];
         $response['paypal_account'] = $paypal_account;
         $token_array = [
             'access_token' => $paypal_account->token,

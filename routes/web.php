@@ -152,7 +152,17 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	Route::get('business/reports/disputes','ShopifyApp\ReportController@disputes')->name('business_report_disputes');
 
 	Route::get('business/expenses/product-cost','ShopifyApp\ExpenseController@productCost')->name('business_expenses_product_cost');
+	Route::post('sync-shopify','ShopifyApp\ExpenseController@syncShopifyData')->name('sync_shopify');
+	Route::post('product-ajax-list','ShopifyApp\ExpenseController@productListAjax')->name('product_ajax_list');
+	Route::post('add-handling-cost','ShopifyApp\ExpenseController@addHandlingCost')->name('add_handling_cost');
+	Route::post('add-product-cost-per-product','ShopifyApp\ExpenseController@addProductCost')->name('add_product_cost');
+	Route::post('delete-product-cost-per-product','ShopifyApp\ExpenseController@deleteProductCost')->name('delete_product_cost');
+
 	Route::get('business/expenses/shipping-cost','ShopifyApp\ExpenseController@shippingCost')->name('business_expenses_shipping_cost');
+	Route::post('business/expenses/add-shipping-country-rule','ShopifyApp\ExpenseController@addCountryRule')->name('add_shipping_country_rule');
+	Route::post('business/expenses/save-shipping-cost-setting','ShopifyApp\ExpenseController@updateShippingCostSettings')->name('save_shipping_cost_setting');
+
+
 	Route::get('business/expenses/handling-cost','ShopifyApp\ExpenseController@handlingCost')->name('business_expenses_handling_cost');
 	Route::get('business/expenses/transaction-cost','ShopifyApp\ExpenseController@transactionCost')->name('business_expenses_transaction_cost');
 	Route::get('business/expenses/custom-cost','ShopifyApp\ExpenseController@customCost')->name('business_expenses_custom_cost');
@@ -220,6 +230,7 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	
 	Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
 	Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
+
 
 });
 

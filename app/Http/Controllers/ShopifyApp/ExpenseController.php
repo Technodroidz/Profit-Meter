@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\BusinessCategory;
 use App\Model\BusinessCustomCost;
 use Illuminate\Support\Str;
+use App\Jobs\SyncShopifyProducts;
+use App\Model\ShopifyProduct;
+use App\Model\ShopifyProductVariant;
+use App\Model\ShippingCostCountryRule;
+use App\Model\ShippingCostSetting;
+use App\Model\ShopifyProductVariantCost;
+use Validator;
+use App\Exceptions\AppException;
+
 class ExpenseController extends Controller
 {
     public function productCost(Request $request)
@@ -21,17 +30,178 @@ class ExpenseController extends Controller
         $shopify    = new \PHPShopify\ShopifySDK($config);
         
         $products = $shopify->Product->get();
-        // pp($products);
-        $data = ['current_link' => 'product_cost','products'=>$products];
+        
+        $data = ['current_link' => 'product_cost','products'=>$products,'country_list'=>country_list()];
 
         return view('business_app/content_template/product_cost',$data);
     }
 
+    public function productListAjax(Request $request)
+    {
+
+        $products = ShopifyProduct::getShopifyProducts(false,true,$request->all());
+        
+        $data = [];
+        foreach ($products as $key => $value) {
+            $profitrack_product_cost = ShopifyProductVariantCost::where('variant_id',$value->variant_id)->where('deleted_at',null)->get();
+            
+            if(!empty($profitrack_product_cost)){
+                $profitrack_product_cost = $profitrack_product_cost->toArray();
+                $profitrack_product_json = urlencode(json_encode(['product_json' => $profitrack_product_cost]));
+            }else{
+                $profitrack_product_json = urlencode(json_encode(['product_json' => '']));
+            }
+
+            $row = [];
+            $row[]  = $value->product_id;
+            $row[]  = $value->product_title;
+            $row[]  = $value->title;
+            $row[]  = $value->product_type;
+            $row[]  = $value->price;
+            $row[]  = $value->sku;
+            $row[]  = $value->shopify_created_at;
+            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#shippingCostModal"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = $value->profitrack_handling_cost.'<button type="button" class="add_prftrck_hnd_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#handlingCostModal"><span aria-hidden="true">&plus;</span></button>';
+            $data[] = $row;
+        }
+
+        $json_array = array(
+            "draw"               => $request->draw,
+            "recordsTotal"       => ShopifyProduct::getShopifyProducts('all',true,$request->all()),
+            "recordsFiltered"    => ShopifyProduct::getShopifyProducts(true,true,$request->all()),
+            "data"               => $data,
+        );
+
+        return json_encode($json_array);
+    }
+
     public function shippingCost(Request $request)
     {
-        $data = ['current_link' => 'shipping_cost'];
+        $country_rules          = ShippingCostCountryRule::get();
+        $shipping_cost_setting  = ShippingCostSetting::get();
+        if(!empty($shipping_cost_setting)){
+            $shipping_cost_setting = $shipping_cost_setting->toArray();
+            $shipping_cost_setting = make_key_value_pair($shipping_cost_setting);
+        }else{
+            $shipping_cost_setting = [];
+        }
+
+        $data = ['shipping_cost_setting' => $shipping_cost_setting,'country_list'=>country_list(),'country_rules'=> $country_rules,'current_link' => 'shipping_cost'];
 
         return view('business_app/content_template/shipping_cost',$data);
+    }
+
+    public function addCountryRule(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'country'           => 'required', 
+                'shipping_cost'     => 'required|numeric', 
+            ];
+
+            $validation_attributes = [
+                'country'           => 'Country', 
+                'shipping_cost'     => 'Shipping Cost', 
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                $insert_array = [
+                    'country' => $request->country,
+                    'shipping_cost' => $request->shipping_cost,
+                ];
+
+                ShippingCostCountryRule::updateOrInsert(['country' => $request->country],$insert_array);
+
+                $json_array = ['close_modal'=>true,'reload' => true];
+                session()->flash('success', 'Country Rule Added successfully.');
+                return response()->data($json_array,'Country Rule Added.');
+            }
+        }
+        throw new AppException('Invalid http method');
+    }
+
+    public function addHandlingCost(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'variant_id'        => 'required',
+                'handling_cost'     => 'required|numeric', 
+            ];
+
+            $validation_attributes = [ 
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+
+                ShopifyProductVariant::where('variant_id',$request->variant_id)->update(['profitrack_handling_cost' => $request->handling_cost]);
+
+                $json_array = ['close_modal'=>true];
+                return response()->data($json_array,'Handling Cost Updated.');
+            }
+        }
+        throw new AppException('Invalid http method');
+    }
+
+    public function updateShippingCostSettings(Request $request){
+        if($request->isMethod('post')){
+
+            $validation_array = [
+                'multiply_shipping_fee'     => 'in:0,1',
+                'fallback_country_rule'     => 'in:0,1', 
+                'multiply_handling_fee'     => 'in:0,1', 
+                'shipping_fee_together'     => 'in:0,1', 
+                'highest_shipping_fee'      => 'in:0,1', 
+                'highest_handling_fee'      => 'in:0,1', 
+            ];
+
+            $validation_attributes = [];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                $request = $request->all();
+
+                $request['multiply_shipping_fee'] = @$request['multiply_shipping_fee']     ? 1 : 0;
+                $request['fallback_country_rule'] = @$request['fallback_country_rule']     ? 1 : 0;
+                $request['multiply_handling_fee'] = @$request['multiply_handling_fee']     ? 1 : 0;
+                $request['shipping_fee_together'] = @$request['shipping_fee_together']     ? 1 : 0;
+                $request['highest_shipping_fee']  = @$request['highest_shipping_fee']      ? 1 : 0;
+                $request['highest_handling_fee']  = @$request['highest_handling_fee']      ? 1 : 0;
+
+                foreach ($request as $key => $value) {
+                    if($key != '_token'){
+                        $insert_array = [
+                            'key'   => $key,
+                            'value' => $value,
+                        ];
+                        ShippingCostSetting::updateOrInsert(['key' => $key],$insert_array);
+                    }
+                }
+
+                return response()->success('Shipping Settings Saved.');
+            }
+        }
+        throw new AppException('Invalid http method');
     }
 
     public function handlingCost(Request $request)
@@ -128,5 +298,92 @@ class ExpenseController extends Controller
         }
         return back()
             ->with('success', 'Category deleted successfully');
+    }
+
+    public function syncShopifyData(Request $request)
+    {
+        if(isset($request->module_name) && $request->module_name == 'shopify_products'){
+            SyncShopifyProducts::dispatch(Auth::User()->id);
+            return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
+        }
+    }
+
+    public function addProductCost(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'product_cost' => 'required', 
+                'start_date'   => 'required', 
+                'end_date'     => 'required', 
+            ];
+
+            $validation_attributes = [
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                $insert_array = [
+                    'variant_id'                => $request->variant_id,
+                    'profitrack_product_cost'   => $request->product_cost,
+                    'start_date'                => date('Y-m-d',strtotime($request->start_date)),
+                    'end_date'                  => date('Y-m-d',strtotime($request->end_date)),
+                    'created_at'                => date('Y-m-d H:i:s')
+                ];
+
+                $id = ShopifyProductVariantCost::insertGetId($insert_array);
+
+                $json_array = ['append_html' => '<div class="row">
+                        <div class="col-md-3">
+                            <input type="text" name="product_cost" value="'.$request->product_cost.'" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="start_date" value="'.$request->start_date.'" readonly="readonly">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="end_date" value="'.$request->end_date.'" readonly="readonly">
+                        </div>
+                        <div class="col-md-3">
+                            <button id = "shopify_loader_'.$id.'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="close" aria-label="Close" data-url="'.route('delete_product_cost').'" data-request="inline-post-ajax" data-method="post" data-variable="product_cost_id" data-product_cost_id="'.$id.'" data-show_error="#show_shopify_error" data-disable_element_class=".shopify_btn_'.$id.'" data-loader="#shopify_loader_'.$id.'" data-swal_message="Are You Sure to Delete.">
+                              <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                            </button>
+                        </div>
+                    </div>'];
+                return response()->data($json_array,'');
+            } 
+        }
+    }
+
+    public function deleteProductCost(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'product_cost_id' => 'required' 
+            ];
+
+            $validation_attributes = [
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                
+                ShopifyProductVariantCost::where('id',$request->product_cost_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                return response()->success('');
+            } 
+        }
     }
 }

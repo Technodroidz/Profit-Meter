@@ -177,6 +177,18 @@ $("#sidebar_menu >li a").each(function() {
         }
     });
 
+    $(document).ready(function() {
+        var date_picker = $('.start_datepicker');
+        if(date_picker.length){
+            date_picker.datepicker();
+        }
+
+        var date_picker = $('.end_datepicker');
+        if(date_picker.length){
+            date_picker.datepicker();
+        }
+    });
+
 
 
     //progressbar js
