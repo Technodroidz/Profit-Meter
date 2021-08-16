@@ -1,3 +1,7 @@
+var lms_table_active;
+var lms_table_active2;
+var lms_table_active3;
+
 (function ($) {
     "use strict";
 
@@ -318,7 +322,7 @@ $("#sidebar_menu >li a").each(function() {
 
 
   if ($('.lms_table_active').length) {
-    $('.lms_table_active').DataTable({
+    lms_table_active = $('.lms_table_active').DataTable({
         bLengthChange: false,
         "bDestroy": true,
         language: {
@@ -337,7 +341,7 @@ $("#sidebar_menu >li a").each(function() {
     });
 }
   if ($('.lms_table_active2').length) {
-    $('.lms_table_active2').DataTable({
+    lms_table_active2 = $('.lms_table_active2').DataTable({
         bLengthChange: false,
         "bDestroy": false,
         language: {
@@ -359,7 +363,7 @@ $("#sidebar_menu >li a").each(function() {
 }
 
 if ($('.lms_table_active3').length) {
-    $('.lms_table_active3').DataTable({
+    lms_table_active3 = $('.lms_table_active3').DataTable({
         bLengthChange: false,
         "bDestroy": false,
         language: {

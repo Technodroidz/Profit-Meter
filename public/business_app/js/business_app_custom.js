@@ -383,6 +383,7 @@ $(document).on('click','[data-request="inline-post-ajax"]',function(){
     var $show_error         = $_this.data('show_error');
     var $swal_message       = $_this.data('swal_message');
     var $remove_element     = $_this.data('remove_element');
+    var remove_datatable_element     = $_this.data('remove_datatable_element');
         
     var $data               = {};
     
@@ -471,6 +472,20 @@ $(document).on('click','[data-request="inline-post-ajax"]',function(){
                             
                             if($remove_element != undefined){
                                 $($remove_element).remove();
+                            }
+
+                            if(remove_datatable_element != undefined){
+                                if(lms_table_active != undefined){
+                                    lms_table_active.row($(remove_datatable_element)).remove().draw();
+                                }
+
+                                if(lms_table_active2 != undefined){
+                                    lms_table_active2.row($(remove_datatable_element)).remove().draw();
+                                }
+
+                                if(lms_table_active3 != undefined){
+                                    lms_table_active3.row($(remove_datatable_element)).remove().draw();
+                                }
                             }
                         }
                     }

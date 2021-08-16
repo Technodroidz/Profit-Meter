@@ -163,6 +163,7 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 	Route::get('business/expenses/shipping-cost','ShopifyApp\ExpenseController@shippingCost')->name('business_expenses_shipping_cost');
 	Route::post('business/expenses/add-shipping-country-rule','ShopifyApp\ExpenseController@addCountryRule')->name('add_shipping_country_rule');
+	Route::post('business/expenses/delete-shipping-country-rule','ShopifyApp\ExpenseController@deleteCountryRule')->name('delete_shipping_country_rule');
 	Route::post('business/expenses/save-shipping-cost-setting','ShopifyApp\ExpenseController@updateShippingCostSettings')->name('save_shipping_cost_setting');
 
 
@@ -170,6 +171,7 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 	Route::get('business/expenses/transaction-cost','ShopifyApp\ExpenseController@transactionCost')->name('business_expenses_transaction_cost');
 	Route::post('add-transaction-cost','ShopifyApp\ExpenseController@addTransactionCost')->name('add_transaction_cost');
+	Route::post('delete-transaction-cost','ShopifyApp\ExpenseController@deleteTransactionCost')->name('delete_transaction_cost');
 
 	Route::get('business/expenses/custom-cost','ShopifyApp\ExpenseController@customCost')->name('business_expenses_custom_cost');
 

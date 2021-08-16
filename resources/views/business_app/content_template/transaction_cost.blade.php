@@ -41,15 +41,24 @@
                                     <th scope="col" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" style="width: 60%;"><b>Name</b></th>
                                     <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Percentage Fee</b></th>
                                     <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Fixed Fee</b></th>
+                                    <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Action</b></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 
                                 @foreach($transaction_cost as $list) 
-                                    <tr>
+                                    <tr id="transaction_cost_{{$list->id}}">
                                         <td>{{ucfirst($list->payment_gateway)}}</td>
                                         <td>{{$list->percentage_fee}}</td>
                                         <td>{{$list->fixed_fee}}</td>
+                                        <td>
+                                            <button id = "transaction_cost_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="close transaction_cst_btn" aria-label="Close" data-url="{{route('delete_transaction_cost')}}" data-request="inline-post-ajax" data-method="post" data-variable="transaction_cost_id" data-transaction_cost_id="{{$list->id}}" data-show_error="#transaction_cost_error" data-disable_element_class=".transaction_cst_btn" data-loader="#transaction_cost_loader" data-swal_message="Are You Sure to Delete." data-remove_datatable_element="#transaction_cost_{{$list->id}}">
+                                              <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                                            </button>
+                                        </td>
                                     </tr> 
                                 @endforeach
                             </tbody>

@@ -88,7 +88,7 @@ class ExpenseController extends Controller
 
     public function shippingCost(Request $request)
     {
-        $country_rules          = ShippingCostCountryRule::get();
+        $country_rules          = ShippingCostCountryRule::where('deleted_at',null)->get();
         $shipping_cost_setting  = ShippingCostSetting::get();
         if(!empty($shipping_cost_setting)){
             $shipping_cost_setting = $shipping_cost_setting->toArray();
@@ -128,7 +128,7 @@ class ExpenseController extends Controller
                     'shipping_cost' => $request->shipping_cost,
                 ];
 
-                ShippingCostCountryRule::updateOrInsert(['country' => $request->country],$insert_array);
+                ShippingCostCountryRule::updateOrInsert(['country' => $request->country,'deleted_at' => null],$insert_array);
 
                 $json_array = ['close_modal'=>true,'reload' => true];
                 session()->flash('success', 'Country Rule Added successfully.');
@@ -136,6 +136,30 @@ class ExpenseController extends Controller
             }
         }
         throw new AppException('Invalid http method');
+    }
+
+    public function deleteCountryRule(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'country_rule_id' => 'required' 
+            ];
+
+            $validation_attributes = [
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                ShippingCostCountryRule::where('id',$request->country_rule_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                return response()->success('Country Rule Deleted');
+            } 
+        }
     }
     
     public function updateShippingCostSettings(Request $request){
@@ -223,7 +247,7 @@ class ExpenseController extends Controller
     public function transactionCost(Request $request)
     {
         $data = ['current_link' => 'transaction_cost'];
-        $data['transaction_cost'] = TransactionCost::get();
+        $data['transaction_cost'] = TransactionCost::where('deleted_at',null)->get();
         return view('business_app/content_template/transaction_cost',$data);
     }
 
@@ -247,14 +271,14 @@ class ExpenseController extends Controller
             if($validator->fails()){
                 throw new AppException($validation_message);
             }else{
-                $transaction_cost_exists = TransactionCost::where('payment_gateway',$request->payment_gateway)->exists();
+                $transaction_cost_exists = TransactionCost::where('payment_gateway',$request->payment_gateway)->where('deleted_at',null)->exists();
                 if($transaction_cost_exists){
                     throw new AppException('Transaction Cost Exists for this Payment Gateway.');
                 }
                 $insert_array = [
                     'payment_gateway'   => $request->payment_gateway, 
                     'percentage_fee'    => $request->percentage_fee, 
-                    'fixed_fee'         => $request->fixed_fee, 
+                    'fixed_fee'         => $request->fixed_fee
                 ];
 
                 TransactionCost::insert($insert_array);
@@ -264,6 +288,30 @@ class ExpenseController extends Controller
             }
         }
         throw new AppException('Invalid http method');
+    }
+
+    public function deleteTransactionCost(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'transaction_cost_id' => 'required' 
+            ];
+
+            $validation_attributes = [
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                TransactionCost::where('id',$request->transaction_cost_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                return response()->success('Transaction Cost Deleted');
+            } 
+        }
     }
 
     public function customCost(Request $request)
