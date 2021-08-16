@@ -32,7 +32,7 @@
                         <p>Current plan based on your data<br> Shopify Transaction costs (Shopify payments 0% + 0 USD, other 0%)<a href="#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
                         </p>
 
-                        <button style="float:right;margin-right: 61px;" class="small_blue_btn active">Add Gateway</button>
+                        <button style="float:right;margin-right: 61px;" class="small_blue_btn active" data-toggle="modal" data-target="#TransactionCostModal">Add Gateway</button>
 
 
                         <table class="table lms_table_active3 dataTable no-footer dtr-inline" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info" style="width: 1140px;">
@@ -44,7 +44,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr></tr> 
+                                
+                                @foreach($transaction_cost as $list) 
+                                    <tr>
+                                        <td>{{ucfirst($list->payment_gateway)}}</td>
+                                        <td>{{$list->percentage_fee}}</td>
+                                        <td>{{$list->fixed_fee}}</td>
+                                    </tr> 
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -52,7 +59,70 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('modal')
+    
+    <div class="modal fade exampleModalCenter"  id="TransactionCostModal" tabindex="-1" role="dialog" aria-labelledby="TransactionCostModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLongTitle">Add Transaction Cost</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form role="handling_cost_form" action="{{ route('add_transaction_cost') }}" method="post">
+                    <div class="modal-body">
+                        <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
+                          <strong class="show_error_msg">Error</strong>
+                          <button type="button" class="close dismiss_alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        @csrf
+                        <label for="basic-url">Payment Gateway</label>
+
+                        <div class="input-group mb-3">
+                            <select class="custom-select mb-3 frequency_name" name="payment_gateway">
+                                <option value="">Select a gateway</option>
+                                <option value="paypal">Paypal</option>
+                                <option value="stripe">Stripe</option>
+                            </select>
+                        </div>
+                        <label for="basic-url">Percentage Fee</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">%</span>
+                            </div>
+                            <input type="text" class="form-control cost" value="" name="percentage_fee" aria-describedby="basic-addon3">
+                        </div>
+                        <label for="basic-url">Fixed Fee</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <input type="text" class="form-control cost" value="" name="fixed_fee" aria-describedby="basic-addon3">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          <span class="sr-only">Loading...</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=handling_cost_form]" >Add</button>
+                        <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+
+@section('script')
     <script>
         $(function() {
             $('input[name="daterange"]').daterangepicker({
@@ -62,5 +132,4 @@
             });
         });
     </script>
-
 @endsection

@@ -112,6 +112,12 @@ $(document).on('click','[data-request="web-ajax-submit"]',function(){
                             }
                         }
 
+                        if($response.data.replace_html_element){
+                            if($response.data.append_html){
+                                $($response.data.replace_html_element).html($response.data.append_html);
+                            }
+                        }
+
                     }
                     
                 }
@@ -376,6 +382,7 @@ $(document).on('click','[data-request="inline-post-ajax"]',function(){
     var $variable_value     = $_this.data($variable);
     var $show_error         = $_this.data('show_error');
     var $swal_message       = $_this.data('swal_message');
+    var $remove_element     = $_this.data('remove_element');
         
     var $data               = {};
     
@@ -459,6 +466,11 @@ $(document).on('click','[data-request="inline-post-ajax"]',function(){
                                 if($response.data.reload){
                                     window.location.href = window.location;
                                 }
+
+                            }
+                            
+                            if($remove_element != undefined){
+                                $($remove_element).remove();
                             }
                         }
                     }

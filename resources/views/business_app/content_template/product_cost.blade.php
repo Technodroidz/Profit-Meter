@@ -168,7 +168,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="modal fade exampleModalCenter"  id="shippingCostModal" tabindex="-1" role="dialog" aria-labelledby="shippingCostModalTitle" aria-hidden="true">
@@ -181,41 +180,43 @@
                     </button>
                 </div>
 
-                <form role="shipping_cost_form" action="{{ route('save_shipping_cost_setting') }}" method="post">
-                <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
-                      <strong class="show_error_msg">Error</strong>
-                      <button type="button" class="close dismiss_alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    @csrf
-
-                    <label>Country</label>
-                    <select class="custom-select mb-3 frequency_name" id="frequency_name" name="country">
-                        <option value="">Please Select One</option>
-                        @foreach($country_list as $country)
-                            <option value="{{$country}}">{{$country}}</option>
-                        @endforeach
-                    </select>
-                        
-                    <label for="basic-url">Shipping Cost</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
+                <div id="append_added_shipping_row" class="modal-body">
+                    <form role="shipping_cost_form" action="{{ route('add_shipping_cost_per_product') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="variant_id">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="custom-select mb-3 frequency_name" name="country">
+                                    <option value="">Please Select One</option>
+                                    @foreach($country_list as $country)
+                                        <option value="{{$country}}">{{$country}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="shipping_cost" placeholder="shipping Cost">
+                            </div>
                         </div>
-                        <input type="text" class="form-control cost" id="shipping_cost" value="" name="cost" aria-describedby="basic-addon3">
-                    </div>
+                        <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
+                          <strong id="shipping_cost_error" class="show_error_msg">Error</strong>
+                          <button type="button" class="close dismiss_alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                  <span class="sr-only">Loading...</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=shipping_cost_form]" data-add_more_append_element="#append_added_shipping_row">Add</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
-                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                      <span class="sr-only">Loading...</span>
-                    </button>
-                    <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=shipping_cost_form]" >Add</button>
                     <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -245,7 +246,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input type="text" class="form-control cost" id="handling_cost" value="" name="cost" aria-describedby="basic-addon3">
+                        <input type="text" class="form-control cost" value="" name="handling_cost" aria-describedby="basic-addon3">
                     </div>
                     <input type="hidden" name="variant_id">
                 </div>
@@ -273,7 +274,7 @@
         var saved_product_html = '';
         jQuery.each(saved_product_cost.product_json, function(index, item) {
             // do something with `item` (or `this` is also `item` if you like)
-            saved_product_html +=  '<div class="row saved_product_cost_list">'+
+            saved_product_html +=  '<div id="product_cost_'+item.id+'" class="row saved_product_cost_list">'+
                                 '<div class="col-md-3">'+
                                     '<input type="text" name="product_cost" value="'+item.profitrack_product_cost+'" readonly>'+
                                 '</div>'+
@@ -287,7 +288,7 @@
                                     '<button id = "product_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
                                         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
                                     '</button>'+
-                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_product_cost') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="product_cost_id" data-product_cost_id="'+item.id+'" data-show_error="#product_cost_error" data-disable_element_class=".product_cst_btn_'+item.id+'" data-loader="#product_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete.">'+
+                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_product_cost') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="product_cost_id" data-product_cost_id="'+item.id+'" data-show_error="#product_cost_error" data-disable_element_class=".product_cst_btn_'+item.id+'" data-loader="#product_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete." data-remove_element="#product_cost_'+item.id+'">'+
                                       '<span aria-hidden="true"><i class="fa fa-trash"></i></span>'+
                                     '</button>'+
                                 '</div>'+
@@ -295,6 +296,33 @@
         });
 
         return saved_product_html;
+    }
+
+    function savedShippingCostHtml(saved_shipping_json){
+        
+        let saved_shipping_cost = JSON.parse(saved_shipping_json);
+        var saved_shipping_html = '';
+        jQuery.each(saved_shipping_cost.product_json, function(index, item) {
+            // do something with `item` (or `this` is also `item` if you like)
+            saved_shipping_html +=  '<div id="shipping_cost_'+item.id+'" class="row saved_shipping_cost_list">'+
+                                '<div class="col-md-6">'+
+                                    '<input type="text" name="country" value="'+item.country+'" readonly="readonly">'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" name="shipping_cost" value="'+item.shipping_cost+'" readonly>'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<button id = "shipping_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
+                                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+                                    '</button>'+
+                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_shipping_cost_per_product') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="shipping_cost_id" data-shipping_cost_id="'+item.id+'" data-show_error="#shipping_cost_error" data-disable_element_class=".shipping_cst_btn_'+item.id+'" data-loader="#shipping_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete." data-remove_element="#shipping_cost_'+item.id+'">'+
+                                      '<span aria-hidden="true"><i class="fa fa-trash"></i></span>'+
+                                    '</button>'+
+                                '</div>'+
+                            '</div>';
+        });
+
+        return saved_shipping_html;
     }
 
     $('body').on('click','.remove_episode',function(e){
@@ -332,6 +360,18 @@
             let saved_product_cost_html = savedProductHtml(decodeURIComponent(saved_product_json));
             $('#append_added_product_row').find('.saved_product_cost_list').remove();
             $('#append_added_product_row').prepend(saved_product_cost_html);
+
+        });
+
+        $(document).on('click','.add_prftrck_shp_cst',function(){
+            let variant_id              = $(this).data('variant_id');
+            $('input[name="variant_id"]').val(variant_id);
+
+            let saved_shipping_json      = $(this).data('saved_product_json');
+            let saved_shipping_cost_html = savedShippingCostHtml(decodeURIComponent(saved_shipping_json));
+            console.log(saved_shipping_cost_html);
+            $('#append_added_shipping_row').find('.saved_shipping_cost_list').remove();
+            $('#append_added_shipping_row').prepend(saved_shipping_cost_html);
 
         });
 
