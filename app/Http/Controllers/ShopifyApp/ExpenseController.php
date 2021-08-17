@@ -123,15 +123,26 @@ class ExpenseController extends Controller
             if($validator->fails()){
                 throw new AppException($validation_message);
             }else{
+                $country_rule_exists = ShippingCostCountryRule::where('country',$request->country)->where('deleted_at',null)->exists();
+                if($country_rule_exists){
+                    throw new AppException('Country rule with this country already exists');
+                }
                 $insert_array = [
                     'country' => $request->country,
                     'shipping_cost' => $request->shipping_cost,
                 ];
 
-                ShippingCostCountryRule::updateOrInsert(['country' => $request->country,'deleted_at' => null],$insert_array);
+                $insert_id = ShippingCostCountryRule::insertGetId($insert_array);
 
-                $json_array = ['close_modal'=>true,'reload' => true];
-                session()->flash('success', 'Country Rule Added successfully.');
+                $delete_button = '<button id = "country_rule_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                    </button>
+                                                    <button type="button" class="close country_rule_btn" aria-label="Close" data-url="'.route('delete_shipping_country_rule').'" data-request="inline-post-ajax" data-method="post" data-variable="country_rule_id" data-country_rule_id="'.$insert_id.'" data-show_error="#country_rule_error" data-disable_element_class=".country_rule_btn" data-loader="#country_rule_loader" data-swal_message="Are You Sure to Delete." data-remove_datatable_element="#country_rule_'.$insert_id.'">
+                                                      <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                                                    </button>';
+
+                $json_array = ['close_modal'=>true,'datatable_row' => [$request->country,$request->shipping_cost,$delete_button]];
+                // session()->flash('success', 'Country Rule Added successfully.');
                 return response()->data($json_array,'Country Rule Added.');
             }
         }
@@ -157,7 +168,7 @@ class ExpenseController extends Controller
                 throw new AppException($validation_message);
             }else{
                 ShippingCostCountryRule::where('id',$request->country_rule_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-                return response()->success('Country Rule Deleted');
+                return response()->data(['remove_datatable_row'=>true],'Country Rule Deleted');
             } 
         }
     }
@@ -281,10 +292,17 @@ class ExpenseController extends Controller
                     'fixed_fee'         => $request->fixed_fee
                 ];
 
-                TransactionCost::insert($insert_array);
+                $id = TransactionCost::insertGetId($insert_array);
 
-                $json_array = ['reload' => true,'close_modal'=>true];
-                return response()->data($json_array,'Handling Cost Updated.');
+                $delete_button = '<button id = "transaction_cost_loader_'.$id.'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="close transaction_cst_btn" aria-label="Close" data-url="'.route('delete_transaction_cost').'" data-request="inline-post-ajax" data-method="post" data-variable="transaction_cost_id" data-transaction_cost_id="'.$id.'" data-show_error="#transaction_cost_error" data-disable_element_class=".transaction_cst_btn" data-loader="#transaction_cost_loader_'.$id.'" data-swal_message="Are You Sure to Delete.">
+                                              <span aria-hidden="true"><i class="fa fa-trash"></i></span>
+                                            </button>';
+
+                $json_array = ['datatable_row' => [ucfirst($request->payment_gateway),$request->percentage_fee,$request->fixed_fee,$delete_button],'close_modal'=>true,];
+                return response()->data($json_array,'Transaction Cost Updated.');
             }
         }
         throw new AppException('Invalid http method');
@@ -309,7 +327,7 @@ class ExpenseController extends Controller
                 throw new AppException($validation_message);
             }else{
                 TransactionCost::where('id',$request->transaction_cost_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-                return response()->success('Transaction Cost Deleted');
+                return response()->data(['remove_datatable_row'=>true],'Transaction Cost Deleted');
             } 
         }
     }

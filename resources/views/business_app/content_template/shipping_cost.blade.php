@@ -126,7 +126,7 @@
                                                     <button id = "country_rule_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
                                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                     </button>
-                                                    <button type="button" class="close country_rule_btn" aria-label="Close" data-url="{{route('delete_shipping_country_rule')}}" data-request="inline-post-ajax" data-method="post" data-variable="country_rule_id" data-country_rule_id="{{$value->id}}" data-show_error="#country_rule_error" data-disable_element_class=".country_rule_btn" data-loader="#country_rule_loader" data-swal_message="Are You Sure to Delete." data-remove_datatable_element="#country_rule_{{$value->id}}">
+                                                    <button type="button" class="close country_rule_btn" aria-label="Close" data-url="{{route('delete_shipping_country_rule')}}" data-request="inline-post-ajax" data-method="post" data-variable="country_rule_id" data-country_rule_id="{{$value->id}}" data-show_error="#country_rule_error" data-disable_element_class=".country_rule_btn" data-loader="#country_rule_loader" data-swal_message="Are You Sure to Delete.">
                                                       <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                                                     </button>
                                                 </td>
