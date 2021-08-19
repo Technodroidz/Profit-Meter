@@ -213,7 +213,6 @@ class ExpenseController extends Controller
                         ShippingCostSetting::updateOrInsert(['key' => $key],$insert_array);
                     }
                 }
-
                 return response()->success('Shipping Settings Saved.');
             }
         }
@@ -250,6 +249,42 @@ class ExpenseController extends Controller
 
                 $json_array = ['replace_html_element'=>'#handling_cost_'.$request->variant_id,'append_html'=>$request->handling_cost,'close_modal'=>true];
                 return response()->data($json_array,'Handling Cost Updated.');
+            }
+        }
+        throw new AppException('Invalid http method');
+    }
+
+    public function tax(Request $request)
+    {
+        $data = ['current_link' => 'tax'];
+        $data['tax'] = ShippingCostSetting::where('deleted_at',null)->where('key','tax_rate')->first();
+        return view('business_app/content_template/tax',$data);
+    }
+
+    public function updateTaxRate(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'tax_rate'     => 'required'
+            ];
+
+            $validation_attributes = [ 
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                $insert_array = [
+                    'key'   => 'tax_rate',
+                    'value' => $request->tax_rate,
+                ];
+                ShippingCostSetting::updateOrInsert(['key' => 'tax_rate'],$insert_array);
+                return response()->success('Tax Rate Updated.');
             }
         }
         throw new AppException('Invalid http method');
@@ -352,7 +387,7 @@ class ExpenseController extends Controller
         $request->validate([
             'name' => 'required',
             'frequency_name' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'cost' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
@@ -381,7 +416,7 @@ class ExpenseController extends Controller
             $product = BusinessCustomCost::find(@$getDublicateData['0']['id']); //get the object of product you want to update
             $product->custom_name =  $request['name'];
             $product->frequency =  $request['frequency_name'];
-            $product->category_id = $request['category_id'];
+            // $product->category_id = $request['category_id'];
             $product->cost =  $request['cost'];
             $product->start_date =  $request['start_date'];
             $product->end_date =  $request['end_date'];
@@ -392,7 +427,7 @@ class ExpenseController extends Controller
         $getInsertedData = BusinessCustomCost::updateOrCreate(['id'=>$request['id']],[
             "custom_name" => $request['name'],
             "frequency" => $request['frequency_name'],
-            "category_id" => $request['category_id'],
+            // "category_id" => $request['category_id'],
             "cost" => $request['cost'],
             'custom_slug'=>Str::slug($request['name']),
             "start_date" => $request['start_date'],

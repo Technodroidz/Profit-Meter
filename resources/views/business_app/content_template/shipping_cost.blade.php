@@ -52,7 +52,7 @@
                             </div> -->
                             <hr>
                             <div class="inlineitem">  <label class="lms_checkbox_1" for="course_2">
-                                <input type="checkbox" name="multiply_shipping_fee" id="course_2" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }}>
+                                <input type="checkbox" name="multiply_shipping_fee" id="course_2" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
                                 <div class="slider-check round"></div>
                                 </label><p class="mb-0 "> Multiply the shipping fee by the quantity of products purchased.</p>
                             </div>
@@ -64,7 +64,7 @@
                             </div>
                             <hr>
                             <div class="inlineitem">  <label class="lms_checkbox_1" for="course_4">
-                                <input type="checkbox" id="course_4" name="multiply_handling_fee" value="1" {{ isset($shipping_cost_setting['multiply_handling_fee']) && $shipping_cost_setting['multiply_handling_fee'] == 1 ? 'checked':'' }}>
+                                <input type="checkbox" id="course_4" name="multiply_handling_fee" value="1" {{ isset($shipping_cost_setting['multiply_handling_fee']) && $shipping_cost_setting['multiply_handling_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_handling_fee]" onchange="checkUncheck($(this));">
                                 <div class="slider-check round"></div>
                                 </label><p class="mb-0 "> Multiply the Handling Cost by the quantity of products purchased.</p>
                             </div>
@@ -74,11 +74,11 @@
                             </div>
 
                                
-                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_shipping_fee" value="1" {{ isset($shipping_cost_setting['highest_shipping_fee']) && $shipping_cost_setting['highest_shipping_fee'] == 1 ? 'checked':'' }}>&nbsp; &nbsp;
+                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_shipping_fee" value="1" {{ isset($shipping_cost_setting['highest_shipping_fee']) && $shipping_cost_setting['highest_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_shipping_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
                                 <p class="mb-0 ">Use the highest shipping fee only in orders with multiple items. </p>
                             </div>
 
-                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_handling_fee" value="1" {{ isset($shipping_cost_setting['highest_handling_fee']) && $shipping_cost_setting['highest_handling_fee'] == 1 ? 'checked':'' }}>&nbsp; &nbsp;
+                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_handling_fee" value="1" {{ isset($shipping_cost_setting['highest_handling_fee']) && $shipping_cost_setting['highest_handling_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_handling_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
                                 <p class="mb-0 ">Use the highest Handling fee only in orders with multiple items. </p>
                             </div>
                             <button id = "shipping_cost_form_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
@@ -238,5 +238,16 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+
+    function checkUncheck(e) {
+        var _target = e.data('target');
+
+        if(e.is(':checked')){
+            $(_target).prop('checked', false);
+        }else{
+            $(_target).prop('checked', true);
+        }
+    }
+
 </script>
 @endsection

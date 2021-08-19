@@ -169,6 +169,9 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 	Route::get('business/expenses/handling-cost','ShopifyApp\ExpenseController@handlingCost')->name('business_expenses_handling_cost');
 
+	Route::get('business/expenses/tax','ShopifyApp\ExpenseController@tax')->name('tax');
+	Route::post('business/expenses/update-tax-rate','ShopifyApp\ExpenseController@updateTaxRate')->name('update_tax_rate');
+
 	Route::get('business/expenses/transaction-cost','ShopifyApp\ExpenseController@transactionCost')->name('business_expenses_transaction_cost');
 	Route::post('add-transaction-cost','ShopifyApp\ExpenseController@addTransactionCost')->name('add_transaction_cost');
 	Route::post('delete-transaction-cost','ShopifyApp\ExpenseController@deleteTransactionCost')->name('delete_transaction_cost');
@@ -238,7 +241,6 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	
 	Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
 	Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
-
 
 });
 

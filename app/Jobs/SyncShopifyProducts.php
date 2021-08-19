@@ -68,8 +68,8 @@ class SyncShopifyProducts implements ShouldQueue
         $shopify_product_table = new ShopifyProduct($user->database_name);
         $shopify_product_variant_table = new ShopifyProductVariant($user->database_name);
 
-        $shopify_product_table->truncate();
-        $shopify_product_variant_table->truncate();
+        // $shopify_product_table->truncate();
+        // $shopify_product_variant_table->truncate();
         
         foreach ($products as $key => $value) {
             $insert_array = [
@@ -90,7 +90,7 @@ class SyncShopifyProducts implements ShouldQueue
                 'created_at'               => date('Y-m-d H:i:s')
             ];
 
-            $shopify_product_table->insert($insert_array);
+            $shopify_product_table->updateOrInsert(['product_id'=>$value['id']],$insert_array);
 
             foreach ($value['variants'] as $k => $val) {
                 $variant_array = [
@@ -123,7 +123,7 @@ class SyncShopifyProducts implements ShouldQueue
                     'created_at'                => date('Y-m-d H:i:s')
                 ];
 
-                $shopify_product_variant_table->insert($variant_array);
+                $shopify_product_variant_table->updateOrInsert(['variant_id'=>$val['id']],$variant_array);
             }
         }
     }

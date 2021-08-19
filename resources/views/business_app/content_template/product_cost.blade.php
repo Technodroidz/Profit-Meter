@@ -104,9 +104,9 @@
                                                 <th scope="col">Price</th>
                                                 <th scope="col">SKU</th>
                                                 <th scope="col">Created At</th>
-                                                <th scope="col">PT Product Cst</th>
-                                                <th scope="col">PT Shipping Cst</th>
-                                                <th scope="col">PT Handling Cst</th>
+                                                <th scope="col">Product Cst</th>
+                                                <th scope="col">Shipping Cst</th>
+                                                <th scope="col">Handling Cst</th>
                                             </tr>
                                         </thead>
                                         @csrf
@@ -384,13 +384,11 @@
         var table = $('#shopify_products').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel',
-                {
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL'
-                },
-                'print'
+                { 
+                  extend: 'excel',
+                  text: 'Export to Excel'
+               }
+                // 'csv', 'excel',
             ],
           
             "aaSorting": [],

@@ -57,7 +57,7 @@
                                         <tr>
                                             <th scope="col">sr. No</th>
                                             <th scope="col">Custom Cost name</th>
-                                            <th scope="col">Category name</th>
+                                            <!-- <th scope="col">Category name</th> -->
                                             <th scope="col">Start Date</th>
                                             <th scope="col">End Date</th>
                                             <th scope="col">Frequency</th>
@@ -75,7 +75,7 @@
                                             <tr>
                                                 <td>{{++$key}}</td>
                                                 <td>{{$list['custom_name']}} </td>
-                                                <td>{{@$list['getCategory']['category_name']}} </td>
+                                                <!-- <td>{{@$list['getCategory']['category_name']}} </td> -->
                                                 <td>{{$list['start_date']}} </td>
                                                 <td>{{$list['end_date']}} </td>
                                                
@@ -126,7 +126,7 @@
                         <option value="Monthly">Monthly</option>
                         <option value="Yearly">Yearly</option>
                     </select>
-                    <label>Category name</label>
+                    <!-- <label>Category name</label>
                     <select class="custom-select mb-3 category_id select2" searchable="Search here.." id="category_id" name="category_id">
                         @if(!empty($getCategorylist))
                         <option value="">Select One</option>
@@ -134,7 +134,7 @@
                         <option value="{{$list['id']}}">{{$list['category_name']}}</option>
                         @endforeach
                         @endif
-                    </select>
+                    </select> -->
                         
                     <label for="basic-url">Cost</label>
                     <div class="input-group mb-3">
