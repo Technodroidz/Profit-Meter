@@ -65,9 +65,9 @@
                                             <div class="text-right btm">
                                                 <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($facebook_account))
-                                                <button class="stBtn" ><a href="{{route('facebook_ad_account_list')}}" style="color:inherit;" >Ads Data</a></button>
                                                 <button class="contBtn"><a href="{{route('facebook_login')}}" style="color:inherit;">Connect</a></button>
                                                 @else
+                                                <button class="stBtn" ><a href="{{route('facebook_ad_account_list')}}" style="color:inherit;" >Ads Data</a></button>
                                                 <button class="contBtn">Connected</button>
                                                 @endif
                                             </div>
@@ -90,9 +90,9 @@
                                             </p>
                                             <div class="text-right btm">
                                                 @if(empty($stripe_account))
-                                                    <button class="stBtn"><a href="{{route('stripe_disputes_list')}}" style="color:inherit;" >Check Dispute</a></button>
                                                     <button class="contBtn"><a href="{{route('stripe_login')}}" style="color:inherit;" >Connect</a></button>
                                                 @else
+                                                    <button class="stBtn"><a href="{{route('stripe_disputes_list')}}" style="color:inherit;" >Check Dispute</a></button>
                                                     <button class="contBtn">Connected</button>
                                                 @endif
                                             </div>
@@ -119,10 +119,10 @@
                                                 <!-- <button class="contBtn" data-toggle="modal" data-target="#paypalConnect"><a href="javascript:void(0);" style="color:inherit;">Connect</a></button> -->
 
                                                 @if(empty($paypal_account))
-                                                    <button class="stBtn" ><a href="{{route('paypal_dispute_list')}}" style="color:inherit;" >Check Dispute</a></button>
                                                     <button class="contBtn"><a href="{{route('connect_paypal')}}" style="color:inherit;" >Connect</a></button>
                                                 
                                                 @else
+                                                    <button class="stBtn" ><a href="{{route('paypal_dispute_list')}}" style="color:inherit;" >Check Dispute</a></button>
                                                 <button class="contBtn">Connected</button>
                                                 @endif
                                             </div>
@@ -145,9 +145,9 @@
                                             </p>
                                             <div class="text-right btm">
                                                 @if(empty($snapchat_account))
-                                                <button class="stBtn" ><a href="{{route('organisation_list')}}" style="color:inherit;" >Ads data</a></button>
                                                 <button class="contBtn"><a href="{{route('connect_snapchat')}}" style="color:inherit;" >Connect</a></button>
                                                 @else
+                                                <button class="stBtn" ><a href="{{route('organisation_list')}}" style="color:inherit;" >Ads data</a></button>
                                                 <button class="contBtn">Connected</button>
                                                 @endif
                                                 <!-- <button id="my-login-button-target">Connect</button>
@@ -187,11 +187,11 @@
                                                 
                                                 <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($google_account))
-                                                    <button class="stBtn" ><a href="{{route('customer_id_list')}}" style="color:inherit;" >Ads data</a></button>
                                                     <button class="contBtn"><a href="{{route('connect_google')}}" style="color:inherit;">Connect</a></button>
                                                 
                                                     <!-- <button class="contBtn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0);" style="color:inherit;">Configure Ads</a></button> -->
                                                 @else
+                                                    <button class="stBtn" ><a href="{{route('customer_id_list')}}" style="color:inherit;" >Ads data</a></button>
                                                     <button class="contBtn"><a href="javascript:void(0);" style="color:inherit;">Connected</a></button>
                                                 @endif
                                             </div>
