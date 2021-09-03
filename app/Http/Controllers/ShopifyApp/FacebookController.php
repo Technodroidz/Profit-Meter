@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Scottybo\LaravelFacebookSdk\LaravelFacebookSdk;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
-use FacebookAds\Api;
 // use FacebookAds\Object\AdUser;
 use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Fields\AdAccountFields;
@@ -19,6 +18,8 @@ use FacebookAds\Object\Fields\AdFields;
 
 use FacebookAds\Object\AdsInsights;
 use FacebookAds\Logger\CurlLogger;
+use FacebookAds\Object\Campaign;
+use FacebookAds\Api;
 
 
 class FacebookController extends Controller
@@ -58,66 +59,116 @@ class FacebookController extends Controller
     public function facebookApiDetail(Request $request)
     {
         $facebook_account = UserFacebookAccount::where('user_id',Auth::User()->id)->first();
-        // // Initialize a new Session and instantiate an Api object
-        // Api::init(env('FACEBOOK_APP_ID'),env('FACEBOOK_APP_SECRET'),$facebook_account->token);
 
-        // // The Api object is now available through singleton
-        // $api = Api::instance();
+        $access_token   = 'EAAE0er30YYIBAMZAZBb106Ytq2yEXvxRfKArHNUJeZCZClKqZBgfkWA2RiZBtoCpKqVx8aiGvPauBWnBIsJNzLhfZBflDSkZAULv2J7X5mZBaW0jg6nV4PzDImEiZBKk06rrbJmhKqpPGWvsYR3TjJmcrtPYHAGeCXZB5n8WVWERMYQxgzLHyHtvqhPbkErHDAbF7qojQocxNRicc4XyCsZCdBBk';
+        $ad_account_id  = 'act_965056857585201';
+        $app_secret     = '5aefc7cdc4ad29edddfee262c002184a';
+        $app_id         = '339176754274690';
 
-
-        // $ad = new Ad('130130937619407');
-        // $ad->getSelf(array(
-        //     AdAccountFields::ID,
-        //     AdAccountFields::NAME,
-        // ));
-        // pp($ad);
-
-        // die;
-
-        // $fields = array(
-        //     AdAccountFields::ID,
-        //     AdAccountFields::NAME,
-        // );
-        
-        // $account = (new AdAccount($facebook_account->facebook_id))->getSelf($fields);
-
-        // pp($account);
-        // $me = new AdUser('me');
-        // $my_adaccount = $me->getAdAccounts()->current();
-        // pp($my_adaccount);
-
-
-        $access_token = 'EAAE0er30YYIBAFM5QbGlHIfyPUZBrnnfljeliP47U88llmTkVV4FL8OlTeZAnhtrz2CiCSWVql80aybMxtjMZCyLGGMTSxRMS9pZBZA00BXpo9qpShATaOP1ZAQBZBapB3aZBKimZBVYAizEUZCAqvIHRAlJ6x7yE2gkhLLAXVXyWBhkC5u2ZAuJrJTvf5AbGbnf9gZD';
-        $ad_account_id = 'act_965056857585201';
-        $app_secret = '5aefc7cdc4ad29edddfee262c002184a';
-        $app_id = '339176754274690';
-
-        $api = Api::init($app_id, $app_secret, $access_token);
+        $api            = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
 
         $fields = array(
-          // 'date_start',
-          // 'date_stop',
-          'account_id',
-          'account_name',
-          // 'campaign_group_name',
-          // 'campaign_group_id',
-          // 'campaign_name',
-          // 'campaign_id',
-          // 'adgroup_id',
-          // 'adgroup_name',
+          'name',
+          'objective',
         );
         $params = array(
-          'time_range' => array('since' => '2021-07-04','until' => '2021-09-01'),
-          'filtering' => array(),
-          'level' => 'campaign',
-          'breakdowns' => array('ad_name'),
+          'effective_status' => array('ACTIVE','PAUSED'),
         );
-        echo json_encode((new AdAccount($ad_account_id))->getInsights(
+        echo json_encode((new AdAccount($ad_account_id))->getCampaigns(
           $fields,
           $params
         )->getResponse()->getContent(), JSON_PRETTY_PRINT);
     }
 
+    public function getCampaigns(Request $request,$ad_account_id)
+    {
+        $facebook_account = UserFacebookAccount::where('user_id',Auth::User()->id)->first();
 
+        // $access_token   = 'EAAE0er30YYIBAMZAZBb106Ytq2yEXvxRfKArHNUJeZCZClKqZBgfkWA2RiZBtoCpKqVx8aiGvPauBWnBIsJNzLhfZBflDSkZAULv2J7X5mZBaW0jg6nV4PzDImEiZBKk06rrbJmhKqpPGWvsYR3TjJmcrtPYHAGeCXZB5n8WVWERMYQxgzLHyHtvqhPbkErHDAbF7qojQocxNRicc4XyCsZCdBBk';
+
+        // $ad_account_id  = 'act_965056857585201';
+        // $app_secret     = '5aefc7cdc4ad29edddfee262c002184a';
+        // $app_id         = '339176754274690';
+
+        // $api            = Api::init($app_id, $app_secret, $facebook_account->token);
+        // $api->setLogger(new CurlLogger());
+
+        // $fields = array(
+        //   'name',
+        //   'objective',
+        // );
+        // $params = array(
+        //   'effective_status' => array(),
+        // );
+        // echo json_encode((new AdAccount($ad_account_id))->getCampaigns(
+        //   $fields,
+        //   $params
+        // )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+
+
+        $access_token = 'EAAExzyNdRZBsBAGbteZBPBO3BChHgPYHmkaRRdWZA7pv259t60Xo1uy43OhvCc5zjAPxR65yGXz6ZCOPHvlol5VPSyxgEcOrWGzj1qZATLnFpKFJ6OjLR3TOL1ZCeJkA7deXBtGmzaYNZCp2frUROUYnn92imYHMCXwLdQ7dGjHcNUbWSA6LieVtZAYVPGmIVGiZAoGEebuJ2ewZDZD';
+        $ad_account_id = 'act_1457434981299430';
+        $app_secret = '1091f2d54100cbe6f31ef6663591c6dc';
+        $app_id = '336240698017771';
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+
+        $fields = array(
+          'name',
+          'objective',
+        );
+        $params = array(
+          'effective_status' => array(),
+        );
+        echo json_encode((new AdAccount($ad_account_id))->getCampaigns(
+          $fields,
+          $params
+        )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+        
+        // $fields = array(
+        //   // 'campaign_group_id',
+        //   // 'campaign_group_name',
+        //   'account_name',
+        //   'account_id',
+        // );
+        // $params = array(
+        //   'time_range' => array('since' => '2021-07-25','until' => '2021-08-24'),
+        //   'filtering' => array(),
+        //   'level' => 'campaign',
+        //   'breakdowns' => array(),
+        // );
+        // echo json_encode((new AdAccount($ad_account_id))->getInsights(
+        //   $fields,
+        //   $params
+        // )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+    }
+
+    public function getAdAccounts()
+    {
+        $facebook_account = UserFacebookAccount::where('user_id',Auth::User()->id)->first();
+
+        // $access_token   = 'EAAE0er30YYIBALZCsOTWb2SIRkZBZB597brVIv3eWA517oP19wGEDmCI9GQUbw0f5FYCFcE8U6i2m5qRFezjavnKyLeISxWMUdIctrJ8lhZBXtVduKjjK1eCZAyyPXR87M1WJUUSqt6H9c9xNnD4ZCZCStIZAvK7e0v3p0grwdtwAbGaJZCrARHurtAIZAE59SoPYvBhXmVJ1cnRsJEji9jhtb';
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://graph.facebook.com/v11.0/me/adaccounts?access_token='.$facebook_account->token,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response = json_decode($response,1);
+        return view('business_app\content_template\facebook_ad_account_list',$response);
+
+    }
 }

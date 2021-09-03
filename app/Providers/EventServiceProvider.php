@@ -23,6 +23,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\\Snapchat\\SnapchatExtendSocialite@handle',
             'SocialiteProviders\\PayPal\\PayPalExtendSocialite@handle',
             'SocialiteProviders\\PayPalSandbox\\PayPalSandboxExtendSocialite@handle',
+            'SocialiteProviders\\Stripe\\StripeExtendSocialite@handle',
         ]
     ];
 

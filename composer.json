@@ -20,6 +20,7 @@
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
+        "maatwebsite/excel": "^3.1",
         "osiset/laravel-shopify": "^16.0",
         "paypal/rest-api-sdk-php": "^1.14",
         "phpclassic/php-shopify": "^1.1",
@@ -28,6 +29,7 @@
         "socialiteproviders/paypal": "^4.1",
         "socialiteproviders/paypal-sandbox": "^4.1",
         "socialiteproviders/snapchat": "^4.1",
+        "socialiteproviders/stripe": "^4.1",
         "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^7.83"
     },

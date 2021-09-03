@@ -157,6 +157,7 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	Route::post('add-handling-cost','ShopifyApp\ExpenseController@addHandlingCost')->name('add_handling_cost');
 	Route::post('add-product-cost-per-product','ShopifyApp\ExpenseController@addProductCost')->name('add_product_cost');
 	Route::post('delete-product-cost-per-product','ShopifyApp\ExpenseController@deleteProductCost')->name('delete_product_cost');
+	Route::post('import-products','ShopifyApp\ExpenseController@importShopifyProducts')->name('import_products');
 
 	Route::post('add-shipping-cost-per-product','ShopifyApp\ExpenseController@addShippingCost')->name('add_shipping_cost_per_product');
 	Route::post('delete-shipping-cost-per-product','ShopifyApp\ExpenseController@deleteShippingCost')->name('delete_shipping_cost_per_product');
@@ -215,6 +216,8 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	Route::get('facebook/callback','ShopifyApp\FacebookController@facebookCallback')->name('facebook_callback');
 	Route::get('facebook-ads-api-list','ShopifyApp\FacebookController@facebookApiList')->name('facebook_ads_api_list');
 	Route::match(['POST','GET'],'facebook-ads-api-detail','ShopifyApp\FacebookController@facebookApiDetail')->name('facebook_ads_api_detail');
+	Route::get('facebook/ad-account-list', 'ShopifyApp\FacebookController@getAdAccounts')->name('facebook_ad_account_list');
+	Route::get('facebook/campaign-list/{account_id}', 'ShopifyApp\FacebookController@getCampaigns')->name('facebook_campaign_list');
 
 	Route::get('login/google', 'ShopifyApp\GoogleController@redirectToProvider')->name('connect_google');
 	Route::get('login/google/callback', 'ShopifyApp\GoogleController@handleProviderCallback')->name('google_callback');
@@ -241,6 +244,12 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 	
 	Route::get('paypal/paypal-api-list', 'ShopifyApp\PaypalController@paypalApiList')->name('paypal_api_list');
 	Route::match(['POST','GET'],'paypal/paypal-api-detail', 'ShopifyApp\PaypalController@paypalApiDetail')->name('paypal_api_detail');
+
+	// Generate a login URL
+	Route::get('stripe/login','ShopifyApp\StripeController@redirectToProvider')->name('stripe_login');
+	// Endpoint that is redirected to after an authentication attempt
+	Route::get('stripe/callback','ShopifyApp\StripeController@handleProviderCallback')->name('stripe_callback');
+	Route::get('stripe/dispute-list','ShopifyApp\StripeController@disputesList')->name('stripe_disputes_list');
 
 });
 

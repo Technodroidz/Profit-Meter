@@ -63,7 +63,7 @@
                                                 The Facebook Ads Extension imports all your campaigns and adsets into Profitario to give you clear pictre of your overall adspend.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn" ><a href="{{route('facebook_ads_api_list')}}" style="color:inherit;" >Check Apis</a></button>
+                                                <button class="stBtn" ><a href="{{route('facebook_ad_account_list')}}" style="color:inherit;" >Ads Data</a></button>
                                                 <!-- <button class="stBtn">Settings</button> -->
                                                 @if(empty($facebook_account))
                                                 <button class="contBtn"><a href="{{route('facebook_login')}}" style="color:inherit;">Connect</a></button>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-12 col-sm-4 col-lg-3">
+                            <div class="col-12 col-sm-4 col-lg-3">
                                 <div class="card">
                                     <div class="card-body pad-0">
                                         <div class="uperPart stripe">
@@ -89,13 +89,17 @@
                                                 Connect Stripe to your Profitario account to integrate disputes into your profit calculations.
                                             </p>
                                             <div class="text-right btm">
-                                                <button class="stBtn">Settings</button>
-                                                <button class="contBtn">Connected</button>
+                                                <button class="stBtn"><a href="{{route('stripe_disputes_list')}}" style="color:inherit;" >Check Dispute</a></button>
+                                                @if(empty($stripe_account))
+                                                    <button class="contBtn"><a href="{{route('stripe_login')}}" style="color:inherit;" >Connect</a></button>
+                                                @else
+                                                    <button class="contBtn">Connected</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="col-12 col-sm-4 col-lg-3" id="paypal_app">
                                 <div class="card">
                                     <div class="card-body pad-0">

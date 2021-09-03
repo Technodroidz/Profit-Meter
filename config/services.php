@@ -66,4 +66,10 @@ return [
 
     // Not Used in active code /
 
+    'stripe' => [    
+      'client_id' => env('STRIPE_CLIENT_ID'),  
+      'client_secret' => env('STRIPE_SECRET'),  
+      'redirect'   => env('STRIPE_REDIRECT_URI') 
+    ],
+
 ];

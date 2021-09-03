@@ -72,7 +72,9 @@ class SyncShopifyProducts implements ShouldQueue
         // $shopify_product_variant_table->truncate();
         
         foreach ($products as $key => $value) {
-            $insert_array = [
+            $shopify_product = $shopify_product_table->where('product_id',$value['id'])->first();
+
+            $shopify_product_insert_array = [
                 'product_id'               => $value['id'],
                 'title'                    => $value['title'],
                 'body_html'                => $value['body_html'],
@@ -87,16 +89,25 @@ class SyncShopifyProducts implements ShouldQueue
                 'published_scope'          => $value['published_scope'],
                 'tags'                     => $value['tags'],
                 'admin_graphql_api_id'     => $value['admin_graphql_api_id'],
-                'created_at'               => date('Y-m-d H:i:s')
             ];
 
-            $shopify_product_table->updateOrInsert(['product_id'=>$value['id']],$insert_array);
+            if(!empty($shopify_product)){
+                $shopify_insert_array['updated_at'] = date('Y-m-d H:i:s');
+                $shopify_product_table_id           = $shopify_product->id;
+                $shopify_product_table->update(['id'=>$shopify_product_table_id],$shopify_product_insert_array);
+            }else{
+                $shopify_insert_array['created_at'] = date('Y-m-d H:i:s');
+                $shopify_product_table_id = $shopify_product_table->insertGetId($shopify_product_insert_array);
+            }
+
 
             foreach ($value['variants'] as $k => $val) {
                 $variant_array = [
                     'variant_id'        =>  $val['id'],
+                    'product_table_id'  =>  $shopify_product_table_id,
                     'product_id'        =>  $val['product_id'],
                     'title'             =>  $val['title'],
+                    'product_title'     =>  $value['title'],
                     'price'             =>  $val['price'],
                     'sku'               =>  $val['sku'],
                     'position'                  =>  $val['position'],

@@ -19,19 +19,49 @@ use App\Model\ShopifyProductVariantShippingCost;
 use App\Model\TransactionCost;
 use Validator;
 use App\Exceptions\AppException;
+use App\Imports\ShopifyProductsImport;
+// use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
+    public function importShopifyProducts(Request $request)
+    {
+        if($request->isMethod('post')){
+            $validation_array = [
+                'import_products'           => 'required|file',
+                'extension'                 => 'required|in:csv,xlsx,xls'
+            ];
+
+            $validation_attributes = [
+                'import_products'           => 'File'
+            ];
+
+            $validation_message = [];
+            
+            $validator = Validator::make(['import_products' => $request->import_products,'extension'=>strtolower($request->import_products->getClientOriginalExtension())], $validation_array,$validation_message,$validation_attributes);
+            $validation_message   = get_message_from_validator_object($validator->errors());
+
+            if($validator->fails()){
+                throw new AppException($validation_message);
+            }else{
+                Excel::import(new ShopifyProductsImport, request()->file('import_products'));
+                $json_array = ['reload'=>true,'close_modal'=>true];
+                return response()->data($json_array,'Import Successfull.');
+            }
+        }
+    }
+
     public function productCost(Request $request)
     {
-        $config = array(
-            'ShopUrl' => Auth::User()->shopify_url,
-            'AccessToken' => Auth::User()->shopify_access_token,
-        );
+        // $config = array(
+        //     'ShopUrl' => Auth::User()->shopify_url,
+        //     'AccessToken' => Auth::User()->shopify_access_token,
+        // );
 
-        $shopify    = new \PHPShopify\ShopifySDK($config);
+        // $shopify    = new \PHPShopify\ShopifySDK($config);
         
-        $products = $shopify->Product->get();
+        // $products = $shopify->Product->get();
         
         $data = ['current_link' => 'product_cost','country_list'=>country_list()];
 
@@ -44,7 +74,7 @@ class ExpenseController extends Controller
         
         $data = [];
         foreach ($products as $key => $value) {
-            $profitrack_product_cost = ShopifyProductVariantCost::where('variant_id',$value->variant_id)->where('deleted_at',null)->get();
+            $profitrack_product_cost = ShopifyProductVariantCost::where('variant_id',$value->id)->where('deleted_at',null)->get();
             
             if(!empty($profitrack_product_cost)){
                 $profitrack_product_cost = $profitrack_product_cost->toArray();
@@ -53,7 +83,7 @@ class ExpenseController extends Controller
                 $profitrack_product_json = urlencode(json_encode(['product_json' => '']));
             }
 
-            $profitrack_shipping_cost = ShopifyProductVariantShippingCost::where('variant_id',$value->variant_id)->where('deleted_at',null)->get();
+            $profitrack_shipping_cost = ShopifyProductVariantShippingCost::where('variant_id',$value->id)->where('deleted_at',null)->get();
             
             if(!empty($profitrack_shipping_cost)){
                 $profitrack_shipping_cost = $profitrack_shipping_cost->toArray();
@@ -70,9 +100,9 @@ class ExpenseController extends Controller
             $row[]  = $value->price;
             $row[]  = $value->sku;
             $row[]  = $value->shopify_created_at;
-            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'"><span aria-hidden="true">&plus;</span></button>';
-            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'"><span aria-hidden="true">&plus;</span></button>';
-            $row[]  = '<p id="handling_cost_'.$value->variant_id.'">'.$value->profitrack_handling_cost.'</p><button type="button" class="add_prftrck_hnd_cst close" data-variant_id="'.$value->variant_id.'" data-toggle="modal" data-target="#handlingCostModal"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<p id="handling_cost_'.$value->id.'">'.$value->profitrack_handling_cost.'</p><button type="button" class="add_prftrck_hnd_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#handlingCostModal"><span aria-hidden="true">&plus;</span></button>';
             $data[] = $row;
         }
 
@@ -107,7 +137,7 @@ class ExpenseController extends Controller
         if($request->isMethod('post')){
             $validation_array = [
                 'country'           => 'required', 
-                'shipping_cost'     => 'required|numeric', 
+                'shipping_cost'     => ['required','numeric','gt:0', 'regex:/^\d{0,4}(\.\d{0,2})?$/i'],
             ];
 
             $validation_attributes = [
@@ -115,7 +145,9 @@ class ExpenseController extends Controller
                 'shipping_cost'     => 'Shipping Cost', 
             ];
 
-            $validation_message = [];
+            $validation_message = [
+                'shipping_cost.regex' => 'Upto 4 digits before and 2 digits after decimal are allowed (xxxx.xx or xxxx).'
+            ];
             
             $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
             $validation_message   = get_message_from_validator_object($validator->errors());
@@ -230,13 +262,15 @@ class ExpenseController extends Controller
         if($request->isMethod('post')){
             $validation_array = [
                 'variant_id'        => 'required',
-                'handling_cost'     => 'required|numeric', 
+                'handling_cost'     => ['required','numeric','gt:0', 'regex:/^\d{0,4}(\.\d{0,2})?$/i'], 
             ];
 
             $validation_attributes = [ 
             ];
 
-            $validation_message = [];
+            $validation_message = [
+                'handling_cost.regex' => 'Upto 4 digits before and 2 digits after decimal are allowed (xxxx.xx or xxxx).'
+            ];
             
             $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
             $validation_message   = get_message_from_validator_object($validator->errors());
@@ -245,7 +279,7 @@ class ExpenseController extends Controller
                 throw new AppException($validation_message);
             }else{
 
-                ShopifyProductVariant::where('variant_id',$request->variant_id)->update(['profitrack_handling_cost' => $request->handling_cost]);
+                ShopifyProductVariant::where('id',$request->variant_id)->update(['profitrack_handling_cost' => $request->handling_cost]);
 
                 $json_array = ['replace_html_element'=>'#handling_cost_'.$request->variant_id,'append_html'=>$request->handling_cost,'close_modal'=>true];
                 return response()->data($json_array,'Handling Cost Updated.');
@@ -302,8 +336,8 @@ class ExpenseController extends Controller
         if($request->isMethod('post')){
             $validation_array = [
                 'payment_gateway'     => 'required',
-                'percentage_fee'      => 'required',
-                'fixed_fee'           => 'required',
+                'percentage_fee'      => 'required|between:0,99.99',
+                'fixed_fee'           => 'required|numeric|gt:0|regex:^(?:[1-9]\d+|\d)(?:\,\d\d)?$',
             ];
 
             $validation_attributes = [ 
@@ -396,17 +430,16 @@ class ExpenseController extends Controller
        
         if($request->inlineitem==='on'){
             $status=1;
-          }
-         else if(empty($request->inlineitem)){
+        }
+        else if(empty($request->inlineitem)){
             $status=2;
-          } 
-          if($request->inlineitem==='2'){
+        } 
+        if($request->inlineitem==='2'){
             $status=1;
-          }
-          if($request->inlineitem==='1'){
+        }
+        if($request->inlineitem==='1'){
             $status=2;
-          }
-        //   print_r($request->all()); exit;
+        }
 
         $currentPackegName=Str::slug($request['name']);
         @$getDublicateData = BusinessCustomCost::where('custom_slug',$currentPackegName)->get();
@@ -424,31 +457,29 @@ class ExpenseController extends Controller
             $product->deleted_at = null;
             $product->save();
         }else{
-        $getInsertedData = BusinessCustomCost::updateOrCreate(['id'=>$request['id']],[
-            "custom_name" => $request['name'],
-            "frequency" => $request['frequency_name'],
-            // "category_id" => $request['category_id'],
-            "cost" => $request['cost'],
-            'custom_slug'=>Str::slug($request['name']),
-            "start_date" => $request['start_date'],
-            "end_date" => $request['end_date'],
-            "accept_include_marketing" => $status,
-        ]); 
-        
+            $getInsertedData = BusinessCustomCost::updateOrCreate(['id'=>$request['id']],[
+                "custom_name" => $request['name'],
+                "frequency" => $request['frequency_name'],
+                // "category_id" => $request['category_id'],
+                "cost" => $request['cost'],
+                'custom_slug'=>Str::slug($request['name']),
+                "start_date" => $request['start_date'],
+                "end_date" => $request['end_date'],
+                "accept_include_marketing" => $status,
+            ]);
         }
 
         return redirect('business/expenses/custom-cost')->with('message', 'Custom cost added  successfully'); 
     }
 
     public function deleteCustomCost($id){
-      try{
+        try{
       
-        $userDelete=BusinessCustomCost::findOrFail($id);
-        $userDelete->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-        } catch(\Exception $e) {
-        }
-        return back()
-            ->with('success', 'Category deleted successfully');
+            $userDelete=BusinessCustomCost::findOrFail($id);
+            $userDelete->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+        }catch(\Exception $e) {}
+
+        return back()->with('success', 'Category deleted successfully');
     }
 
     public function syncShopifyData(Request $request)
@@ -463,7 +494,7 @@ class ExpenseController extends Controller
     {
         if($request->isMethod('post')){
             $validation_array = [
-                'product_cost' => 'required', 
+                'product_cost' => ['required','numeric','gt:0', 'regex:/^\d{0,4}(\.\d{0,2})?$/i'], 
                 'start_date'   => 'required', 
                 'end_date'     => 'required', 
             ];
@@ -471,7 +502,9 @@ class ExpenseController extends Controller
             $validation_attributes = [
             ];
 
-            $validation_message = [];
+            $validation_message = [
+                'product_cost.regex' => 'Upto 4 digits before and 2 digits after decimal are allowed (xxxx.xx or xxxx).'
+            ];
             
             $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
             $validation_message   = get_message_from_validator_object($validator->errors());
@@ -543,13 +576,15 @@ class ExpenseController extends Controller
             $validation_array = [
                 'variant_id' => 'required',
                 'country' => 'required', 
-                'shipping_cost'   => 'required',
+                'shipping_cost'   => 'required|numeric|gt:0|regex:/^\d{0,4}(\.\d{0,2})?$/i',
             ];
 
             $validation_attributes = [
             ];
 
-            $validation_message = [];
+            $validation_message = [
+                'shipping_cost.regex' => 'Upto 4 digits before and 2 digits after decimal are allowed (xxxx.xx or xxxx).'
+            ];
             
             $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
             $validation_message   = get_message_from_validator_object($validator->errors());

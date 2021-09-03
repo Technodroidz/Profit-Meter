@@ -49,16 +49,16 @@
                         <option value="-1">All</option>
                     </select> entries</label>
                 </div> -->
-                <!-- <div class="col-md-3">
+                <div class="col-md-3">
                    <div class="view_btns">
                             
-                        <a href="#" class="mr_5 mb_10  small_blue_btn active">Export to CSV</a>
-                        <a href="#" class="mr_5 mb_10  small_blue_btn">CSV Import</a>
-                        <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a> 
+                        <!-- <a href="#" class="mr_5 mb_10  small_blue_btn active">Export to CSV</a> -->
+                        <a href="#" class="mr_5 mb_10  small_blue_btn" data-toggle="modal" data-target="#importProductsModal">Excel Import</a>
+                        <!-- <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a> 
                         <a href="#" class="mr_5 mb_10  small_blue_btn">1Y</a>
-                        <a href="#" class="mr_5 mb_10  small_blue_btn">YTD</a>
+                        <a href="#" class="mr_5 mb_10  small_blue_btn">YTD</a> -->
                     </div>
-                </div> -->
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -256,6 +256,47 @@
                       <span class="sr-only">Loading...</span>
                     </button>
                     <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=handling_cost_form]" >Add</button>
+                    <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade exampleModalCenter"  id="importProductsModal" tabindex="-1" role="dialog" aria-labelledby="importProductsModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLongTitle">Import Products</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form role="import_products_form" action="{{ route('import_products') }}" method="post">
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
+                      <strong class="show_error_msg">Error</strong>
+                      <button type="button" class="close dismiss_alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    @csrf
+                        
+                    <label for="basic-url">Upload products excel file</label>
+                    <div class="input-group mb-3">
+                        <!-- <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div> -->
+                        <input type="file" class="form-control cost" name="import_products" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span class="sr-only">Loading...</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=import_products_form]" >Add</button>
                     <button type="button" class="btn btn-primary disable_btn_class" data-dismiss="modal">Close</button>
                 </div>
                 </form>

@@ -17,7 +17,7 @@ use Google\Ads\GoogleAds\Lib\V8\GoogleAdsException;
 use Google\Ads\GoogleAds\Lib\OAuth2TokenBuilder;
 use Google\Ads\GoogleAds\Util\V8\ResourceNames;
 use Google\Ads\GoogleAds\V8\Errors\GoogleAdsError;
-use Google\ApiCore\ApiExceptio;
+use Google\ApiCore\ApiException;
 
 class GoogleController extends Controller
 {

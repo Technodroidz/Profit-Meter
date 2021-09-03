@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Scottybo\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
         App\Providers\ResponseServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         // laravel\Socialite\SocialiteServiceProvider::class
 
     ],
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Facebook' => Scottybo\LaravelFacebookSdk\FacebookFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'Socialite' => laravel\Socialite\SocialiteServiceProvider::class
 
     ],
