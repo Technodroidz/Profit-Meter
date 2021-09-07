@@ -14,7 +14,7 @@ class AddColumnStripeCustomerIdInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // $table->string('stripe_customer_id')->nullable()->after('id');
+            $table->string('stripe_customer_id')->nullable()->after('id');
         });
     }
 
