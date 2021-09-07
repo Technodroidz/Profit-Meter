@@ -7,6 +7,21 @@ use App\UnderSecretiantModel;
 use App\SecretiantModel;
 use App\InvoiceModel;
 use App\DeviceModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+    function makeDBConnection($database_name='')
+    {
+        config([
+            'database.connections.tenant.database' => Auth::User()->database_name,
+        ]);
+
+        DB::purge('tenant');
+
+        DB::reconnect('tenant');
+
+        Schema::connection('tenant')->getConnection()->reconnect();
+    }
 
     function pp($arr, $die="true")
     {

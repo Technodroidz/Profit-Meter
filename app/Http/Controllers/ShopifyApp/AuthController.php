@@ -16,6 +16,9 @@ use Illuminate\Support\Str;
 use App\Model\MultiTenantModel;
 use App\Model\SubscriptionPlan;
 use App\Model\UserSubscription;
+use App\Model\Tenant;
+use Illuminate\Support\Facades\Artisan;
+use App\Console\Commands\TenantsMigrateCommand;
 
 class AuthController extends Controller
 {
@@ -208,6 +211,18 @@ class AuthController extends Controller
                 }
 
                 User::where('id',$user_id)->update(['database_name' => $userName]);
+
+                $tenant = Tenant::find($user_id);
+                if(!empty($tenant->database_name)){
+                    $tenant->configure()->use();
+
+                    $options = ['--force' => true,'--path'=>'/database/migrations/tenant_migrations','--database'=> 'tenant'];
+
+                    Artisan::call(
+                        'migrate',
+                        $options
+                    );
+                }
 
                 if(Auth::attempt($credentials)){
                     return redirect()->route('connect_shopify_account');

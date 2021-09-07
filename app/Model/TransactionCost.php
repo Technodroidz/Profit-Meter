@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionCost extends Model
 {
-    protected $connection ='';
+    protected $connection ='tenant';
 
-    public function __construct($database_name = "")
+    public function __construct()
     {
-        $this->connection = $database_name ? $database_name : Auth::User()->database_name;
+        // $this->connection = $database_name ? $database_name : Auth::User()->database_name;
     }
 }

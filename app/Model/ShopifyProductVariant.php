@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopifyProductVariant extends Model
 {
-    protected $connection ='';
+    protected $connection ='tenant';
 
-    public function __construct($database_name='')
+    public function __construct()
     {
-        $this->connection = null !== Auth::User() ? Auth::User()->database_name : $database_name;
+        // $this->connection = null !== Auth::User() ? Auth::User()->database_name : $database_name;
     }
 }

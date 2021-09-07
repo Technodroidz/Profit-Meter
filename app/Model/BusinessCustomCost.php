@@ -11,12 +11,12 @@ class BusinessCustomCost extends Model
    
     protected $guarded = []; 
    
-    protected $connection ='';
+    protected $connection ='tenant';
     protected $table = 'business_custom_costs';
     
     public function __construct()
     {
-        $this->connection = Auth::User()->database_name;
+        // $this->connection = Auth::User()->database_name;
     }
     public function getCategory(){
         return $this->hasOne(BusinessCategory::class,'id','category_id');

@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopifyProduct extends Model
 {
-    protected $connection ='';
+    protected $connection ='tenant';
     // protected $table = 'tenant_user';
 
-    public function __construct($database_name='')
+    public function __construct()
     {
-        $this->connection = null !== Auth::User() ? Auth::User()->database_name : $database_name;
+        // $this->connection = null !== Auth::User() ? Auth::User()->database_name : $database_name;
     }
 
     public static function getShopifyProducts($count,$filter,$request)

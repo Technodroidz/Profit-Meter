@@ -44,29 +44,30 @@ class SyncShopifyProducts implements ShouldQueue
         );
         $shopify    = new \PHPShopify\ShopifySDK($config);
         $products   = $shopify->Product->get();
+        makeDBConnection($user->database_name);
 
-        Config::set("database.connections.".$user->database_name, [
-            'driver'    => 'mysql',
-            'url'       => env('DATABASE_URL'),
-            'host'      => env('DB_HOST', '127.0.0.1'),
-            'port'      => env('DB_PORT', '3306'),
-            'database'  => $user->database_name,
-            'username'  => env('DB_USERNAME', 'forge'),
-            'password'  => env('DB_PASSWORD', ''),
-            'unix_socket'       => env('DB_SOCKET', ''),
-            'charset'           => 'utf8mb4',
-            'collation'         => 'utf8mb4_unicode_ci',
-            'prefix'            => '',
-            'prefix_indexes'    => true,
-            'strict'            => true,
-            'engine'            => null,
-            'options'           => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : []
-        ]);
+        // Config::set("database.connections.".$user->database_name, [
+        //     'driver'    => 'mysql',
+        //     'url'       => env('DATABASE_URL'),
+        //     'host'      => env('DB_HOST', '127.0.0.1'),
+        //     'port'      => env('DB_PORT', '3306'),
+        //     'database'  => $user->database_name,
+        //     'username'  => env('DB_USERNAME', 'forge'),
+        //     'password'  => env('DB_PASSWORD', ''),
+        //     'unix_socket'       => env('DB_SOCKET', ''),
+        //     'charset'           => 'utf8mb4',
+        //     'collation'         => 'utf8mb4_unicode_ci',
+        //     'prefix'            => '',
+        //     'prefix_indexes'    => true,
+        //     'strict'            => true,
+        //     'engine'            => null,
+        //     'options'           => extension_loaded('pdo_mysql') ? array_filter([
+        //         PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+        //     ]) : []
+        // ]);
 
-        $shopify_product_table = new ShopifyProduct($user->database_name);
-        $shopify_product_variant_table = new ShopifyProductVariant($user->database_name);
+        $shopify_product_table = new ShopifyProduct();
+        $shopify_product_variant_table = new ShopifyProductVariant();
 
         // $shopify_product_table->truncate();
         // $shopify_product_variant_table->truncate();

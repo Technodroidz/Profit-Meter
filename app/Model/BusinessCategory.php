@@ -14,12 +14,12 @@ class BusinessCategory extends Model
    // protected $connection= Auth::User()->database_name;
     
     protected $guarded = []; 
-    protected $connection ='';
+    protected $connection ='tenant';
     protected $table = 'business_categories';
   
     public function __construct()
     {
-        $this->connection = Auth::User()->database_name;
+        // $this->connection = Auth::User()->database_name;
     }
     // public static function boot()
     // {
