@@ -15,6 +15,12 @@ class CreateGoogleAdCustomerIdsTable extends Migration
     {
         Schema::create('google_ad_customer_ids', function (Blueprint $table) {
             $table->id();
+            $table->string('customer_id')->nullable();
+            $table->string('name')->nullable();
+            
+            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('calculation_active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

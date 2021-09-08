@@ -15,6 +15,14 @@ class CreateSnapchatOrganisationsTable extends Migration
     {
         Schema::create('snapchat_organisations', function (Blueprint $table) {
             $table->id();
+            $table->string('organisation_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('calculation_active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,6 +15,11 @@ class CreateShopifyProductVariantShippingCostsTable extends Migration
     {
         Schema::create('shopify_product_variant_shipping_costs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('variant_id')->nullable();
+            $table->string('country')->nullable();
+            $table->string('shipping_cost')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

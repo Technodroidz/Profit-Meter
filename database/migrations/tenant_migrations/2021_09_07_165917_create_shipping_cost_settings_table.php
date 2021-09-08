@@ -15,6 +15,10 @@ class CreateShippingCostSettingsTable extends Migration
     {
         Schema::create('shipping_cost_settings', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->nullable();
+            $table->text('value')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

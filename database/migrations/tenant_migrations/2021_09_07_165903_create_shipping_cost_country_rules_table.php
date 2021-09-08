@@ -15,6 +15,10 @@ class CreateShippingCostCountryRulesTable extends Migration
     {
         Schema::create('shipping_cost_country_rules', function (Blueprint $table) {
             $table->id();
+            $table->string('country')->nullable();
+            $table->float('shipping_cost',6,2)->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

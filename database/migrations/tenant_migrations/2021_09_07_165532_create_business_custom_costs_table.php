@@ -15,6 +15,16 @@ class CreateBusinessCustomCostsTable extends Migration
     {
         Schema::create('business_custom_costs', function (Blueprint $table) {
             $table->id();
+            $table->string('custom_name')->nullable();
+            $table->string('custom_slug')->nullable();
+            $table->unsignedInteger('category_id ')->nullable();
+            $table->string('start_date')->nullable();
+            $table->string('end_date')->nullable();
+            $table->string('frequency')->nullable();
+            $table->string('cost')->nullable();
+            $table->unsignedInteger('accept_include_marketing')->default(1);
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

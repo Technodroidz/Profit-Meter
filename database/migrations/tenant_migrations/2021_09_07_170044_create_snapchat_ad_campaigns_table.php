@@ -15,6 +15,17 @@ class CreateSnapchatAdCampaignsTable extends Migration
     {
         Schema::create('snapchat_ad_campaigns', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('ad_account_id')->nullable();
+            $table->string('campaign_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('campaign_status')->nullable();
+            $table->string('objective')->nullable();
+            $table->string('buy_model')->nullable();
+            $table->timestamp('start_time')->nullable();
+            
+            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('calculation_active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

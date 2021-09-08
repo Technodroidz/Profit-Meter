@@ -15,6 +15,12 @@ class CreateShopifyProductVariantCostsTable extends Migration
     {
         Schema::create('shopify_product_variant_costs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('variant_id')->nullable();
+            $table->string('profitrack_product_cost')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
