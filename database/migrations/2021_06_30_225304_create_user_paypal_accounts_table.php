@@ -21,6 +21,7 @@ class CreateUserPaypalAccountsTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->text('token')->nullable();
+            $table->text('token_id')->nullable();
             $table->text('refresh_token')->nullable();
             $table->text('expires_in')->nullable();
             $table->text('sub')->nullable();

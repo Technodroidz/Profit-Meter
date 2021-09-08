@@ -35,7 +35,7 @@ class PaypalController extends Controller
             return redirect()->route('business_integration')->with('error',$request->error_description);
         }
         $user = Socialite::driver('paypal_sandbox')->user();
-        
+        // pp($user);
         $insert_array = [
             'user_id'          => Auth::User()->id,
             'paypal_id'        => $user->id,
@@ -103,14 +103,14 @@ class PaypalController extends Controller
               ),
             ));
 
-            $response = curl_exec($curl);
+            $resp = curl_exec($curl);
 
             curl_close($curl);
-            $response = json_decode($response,1);
-            if(isset($response['access_token'])){
-                UserPaypalAccount::where('user_id',Auth::User()->id)->update(['token'=>$response['access_token']]);
+            $resp = json_decode($resp,1);
+            if(isset($resp['access_token'])){
+                UserPaypalAccount::where('user_id',Auth::User()->id)->update(['token'=>$resp['access_token']]);
                 $token_array = [
-                    'access_token' => $response['access_token'],
+                    'access_token' => $resp['access_token'],
                     'token_type'   => 'Bearer',
                 ];
                 $provider->setAccessToken($token_array);

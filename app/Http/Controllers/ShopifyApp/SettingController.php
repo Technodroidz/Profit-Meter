@@ -12,6 +12,9 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Model\SubscriptionPlan;
+use App\Jobs\SyncGoogleAdsData;
+use App\Jobs\SyncSnapchatAdsData;
+use App\Jobs\SyncPaypalDisputesData;
 
 class SettingController extends Controller
 {
@@ -174,6 +177,24 @@ class SettingController extends Controller
         $data  = ['current_link' => 'account','subscription_plans' => $plans];
 
         return view('business_app/content_template/upgrade_plan',$data);
+    }
+
+    public function syncSnapchatAdsData(Request $request)
+    {
+        SyncSnapchatAdsData::dispatch(Auth::User()->id);
+        return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
+    }
+
+    public function syncGoogleAdsData(Request $request)
+    {
+        SyncGoogleAdsData::dispatch(Auth::User()->id);
+        return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
+    }
+
+    public function syncPaypalDisputesData(Request $request)
+    {
+        SyncPaypalDisputesData::dispatch(Auth::User()->id);
+        return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
     }
 
 }

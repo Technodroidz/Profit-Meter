@@ -116,6 +116,102 @@ class SyncGoogleAdsData implements ShouldQueue
             }
             $response['customer_list'] = $customer_list;
         }
+
+        if(!empty($google_account)){
+            // $oAuth2Credential = (new OAuth2TokenBuilder())
+            //     ->withClientId(env('GOOGLE_CLIENT_ID'))
+            //     ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
+            //     ->withRefreshToken($google_account->refresh_token)
+            //     // ...
+            //     ->build();
+
+            // $googleAdsClient = (new GoogleAdsClientBuilder())
+            //     ->withOAuth2Credential($oAuth2Credential)
+            //     ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+            //     ->withLoginCustomerId($customer_id)
+            //     // ...
+            //     ->build();
+
+            // $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+            // // Creates a query that retrieves all campaigns.
+            // $query = 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id';
+            // // Issues a search stream request.
+            // /** @var GoogleAdsServerStreamDecorator $stream */
+
+            // $stream = $googleAdsServiceClient->searchStream('6325332442', $query);
+
+            // // Iterates over all rows in all messages and prints the requested field values for
+            // // the campaign in each row.
+            // pp($stream);
+            // foreach ($stream->iterateAllElements() as $googleAdsRow) {
+            //     pp($googleAdsRow);
+            //     /** @var GoogleAdsRow $googleAdsRow */
+            //     printf(
+            //         "Campaign with ID %d and name '%s' was found.%s",
+            //         $googleAdsRow->getCampaign()->getId(),
+            //         $googleAdsRow->getCampaign()->getName(),
+            //         PHP_EOL
+            //     );
+            // }
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.googleapis.com/oauth2/v3/token',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS => 'grant_type=refresh_token&client_id='.env('GOOGLE_CLIENT_ID').'&client_secret='.env('GOOGLE_CLIENT_SECRET').'&refresh_token='.$google_account->refresh_token,
+              CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $response = json_decode($response,1);
+
+            if(isset($response['access_token'])){
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => 'https://googleads.googleapis.com/v8/customers/6325332442/googleAds:searchStream',
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => '',
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 0,
+                  CURLOPT_FOLLOWLOCATION => true,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => 'POST',
+                  CURLOPT_POSTFIELDS =>'{
+                    "query":"SELECT campaign.id, campaign.name,campaign.status,metrics.clicks,metrics.impressions,metrics.cost_micros FROM campaign ORDER BY campaign.id"
+                }',
+                  CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer '.$response['access_token'],
+                    'developer-token: '.env('GOOGLE_ADS_DEVELOPER_TOKEN'),
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                    'login-customer-id: '.$customer_id
+                  ),
+                ));
+
+                $campaign_response = curl_exec($curl);
+
+                curl_close($curl);
+                $campaign_response = json_decode($campaign_response,1);
+                
+                $response['customer_id'] = $customer_id;
+                $response['campaign_list'] = $campaign_response[0]['results'];
+                // pp($response);
+                return view('business_app/content_template/google_ads_campaign_list',$response);
+
+            }
+        }
     
     }
 }
