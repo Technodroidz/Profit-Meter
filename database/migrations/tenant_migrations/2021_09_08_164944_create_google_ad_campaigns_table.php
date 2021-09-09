@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGoogleAdCampaignListTable extends Migration
+class CreateGoogleAdCampaignsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateGoogleAdCampaignListTable extends Migration
      */
     public function up()
     {
-        Schema::create('google_ad_campaign_list', function (Blueprint $table) {
+        Schema::create('google_ad_campaigns', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('google_ad_customer_id')->nullable();
             $table->text('campaign_resource_name')->nullable();
             $table->text('campaign_status')->nullable();
             $table->text('campaign_name')->nullable();
@@ -37,6 +38,6 @@ class CreateGoogleAdCampaignListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('google_ad_campaign_list');
+        Schema::dropIfExists('google_ad_campaigns');
     }
 }

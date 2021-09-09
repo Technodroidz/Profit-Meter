@@ -19,7 +19,7 @@ class CreatePaypalDisputesTable extends Migration
             $table->timestamp('create_time')->nullable();
             $table->timestamp('update_time')->nullable();
             $table->string('reason')->nullable();
-            $table->string('status')->nullable();
+            $table->string('dispute_status')->nullable();
             $table->string('dispute_state')->nullable();
             $table->string('dispute_amount_currency_code')->nullable();
             $table->string('dispute_amount_value')->nullable();
