@@ -32,6 +32,7 @@
                                     <tr>
                                         <th scope="col">Customer ID</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Calculation Active</th>
                                         
                                     </tr>
                                 </thead>
@@ -46,6 +47,11 @@
                                             </div>
                                         </td>
                                         <td> {{$value['descriptive_name']}} </td>
+                                        <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['customer_id']}}">
+                                                <input type="checkbox" name="multiply_shipping_fee" id="course_{{$value['customer_id']}}" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
+                                                <div class="slider-check round"></div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
 
