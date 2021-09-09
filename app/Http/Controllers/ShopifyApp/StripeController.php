@@ -53,7 +53,8 @@ class StripeController extends Controller
         $stripe = new \Stripe\StripeClient(
           $stripe_account->access_token
         );
-        $disputes = $stripe->disputes->all(['limit' => 3]);
+        // $disputes = $stripe->issuing->disputes->all(['limit' => 3]);
+        $disputes = $stripe->disputes->all();
         dd($disputes);
     }
 }
