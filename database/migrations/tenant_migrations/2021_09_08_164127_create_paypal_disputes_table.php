@@ -16,8 +16,8 @@ class CreatePaypalDisputesTable extends Migration
         Schema::create('paypal_disputes', function (Blueprint $table) {
             $table->id();
             $table->string('dispute_id')->nullable();
-            $table->timestamp('create_time')->nullable();
-            $table->timestamp('update_time')->nullable();
+            $table->string('create_time')->nullable();
+            $table->string('update_time')->nullable();
             $table->string('reason')->nullable();
             $table->string('dispute_status')->nullable();
             $table->string('dispute_state')->nullable();

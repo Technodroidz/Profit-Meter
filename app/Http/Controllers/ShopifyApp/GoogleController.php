@@ -340,7 +340,7 @@ class GoogleController extends Controller
                 
                 $response['customer_id'] = $customer_id;
                 $response['campaign_list'] = $campaign_response[0]['results'];
-                pp($response);
+                
                 return view('business_app/content_template/google_ads_campaign_list',$response);
 
             }

@@ -24,6 +24,12 @@
                         <span class="sr-only">Loading...</span>
                       </button>
                       <a data-url="{{route('sync_shopify')}}" data-request="inline-post-ajax" data-method="post" data-variable="module_name" data-module_name="shopify_products" href="javascript:void(0);" class="mr_5 mb_10  small_blue_btn active shopify_btn" data-show_error="#show_shopify_error" data-disable_element_class=".shopify_btn" data-loader="#shopify_loader" data-swal_message="Are You Sure to Sync Shopify Products.">Sync Products</a>
+
+                      <a data-url="{{route('sync_google_ads')}}" data-request="inline-post-ajax" data-method="post" data-variable="module_name" data-module_name="shopify_products" href="javascript:void(0);" class="mr_5 mb_10  small_blue_btn active shopify_btn" data-show_error="#show_shopify_error" data-disable_element_class=".shopify_btn" data-loader="#shopify_loader" data-swal_message="Are You Sure to Sync Google Ads.">Sync Google Ads</a>
+
+                      <a data-url="{{route('sync_paypal_disputes')}}" data-request="inline-post-ajax" data-method="post" data-variable="module_name" data-module_name="shopify_products" href="javascript:void(0);" class="mr_5 mb_10  small_blue_btn active shopify_btn" data-show_error="#show_shopify_error" data-disable_element_class=".shopify_btn" data-loader="#shopify_loader" data-swal_message="Are You Sure to Sync Paypal Disputes.">Sync Paypal Disputes</a>
+
+                      <a data-url="{{route('sync_snapchat_ads')}}" data-request="inline-post-ajax" data-method="post" data-variable="module_name" data-module_name="shopify_products" href="javascript:void(0);" class="mr_5 mb_10  small_blue_btn active shopify_btn" data-show_error="#show_shopify_error" data-disable_element_class=".shopify_btn" data-loader="#shopify_loader" data-swal_message="Are You Sure to Sync Snapchat Ads.">Sync Snapchat</a>
                       @csrf
                       
 

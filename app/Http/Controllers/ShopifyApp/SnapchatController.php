@@ -224,6 +224,7 @@ class SnapchatController extends Controller
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/me/organizations';
         $response   = $this->snapchatApiDetail($api_url);
+        // pp($response);
         return view('business_app/content_template/snapchat_organisation_account_list',$response);
         
     }
@@ -232,7 +233,6 @@ class SnapchatController extends Controller
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/organizations/'.$organization_id.'/adaccounts';
         $response   = $this->snapchatApiDetail($api_url);
-        // pp($response);
         return view('business_app/content_template/snapchat_ad_account_list',$response);
         
     }
@@ -241,7 +241,6 @@ class SnapchatController extends Controller
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/invoices';
         $response   = $this->snapchatApiDetail($api_url);
-        // pp($response);
         return view('business_app/content_template/snapchat_ad_account_invoice_list',$response);
         
     }
@@ -250,7 +249,6 @@ class SnapchatController extends Controller
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/campaigns';
         $response   = $this->snapchatApiDetail($api_url);
-        // pp($response);
         return view('business_app/content_template/snapchat_campaign_list',$response);
         
     }
@@ -259,7 +257,6 @@ class SnapchatController extends Controller
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/campaigns/'.$campaign_id.'/ads';
         $response   = $this->snapchatApiDetail($api_url);
-        // pp($response);
         return view('business_app/content_template/snapchat_ads_list',$response);
         
     }

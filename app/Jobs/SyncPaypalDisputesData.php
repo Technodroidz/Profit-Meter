@@ -9,6 +9,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Model\UserPaypalAccount;
+use App\Model\User;
+use App\Model\PaypalDispute;
 
 class SyncPaypalDisputesData implements ShouldQueue
 {
@@ -32,6 +34,7 @@ class SyncPaypalDisputesData implements ShouldQueue
      */
     public function handle()
     {
+        makeDBConnection(User::find($this->user_id)->database_name);
         $paypal_account = UserPaypalAccount::where('user_id',$this->user_id)->first();
         $response = [];
         $response['paypal_account'] = $paypal_account;
@@ -96,6 +99,47 @@ class SyncPaypalDisputesData implements ShouldQueue
             }
         }else{
             $response['disputes'] = $disputes;
+        }
+
+        if(isset($response['disputes']['items']) && !empty($response['disputes']['items'])){
+            foreach ($response['disputes']['items'] as $key => $value) {
+                
+                $paypal_dispute = PaypalDispute::where('dispute_id',$value['dispute_id'])->where('deleted_at',null)->first();
+
+                if(!empty($paypal_dispute)){
+                    $update_array = [
+                        'dispute_id'                    => $value['dispute_id'],
+                        'create_time'                   => $value['create_time'],
+                        'update_time'                   => $value['update_time'],
+                        'reason'                        => $value['reason'],
+                        'dispute_status'                => $value['status'],
+                        'dispute_state'                 => $value['dispute_state'],
+                        'dispute_amount_currency_code'  => $value['dispute_amount']['currency_code'],
+                        'dispute_amount_value'          => $value['dispute_amount']['value'],
+                        'dispute_life_cycle_stage'      => $value['dispute_life_cycle_stage'],
+                        'updated_at'                    => date('Y-m-d H:i:s')
+                    ];
+
+                    PaypalDispute::where('id',$paypal_dispute->id)->update($update_array);
+                    $paypal_dispute_id = $paypal_dispute->id;
+                }else{
+                    $insert_array = [
+                        'dispute_id'                    => $value['dispute_id'],
+                        'create_time'                   => $value['create_time'],
+                        'update_time'                   => $value['update_time'],
+                        'reason'                        => $value['reason'],
+                        'dispute_status'                => $value['status'],
+                        'dispute_state'                 => $value['dispute_state'],
+                        'dispute_amount_currency_code'  => $value['dispute_amount']['currency_code'],
+                        'dispute_amount_value'          => $value['dispute_amount']['value'],
+                        'dispute_life_cycle_stage'      => $value['dispute_life_cycle_stage'],
+                        'created_at'    => date('Y-m-d H:i:s')
+                    ];
+
+                    $paypal_dispute_id = PaypalDispute::insertGetId($insert_array);   
+                }
+            }
+
         }
     }
 }

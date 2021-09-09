@@ -17,7 +17,12 @@ class CreateSnapchatAdsTable extends Migration
             $table->id();
             $table->unsignedInteger('campaign_id')->nullable();
             $table->string('ad_id')->nullable();
+            $table->string('snapchat_updated_at')->nullable();
+            $table->string('snapchat_created_at')->nullable();
+            
             $table->string('name')->nullable();
+            $table->string('ad_squad_id')->nullable();
+            $table->string('creative_id')->nullable();
             $table->string('ad_status')->nullable();
             $table->string('type')->nullable();
             $table->string('render_type')->nullable();

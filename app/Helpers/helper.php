@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Schema;
     function makeDBConnection($database_name='')
     {
         config([
-            'database.connections.tenant.database' => Auth::User()->database_name,
+            'database.connections.tenant.database' => $database_name,
         ]);
 
         DB::purge('tenant');

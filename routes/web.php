@@ -194,6 +194,11 @@ Route::group(['middleware' => ['auth:web','restrict.registered.user','configure.
 
 	Route::match(['POST','GET'],'business/settings/rules','ShopifyApp\SettingController@rules')->name('business_setting_rules');
 	Route::get('business/settings/sync-status','ShopifyApp\SettingController@syncStatus')->name('business_setting_sync_status');
+
+	Route::match(['POST','GET'],'business/settings/sync-paypal-disputes','ShopifyApp\SettingController@syncPaypalDisputesData')->name('sync_paypal_disputes');
+	Route::match(['POST','GET'],'business/settings/sync-google-ads','ShopifyApp\SettingController@syncGoogleAdsData')->name('sync_google_ads');
+	Route::match(['POST','GET'],'business/settings/sync-snapchat-ads','ShopifyApp\SettingController@syncSnapchatAdsData')->name('sync_snapchat_ads');
+
 	Route::get('business/settings/account','ShopifyApp\SettingController@account')->name('business_setting_account');
 	Route::get('business/settings/upgrade_plan','ShopifyApp\SettingController@upgradePlan')->name('business_setting_upgrade_plan');
 	

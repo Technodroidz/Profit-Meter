@@ -179,9 +179,9 @@ class SettingController extends Controller
         return view('business_app/content_template/upgrade_plan',$data);
     }
 
-    public function syncSnapchatAdsData(Request $request)
+    public function syncPaypalDisputesData(Request $request)
     {
-        SyncSnapchatAdsData::dispatch(Auth::User()->id);
+        SyncPaypalDisputesData::dispatch(Auth::User()->id);
         return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
     }
 
@@ -190,11 +190,13 @@ class SettingController extends Controller
         SyncGoogleAdsData::dispatch(Auth::User()->id);
         return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
     }
-
-    public function syncPaypalDisputesData(Request $request)
+    
+    public function syncSnapchatAdsData(Request $request)
     {
-        SyncPaypalDisputesData::dispatch(Auth::User()->id);
+        SyncSnapchatAdsData::dispatch(Auth::User()->id);
         return response()->success('Request to sync Shopify Products initiated.Will be synced shortly.');
     }
+
+
 
 }

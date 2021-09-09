@@ -17,11 +17,14 @@ class CreateSnapchatAdCampaignsTable extends Migration
             $table->id();
             $table->unsignedInteger('ad_account_id')->nullable();
             $table->string('campaign_id')->nullable();
+            $table->string('snapchat_updated_at')->nullable();
+            $table->string('snapchat_created_at')->nullable();
+            
             $table->string('name')->nullable();
             $table->string('campaign_status')->nullable();
             $table->string('objective')->nullable();
+            $table->string('start_time')->nullable();
             $table->string('buy_model')->nullable();
-            $table->timestamp('start_time')->nullable();
             
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('calculation_active')->default(1);
