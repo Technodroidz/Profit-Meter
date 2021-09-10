@@ -74,7 +74,7 @@
                                             </div>
                                         </td>
                                         <td> {{$value['name']}} </td>
-                                        <td> {{$value['snapchat_status']}} </td>
+                                        <td> {{$value['campaign_status']}} </td>
                                         <td> {{$value['objective']}} </td>
                                         <td> {{$value['start_time']}} </td>
                                         <td> {{$value['buy_model']}} </td>

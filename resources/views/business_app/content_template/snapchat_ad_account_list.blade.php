@@ -75,7 +75,7 @@
                                         </td>
                                         <td> {{$value['name']}} </td>
                                         <td> {{$value['type']}} </td>
-                                        <td> {{$value['snapchat_status']}} </td>
+                                        <td> {{$value['ad_account_status_status']}} </td>
                                         <td> {{$value['billing_type']}} </td>
                                         <td> <a href="{{ route('ad_account_invoice_list',$value['ad_account_id']) }}">Invoices</a></td>
                                         <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['id']}}">
