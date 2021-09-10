@@ -37,6 +37,7 @@
                                         <th scope="col">Clicks</th>
                                         <th scope="col">Cost Micros</th>
                                         <th scope="col">Impressions</th>
+                                        <th scope="col">Calculation Active</th>
                                         
                                     </tr>
                                 </thead>
@@ -47,15 +48,20 @@
                                         <td>
                                             <div class="trade d-flex align-items-center">
                                                
-                                                <span class="ml-3"> {{$value['campaign']['id']}} </span>
+                                                <span class="ml-3"> {{$value['id']}} </span>
                                             </div>
                                         </td>
-                                        <td> {{$value['campaign']['name']}} </td>
-                                        <td> {{$value['campaign']['resourceName']}} </td>
-                                        <td> {{$value['campaign']['status']}} </td>
-                                        <td> {{$value['metrics']['clicks']}} </td>
-                                        <td> {{$value['metrics']['costMicros']}} </td>
-                                        <td> {{$value['metrics']['impressions']}} </td>
+                                        <td> {{$value['campaign_name']}} </td>
+                                        <td> {{$value['campaign_resource_name']}} </td>
+                                        <td> {{$value['campaign_status']}} </td>
+                                        <td> {{$value['metrics_clicks']}} </td>
+                                        <td> {{$value['costMicros']}} </td>
+                                        <td> {{$value['impressions']}} </td>
+                                        <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['id']}}">
+                                                <input type="checkbox" name="multiply_shipping_fee" id="course_{{$value['id']}}" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
+                                                <div class="slider-check round"></div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
 

@@ -8,6 +8,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Model\UserPaypalAccount;
+use App\Model\PaypalDispute;
 
 class PaypalController extends Controller
 {
@@ -58,69 +59,69 @@ class PaypalController extends Controller
         $paypal_account = UserPaypalAccount::where('user_id',Auth::User()->id)->first();
         $response = [];
         $response['paypal_account'] = $paypal_account;
-        $token_array = [
-            'access_token' => $paypal_account->token,
-            'token_type'   => 'Bearer',
-        ];
-        $provider = new PayPalClient;
-        $provider = \PayPal::setProvider();
-        $config = [
-            'mode'             => 'sandbox',
-            'sandbox'          => [
-                'client_id'    => '',
-                'client_secret'=> '',
-                // 'app_id'       => 'APP-80W284485P519543T',
-                'app_id'       => '',
-            ],
+        // $token_array = [
+        //     'access_token' => $paypal_account->token,
+        //     'token_type'   => 'Bearer',
+        // ];
+        // $provider = new PayPalClient;
+        // $provider = \PayPal::setProvider();
+        // $config = [
+        //     'mode'             => 'sandbox',
+        //     'sandbox'          => [
+        //         'client_id'    => '',
+        //         'client_secret'=> '',
+        //         // 'app_id'       => 'APP-80W284485P519543T',
+        //         'app_id'       => '',
+        //     ],
 
-            'payment_action'   => 'Authorization',
-            'currency'         => 'USD',
-            'notify_url'       => env('PAYPAL_NOTIFY_URL'),
-            'locale'           => 'en_US',
-            'validate_ssl'     => false,
-        ];
+        //     'payment_action'   => 'Authorization',
+        //     'currency'         => 'USD',
+        //     'notify_url'       => env('PAYPAL_NOTIFY_URL'),
+        //     'locale'           => 'en_US',
+        //     'validate_ssl'     => false,
+        // ];
 
-        $provider->setApiCredentials($config);
-        $provider->setAccessToken($token_array);
-        $disputes = $provider->listDisputes();
-        if(isset($disputes['type']) && $disputes['type'] == 'error'){
+        // $provider->setApiCredentials($config);
+        // $provider->setAccessToken($token_array);
+        // $disputes = $provider->listDisputes();
+        // if(isset($disputes['type']) && $disputes['type'] == 'error'){
 
-            $curl = curl_init();
+        //     $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://api-m.sandbox.paypal.com/v1/oauth2/token',
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => '',
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => 'GET',
-              CURLOPT_POSTFIELDS => 'grantType=refreshToken&refreshToken='.$paypal_account->token,
-              CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$paypal_account->token_id,
-                'Content-Type: application/x-www-form-urlencoded'
-              ),
-            ));
+        //     curl_setopt_array($curl, array(
+        //       CURLOPT_URL => 'https://api-m.sandbox.paypal.com/v1/oauth2/token',
+        //       CURLOPT_RETURNTRANSFER => true,
+        //       CURLOPT_ENCODING => '',
+        //       CURLOPT_MAXREDIRS => 10,
+        //       CURLOPT_TIMEOUT => 0,
+        //       CURLOPT_FOLLOWLOCATION => true,
+        //       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //       CURLOPT_CUSTOMREQUEST => 'GET',
+        //       CURLOPT_POSTFIELDS => 'grantType=refreshToken&refreshToken='.$paypal_account->token,
+        //       CURLOPT_HTTPHEADER => array(
+        //         'Authorization: Bearer '.$paypal_account->token_id,
+        //         'Content-Type: application/x-www-form-urlencoded'
+        //       ),
+        //     ));
 
-            $resp = curl_exec($curl);
+        //     $resp = curl_exec($curl);
 
-            curl_close($curl);
-            $resp = json_decode($resp,1);
-            if(isset($resp['access_token'])){
-                UserPaypalAccount::where('user_id',Auth::User()->id)->update(['token'=>$resp['access_token']]);
-                $token_array = [
-                    'access_token' => $resp['access_token'],
-                    'token_type'   => 'Bearer',
-                ];
-                $provider->setAccessToken($token_array);
-                $disputes = $provider->listDisputes();
-                $response['disputes'] = $disputes;
-            }
-        }else{
-            $response['disputes'] = $disputes;
-        }
-        // pp($response);
+        //     curl_close($curl);
+        //     $resp = json_decode($resp,1);
+        //     if(isset($resp['access_token'])){
+        //         UserPaypalAccount::where('user_id',Auth::User()->id)->update(['token'=>$resp['access_token']]);
+        //         $token_array = [
+        //             'access_token' => $resp['access_token'],
+        //             'token_type'   => 'Bearer',
+        //         ];
+        //         $provider->setAccessToken($token_array);
+        //         $disputes = $provider->listDisputes();
+        //         $response['disputes'] = $disputes;
+        //     }
+        // }else{
+        //     $response['disputes'] = $disputes;
+        // }
+        $response['disputes'] = PaypalDispute::where('deleted_at',null)->get();
         return view('business_app/content_template/paypal_disputes_list',$response);
     }
 

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Model\UserGoogleAccount;
+use App\Model\GoogleAdCustomerId;
+use App\Model\GoogleAdCampaigns;
 use Illuminate\Support\Facades\Auth;
 
 use GetOpt\GetOpt;
@@ -173,75 +175,76 @@ class GoogleController extends Controller
         $google_account = UserGoogleAccount::where('user_id',Auth::User()->id)->first();
         $customer_list = [];
         if(!empty($google_account)){
-            $oAuth2Credential = (new OAuth2TokenBuilder())
-                ->withClientId(env('GOOGLE_CLIENT_ID'))
-                ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
-                ->withRefreshToken($google_account->refresh_token)
-                // ...
-                ->build();
+            // $oAuth2Credential = (new OAuth2TokenBuilder())
+            //     ->withClientId(env('GOOGLE_CLIENT_ID'))
+            //     ->withClientSecret(env('GOOGLE_CLIENT_SECRET'))
+            //     ->withRefreshToken($google_account->refresh_token)
+            //     // ...
+            //     ->build();
 
-            $googleAdsClient = (new GoogleAdsClientBuilder())
-                ->withOAuth2Credential($oAuth2Credential)
-                ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
-                // ...
-                ->build();
-            // $customer_id = $google_account->google_ads_customer_id;
+            // $googleAdsClient = (new GoogleAdsClientBuilder())
+            //     ->withOAuth2Credential($oAuth2Credential)
+            //     ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+            //     // ...
+            //     ->build();
+            // // $customer_id = $google_account->google_ads_customer_id;
 
-            $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
+            // $customerServiceClient = $googleAdsClient->getCustomerServiceClient();
             
-            // Issues a request for listing all accessible customers.
-            $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
+            // // Issues a request for listing all accessible customers.
+            // $accessibleCustomers = $customerServiceClient->listAccessibleCustomers();
             
             
-            // Iterates over all accessible customers' resource names and prints them.
-            foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
-                /** @var string $resourceName */
+            // // Iterates over all accessible customers' resource names and prints them.
+            // foreach ($accessibleCustomers->getResourceNames() as $resourceName) {
+            //     /** @var string $resourceName */
                 
-                $customer_id = str_replace("customers/","",$resourceName);
-                if($customer_id == '4795273194' ){
-                    $customer    = $customerServiceClient->getCustomer(ResourceNames::forCustomer($customer_id));
+            //     $customer_id = str_replace("customers/","",$resourceName);
+            //     if($customer_id == '4795273194' ){
+            //         $customer    = $customerServiceClient->getCustomer(ResourceNames::forCustomer($customer_id));
 
-                    // $query = 'SELECT customer_client.client_customer, customer_client.level,'
-                    //     . ' customer_client.manager, customer_client.descriptive_name,'
-                    //     . ' customer_client.currency_code, customer_client.time_zone,'
-                    //     . ' customer_client.id FROM customer_client WHERE customer_client.level <= 1';
+            //         // $query = 'SELECT customer_client.client_customer, customer_client.level,'
+            //         //     . ' customer_client.manager, customer_client.descriptive_name,'
+            //         //     . ' customer_client.currency_code, customer_client.time_zone,'
+            //         //     . ' customer_client.id FROM customer_client WHERE customer_client.level <= 1';
 
-                    // // Adds the root customer ID to the list of IDs to be processed.
+            //         // // Adds the root customer ID to the list of IDs to be processed.
 
-                    // // Performs a breadth-first search algorithm to build an associative array mapping
-                    // // managers to their child accounts ($customerIdsToChildAccounts).
+            //         // // Performs a breadth-first search algorithm to build an associative array mapping
+            //         // // managers to their child accounts ($customerIdsToChildAccounts).
 
-                    // // Issues a search request by specifying page size.
-                    // /** @var GoogleAdsServerStreamDecorator $stream */
-                    // $googleAdsClient = (new GoogleAdsClientBuilder())
-                    // ->withOAuth2Credential($oAuth2Credential)
-                    // ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
-                    // ->withLoginCustomerId('4795273194')
-                    // // ...
-                    // ->build();
+            //         // // Issues a search request by specifying page size.
+            //         // /** @var GoogleAdsServerStreamDecorator $stream */
+            //         // $googleAdsClient = (new GoogleAdsClientBuilder())
+            //         // ->withOAuth2Credential($oAuth2Credential)
+            //         // ->withDeveloperToken(env('GOOGLE_ADS_DEVELOPER_TOKEN'))
+            //         // ->withLoginCustomerId('4795273194')
+            //         // // ...
+            //         // ->build();
 
-                    // $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
+            //         // $googleAdsServiceClient = $googleAdsClient->getGoogleAdsServiceClient();
 
-                    // $stream = $googleAdsServiceClient->searchStream(
-                    //     $customer_id,
-                    //     $query
-                    // );
-                    // pp($stream);
-                    // // Iterates over all elements to get all customer clients under the specified customer's
-                    // // hierarchy.
+            //         // $stream = $googleAdsServiceClient->searchStream(
+            //         //     $customer_id,
+            //         //     $query
+            //         // );
+            //         // pp($stream);
+            //         // // Iterates over all elements to get all customer clients under the specified customer's
+            //         // // hierarchy.
 
-                    // foreach ($stream->iterateAllElements() as $googleAdsRow) {
-                    //     /** @var GoogleAdsRow $googleAdsRow */
-                    //     $customerClient = $googleAdsRow->getCustomerClient();
-                    // }
-                }
+            //         // foreach ($stream->iterateAllElements() as $googleAdsRow) {
+            //         //     /** @var GoogleAdsRow $googleAdsRow */
+            //         //     $customerClient = $googleAdsRow->getCustomerClient();
+            //         // }
+            //     }
 
-                $customer_list[] = [
-                    'customer_id'       => $customer_id,
-                    'descriptive_name'  => isset($customer)?$customer->getDescriptiveName():'',
-                    'client_customer_id' => ''
-                ];
-            }
+            //     $customer_list[] = [
+            //         'customer_id'       => $customer_id,
+            //         'descriptive_name'  => isset($customer)?$customer->getDescriptiveName():'',
+            //         'client_customer_id' => ''
+            //     ];
+            // }
+            $customer_list = GoogleAdCustomerId::where('deleted_at',null)->get();
             $response['customer_list'] = $customer_list;
             return view('business_app/content_template/google_ads_customer_list',$response);
         }
@@ -287,63 +290,63 @@ class GoogleController extends Controller
             //     );
             // }
 
-            $curl = curl_init();
+            // $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.googleapis.com/oauth2/v3/token',
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => '',
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS => 'grant_type=refresh_token&client_id='.env('GOOGLE_CLIENT_ID').'&client_secret='.env('GOOGLE_CLIENT_SECRET').'&refresh_token='.$google_account->refresh_token,
-              CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/x-www-form-urlencoded'
-              ),
-            ));
+            // curl_setopt_array($curl, array(
+            //   CURLOPT_URL => 'https://www.googleapis.com/oauth2/v3/token',
+            //   CURLOPT_RETURNTRANSFER => true,
+            //   CURLOPT_ENCODING => '',
+            //   CURLOPT_MAXREDIRS => 10,
+            //   CURLOPT_TIMEOUT => 0,
+            //   CURLOPT_FOLLOWLOCATION => true,
+            //   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //   CURLOPT_CUSTOMREQUEST => 'POST',
+            //   CURLOPT_POSTFIELDS => 'grant_type=refresh_token&client_id='.env('GOOGLE_CLIENT_ID').'&client_secret='.env('GOOGLE_CLIENT_SECRET').'&refresh_token='.$google_account->refresh_token,
+            //   CURLOPT_HTTPHEADER => array(
+            //     'Content-Type: application/x-www-form-urlencoded'
+            //   ),
+            // ));
 
-            $response = curl_exec($curl);
+            // $response = curl_exec($curl);
 
-            curl_close($curl);
-            $response = json_decode($response,1);
+            // curl_close($curl);
+            // $response = json_decode($response,1);
 
-            if(isset($response['access_token'])){
-                $curl = curl_init();
+            // if(isset($response['access_token'])){
+            //     $curl = curl_init();
 
-                curl_setopt_array($curl, array(
-                  CURLOPT_URL => 'https://googleads.googleapis.com/v8/customers/6325332442/googleAds:searchStream',
-                  CURLOPT_RETURNTRANSFER => true,
-                  CURLOPT_ENCODING => '',
-                  CURLOPT_MAXREDIRS => 10,
-                  CURLOPT_TIMEOUT => 0,
-                  CURLOPT_FOLLOWLOCATION => true,
-                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                  CURLOPT_CUSTOMREQUEST => 'POST',
-                  CURLOPT_POSTFIELDS =>'{
-                    "query":"SELECT campaign.id, campaign.name,campaign.status,metrics.clicks,metrics.impressions,metrics.cost_micros FROM campaign ORDER BY campaign.id"
-                }',
-                  CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer '.$response['access_token'],
-                    'developer-token: '.env('GOOGLE_ADS_DEVELOPER_TOKEN'),
-                    'Content-Type: application/json',
-                    'Accept: application/json',
-                    'login-customer-id: '.$customer_id
-                  ),
-                ));
+            //     curl_setopt_array($curl, array(
+            //       CURLOPT_URL => 'https://googleads.googleapis.com/v8/customers/6325332442/googleAds:searchStream',
+            //       CURLOPT_RETURNTRANSFER => true,
+            //       CURLOPT_ENCODING => '',
+            //       CURLOPT_MAXREDIRS => 10,
+            //       CURLOPT_TIMEOUT => 0,
+            //       CURLOPT_FOLLOWLOCATION => true,
+            //       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //       CURLOPT_CUSTOMREQUEST => 'POST',
+            //       CURLOPT_POSTFIELDS =>'{
+            //         "query":"SELECT campaign.id, campaign.name,campaign.status,metrics.clicks,metrics.impressions,metrics.cost_micros FROM campaign ORDER BY campaign.id"
+            //     }',
+            //       CURLOPT_HTTPHEADER => array(
+            //         'Authorization: Bearer '.$response['access_token'],
+            //         'developer-token: '.env('GOOGLE_ADS_DEVELOPER_TOKEN'),
+            //         'Content-Type: application/json',
+            //         'Accept: application/json',
+            //         'login-customer-id: '.$customer_id
+            //       ),
+            //     ));
 
-                $campaign_response = curl_exec($curl);
+            //     $campaign_response = curl_exec($curl);
 
-                curl_close($curl);
-                $campaign_response = json_decode($campaign_response,1);
-                
-                $response['customer_id'] = $customer_id;
-                $response['campaign_list'] = $campaign_response[0]['results'];
+            //     curl_close($curl);
+            //     $campaign_response = json_decode($campaign_response,1);
+                $campaign_list = GoogleAdCampaigns::where('google_ad_customer_id',$customer_id)->get();
+                $response['customer_id'] = GoogleAdCustomerId::where('id',$customer_id)->first()->customer_id;
+                $response['campaign_list'] = $campaign_list;
                 
                 return view('business_app/content_template/google_ads_campaign_list',$response);
 
-            }
+            // }
         }
     }
 }

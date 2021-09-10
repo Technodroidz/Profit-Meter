@@ -43,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($disputes['items'] as $value)
+                                    @foreach ($disputes as $value)
 
                                     <tr>
                                         <td>
@@ -53,10 +53,10 @@
                                             </div>
                                         </td>
                                         <td> {{$value['reason']}} </td>
-                                        <td> {{$value['status']}} </td>
+                                        <td> {{$value['dispute_status']}} </td>
                                         <td> {{$value['dispute_state']}} </td>
-                                        <td> {{$value['dispute_amount']['currency_code']}} </td>
-                                        <td> {{$value['dispute_amount']['value']}}</td>
+                                        <td> {{$value['dispute_amount_currency_code']}} </td>
+                                        <td> {{$value['dispute_amount_value']}}</td>
                                         <td> {{$value['dispute_life_cycle_stage']}}</td>
                                         <td> {{$value['create_time']}}</td>
                                         
