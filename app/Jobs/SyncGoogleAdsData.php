@@ -196,13 +196,8 @@ class SyncGoogleAdsData implements ShouldQueue
                             }
                         }
                     }
-
-                }
-                
-            }
-
-            
+                }   
+            }   
         }
-    
     }
 }
