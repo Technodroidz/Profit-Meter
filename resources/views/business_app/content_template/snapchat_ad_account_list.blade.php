@@ -59,6 +59,7 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Billing Type</th>
                                         <th scope="col">All Invoices</th>
+                                        <th scope="col">Calculation Active</th>
                                         
                                     </tr>
                                 </thead>
@@ -69,14 +70,19 @@
                                         <td>
                                             <div class="trade d-flex align-items-center">
                                                
-                                                <span class="ml-3"><a href="{{ route('campaign_list',$value['adaccount']['id']) }}"> {{$value['adaccount']['id']}} </a></span>
+                                                <span class="ml-3"><a href="{{ route('campaign_list',$value['id']) }}"> {{$value['ad_account_id']}} </a></span>
                                             </div>
                                         </td>
-                                        <td> {{$value['adaccount']['name']}} </td>
-                                        <td> {{$value['adaccount']['type']}} </td>
-                                        <td> {{$value['adaccount']['status']}} </td>
-                                        <td> {{$value['adaccount']['billing_type']}} </td>
-                                        <td> <a href="{{ route('ad_account_invoice_list',$value['adaccount']['id']) }}">Invoices</a></td>
+                                        <td> {{$value['name']}} </td>
+                                        <td> {{$value['type']}} </td>
+                                        <td> {{$value['snapchat_status']}} </td>
+                                        <td> {{$value['billing_type']}} </td>
+                                        <td> <a href="{{ route('ad_account_invoice_list',$value['ad_account_id']) }}">Invoices</a></td>
+                                        <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['id']}}">
+                                                <input type="checkbox" name="multiply_shipping_fee" id="course_{{$value['id']}}" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
+                                                <div class="slider-check round"></div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
 

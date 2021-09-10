@@ -59,6 +59,7 @@
                                         <th scope="col">Objective</th>
                                         <th scope="col">Start Time</th>
                                         <th scope="col">Buy Model</th>
+                                        <th scope="col">Calculation Active</th>
                                         
                                     </tr>
                                 </thead>
@@ -69,14 +70,19 @@
                                         <td>
                                             <div class="trade d-flex align-items-center">
                                                
-                                                <span class="ml-3"><a href="{{ route('ads_list',$value['campaign']['id']) }}"> {{$value['campaign']['id']}} </a></span>
+                                                <span class="ml-3"><a href="{{ route('ads_list',$value['id']) }}"> {{$value['campaign_id']}} </a></span>
                                             </div>
                                         </td>
-                                        <td> {{$value['campaign']['name']}} </td>
-                                        <td> {{$value['campaign']['status']}} </td>
-                                        <td> {{$value['campaign']['objective']}} </td>
-                                        <td> {{$value['campaign']['start_time']}} </td>
-                                        <td> {{$value['campaign']['buy_model']}} </td>
+                                        <td> {{$value['name']}} </td>
+                                        <td> {{$value['snapchat_status']}} </td>
+                                        <td> {{$value['objective']}} </td>
+                                        <td> {{$value['start_time']}} </td>
+                                        <td> {{$value['buy_model']}} </td>
+                                        <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['id']}}">
+                                                <input type="checkbox" name="multiply_shipping_fee" id="course_{{$value['id']}}" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
+                                                <div class="slider-check round"></div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
 

@@ -59,6 +59,7 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Country</th>
                                         <th scope="col">State</th>
+                                        <th scope="col">Calculation Active</th>
                                         
                                     </tr>
                                 </thead>
@@ -69,13 +70,18 @@
                                         <td>
                                             <div class="trade d-flex align-items-center">
                                                
-                                                <span class="ml-3"><a href="{{ route('ad_account_list',$value['organization']['id']) }}"> {{$value['organization']['id']}} </a></span>
+                                                <span class="ml-3"><a href="{{ route('ad_account_list',$value['id']) }}"> {{$value['organisation_id']}} </a></span>
                                             </div>
                                         </td>
-                                        <td> {{$value['organization']['name']}} </td>
-                                        <td> {{$value['organization']['contact_email']}} </td>
-                                        <td> {{$value['organization']['country']}} </td>
-                                        <td> {{$value['organization']['state']}} </td>
+                                        <td> {{$value['name']}} </td>
+                                        <td> {{$value['contact_email']}} </td>
+                                        <td> {{$value['country']}} </td>
+                                        <td> {{$value['state']}} </td>
+                                        <td> <div class="inlineitem">  <label class="lms_checkbox_1" for="course_{{$value['id']}}">
+                                                <input type="checkbox" name="multiply_shipping_fee" id="course_{{$value['id']}}" value="1" {{ isset($shipping_cost_setting['multiply_shipping_fee']) && $shipping_cost_setting['multiply_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=highest_shipping_fee]" onchange="checkUncheck($(this));">
+                                                <div class="slider-check round"></div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
 

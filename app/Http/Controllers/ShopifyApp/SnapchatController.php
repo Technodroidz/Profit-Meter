@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Model\UserSnapchatAccount;
+use App\Model\SnapchatOrganisation;
+use App\Model\SnapchatInvoices;
+use App\Model\SnapchatAdAccount;
+use App\Model\SnapchatCampaign;
+use App\Model\SnapchatAds;
 
 class SnapchatController extends Controller
 {
@@ -222,17 +227,20 @@ class SnapchatController extends Controller
 
     public function organisationList(Request $request)
     {
-        $api_url    = 'https://adsapi.snapchat.com/v1/me/organizations';
-        $response   = $this->snapchatApiDetail($api_url);
-        // pp($response);
+        // $api_url    = 'https://adsapi.snapchat.com/v1/me/organizations';
+        // $response   = $this->snapchatApiDetail($api_url);
+        $response['organizations']   = SnapchatOrganisation::where('deleted_at',null)->get();
+        
         return view('business_app/content_template/snapchat_organisation_account_list',$response);
         
     }
 
     public function adAccountList(Request $request,$organization_id)
     {
-        $api_url    = 'https://adsapi.snapchat.com/v1/organizations/'.$organization_id.'/adaccounts';
-        $response   = $this->snapchatApiDetail($api_url);
+        // $api_url    = 'https://adsapi.snapchat.com/v1/organizations/'.$organization_id.'/adaccounts';
+        // $response   = $this->snapchatApiDetail($api_url);
+        $response['adaccounts']   = SnapchatAdAccount::where('deleted_at',null)->where('organisation_id',$organization_id)->get();
+
         return view('business_app/content_template/snapchat_ad_account_list',$response);
         
     }
@@ -247,16 +255,20 @@ class SnapchatController extends Controller
 
     public function campaignList(Request $request,$ad_account_id)
     {
-        $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/campaigns';
-        $response   = $this->snapchatApiDetail($api_url);
+        // $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/campaigns';
+        // $response   = $this->snapchatApiDetail($api_url);
+        $response['campaigns']   = SnapchatCampaign::where('deleted_at',null)->where('ad_account_id',$ad_account_id)->get();
+
         return view('business_app/content_template/snapchat_campaign_list',$response);
         
     }
 
     public function adsList(Request $request,$campaign_id)
     {
-        $api_url    = 'https://adsapi.snapchat.com/v1/campaigns/'.$campaign_id.'/ads';
-        $response   = $this->snapchatApiDetail($api_url);
+        // $api_url    = 'https://adsapi.snapchat.com/v1/campaigns/'.$campaign_id.'/ads';
+        // $response   = $this->snapchatApiDetail($api_url);
+        $response['ads']   = SnapchatAds::where('deleted_at',null)->where('campaign_id',$campaign_id)->get();
+
         return view('business_app/content_template/snapchat_ads_list',$response);
         
     }
