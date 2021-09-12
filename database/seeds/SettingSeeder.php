@@ -29,32 +29,33 @@ class SettingSeeder extends Seeder
                 'option_name'  => 'stripe_currency',
                 'option_value' => 'USD',
                 'setting_type' => 'STRIPE',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'paypal_api_username',
-                'option_value' => 'sb-ymttk6449799_api1.business.example.com',
-                'setting_type' => 'PAYPAL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'paypal_api_password',
-                'option_value' => 'G95BGDHSTRYGVZJ3',
-                'setting_type' => 'PAYPAL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'paypal_api_signature',
-                'option_value' => 'AmtOMfrGlbkvUIEemQaQR85l4R2AA3Du8-YGpl9aXxpLmzBnRMOoreCE',
-                'setting_type' => 'PAYPAL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'paypal_currency',
-                'option_value' => 'USD',
-                'setting_type' => 'PAYPAL',
-            ],[
-                'input_type'   => 'text',
-                'option_name'  => 'paypal_status',
-                'option_value' => '1',
-                'setting_type' => 'PAYPAL',
             ]
+            // ,[
+            //     'input_type'   => 'text',
+            //     'option_name'  => 'paypal_api_username',
+            //     'option_value' => 'sb-ymttk6449799_api1.business.example.com',
+            //     'setting_type' => 'PAYPAL',
+            // ],[
+            //     'input_type'   => 'text',
+            //     'option_name'  => 'paypal_api_password',
+            //     'option_value' => 'G95BGDHSTRYGVZJ3',
+            //     'setting_type' => 'PAYPAL',
+            // ],[
+            //     'input_type'   => 'text',
+            //     'option_name'  => 'paypal_api_signature',
+            //     'option_value' => 'AmtOMfrGlbkvUIEemQaQR85l4R2AA3Du8-YGpl9aXxpLmzBnRMOoreCE',
+            //     'setting_type' => 'PAYPAL',
+            // ],[
+            //     'input_type'   => 'text',
+            //     'option_name'  => 'paypal_currency',
+            //     'option_value' => 'USD',
+            //     'setting_type' => 'PAYPAL',
+            // ],[
+            //     'input_type'   => 'text',
+            //     'option_name'  => 'paypal_status',
+            //     'option_value' => '1',
+            //     'setting_type' => 'PAYPAL',
+            // ]
         ];
         Setting::insert($data);
     }
