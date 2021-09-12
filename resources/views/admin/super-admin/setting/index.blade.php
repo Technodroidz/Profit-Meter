@@ -32,9 +32,9 @@
                                     <!-- Page-header end -->
 
                                     <!-- Page-body start -->
-                                    <div class="page-body">
-                                        <!--Table start-->
-                                        <div class="row">
+                                    <!-- <div class="page-body"> -->
+                                        
+                                        <!-- <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -76,8 +76,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div> -->
+                                    <!-- </div> -->
                                     <!-- Page-body end -->
                                 </div>
                             </div>

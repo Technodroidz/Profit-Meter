@@ -29,7 +29,7 @@ class MailSettingSeeder extends Seeder
                 'input_type'   => 'text',
                 'option_name'  => 'MAIL_PORT',
                 'option_value' => '587',
-                'setting_type' => 'STRIPE',
+                'setting_type' => 'MAIL',
             ],[
                 'input_type'   => 'text',
                 'option_name'  => 'MAIL_USERNAME',
