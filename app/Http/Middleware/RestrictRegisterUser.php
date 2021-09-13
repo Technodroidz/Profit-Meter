@@ -19,6 +19,14 @@ class RestrictRegisterUser
             if(empty(Auth::User()->shopify_url) || empty(Auth::User()->shopify_access_token)){
                 return redirect()->route('connect_shopify_account');
             }
+
+            if(session()->get('user_subscribed') == false){
+                $allowed_urls = ['business/settings/rules','business/settings/account','business/settings/upgrade_plan','business/settings/subscribe-stripe-payment'];
+
+                if(!in_array($request->path(), $allowed_urls)){
+                    return redirect()->route('business_setting_account');
+                }
+            }
         }
         return $next($request);
     }
