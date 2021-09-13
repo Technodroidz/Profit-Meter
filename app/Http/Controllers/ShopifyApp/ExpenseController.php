@@ -327,8 +327,13 @@ class ExpenseController extends Controller
     public function transactionCost(Request $request)
     {
         $data = ['current_link' => 'transaction_cost'];
-        $data['transaction_cost'] = TransactionCost::where('deleted_at',null)->get();
+        $transaction_cost_list = TransactionCost::where('deleted_at',null)->get();
+        foreach ($transaction_cost_list as $key => &$value) {
+            $value->payment_gateway = payment_gateway_list($value->payment_gateway);
+        }
+        $data['transaction_cost'] = $transaction_cost_list;
         $data['payment_gateway_list'] = payment_gateway_list();
+
         return view('business_app/content_template/transaction_cost',$data);
     }
 
@@ -338,7 +343,7 @@ class ExpenseController extends Controller
             $validation_array = [
                 'payment_gateway'     => 'required',
                 'percentage_fee'      => 'required|between:0,99.99',
-                'fixed_fee'           => 'required|numeric|gt:0|regex:^(?:[1-9]\d+|\d)(?:\,\d\d)?$',
+                'fixed_fee'           => 'required|numeric|gt:0|regex:/^\d{0,4}(\.\d{0,2})?$/i',
             ];
 
             $validation_attributes = [ 

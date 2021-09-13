@@ -48,7 +48,7 @@
                                 
                                 @foreach($transaction_cost as $list) 
                                     <tr id="transaction_cost_{{$list->id}}">
-                                        <td>{{ucfirst($list->payment_gateway)}}</td>
+                                        <td>{{ $list->payment_gateway }}</td>
                                         <td>{{$list->percentage_fee}}</td>
                                         <td>{{$list->fixed_fee}}</td>
                                         <td>
