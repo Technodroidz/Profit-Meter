@@ -68,6 +68,10 @@
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
+                                                                    <label class="col-form-label">Subject</label>
+                                                                    <textarea class="form-control" name="subject" id="subject" placeholder="Type here...">{!!@$getdata['0']['subject']!!}</textarea>
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12">
                                                                     <label class="col-form-label">Description</label>
                                                                     <textarea class="form-control editor" name="long_description" id="long_description" placeholder="Type here...">{!!@$getdata['0']['description']!!}</textarea>
                                                                 </div>
@@ -91,6 +95,10 @@
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <label class="col-form-label">Subject</label>
+                                                                    <textarea class="form-control" name="subject" id="subject" placeholder="Type here...">{!!@$getdata['0']['subject']!!}</textarea>
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
                                                                     <label class="col-form-label">Description</label>
@@ -118,6 +126,10 @@
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
+                                                                    <label class="col-form-label">Subject</label>
+                                                                    <textarea class="form-control" name="subject" id="subject" placeholder="Type here...">{!!@$getdata['0']['subject']!!}</textarea>
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12">
                                                                     <label class="col-form-label">Description</label>
                                                                     <textarea class="form-control editor" name="long_description" id="long_description" placeholder="Type here...">{!!@$getdata['0']['description']!!}</textarea>
                                                                 </div>
@@ -141,6 +153,10 @@
                                                                 <div class="col-sm-3 col-xs-12 form-group">
                                                                     <label class="col-form-label">Template Name</label>
                                                                     <input type="text" class="form-control" name="name" id="name" value="{{@$getdata['0']['name']}}" placeholder="Enter  name">
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <label class="col-form-label">Subject</label>
+                                                                    <textarea class="form-control" name="subject" id="subject" placeholder="Type here...">{!!@$getdata['0']['subject']!!}</textarea>
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12">
                                                                     <label class="col-form-label">Description</label>

@@ -41,11 +41,13 @@ class TempleteController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'subject' => 'required',
             'long_description' => 'required',
         ]);
       
         $getInsertedData = EmailTemplate::updateOrCreate(['id'=>$request['table_id']],[
             "name" => $request['name'],
+            "subject" => $request['subject'],
             "description" => $request['long_description']
         ]);
 
