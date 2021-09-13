@@ -40,11 +40,12 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>ID</th>
-                                                                        <th>First name</th>
-                                                                        <th>Last name</th>
+                                                                        <th>Name</th>
                                                                         <th>Email</th>
                                                                         <th>Contact no.</th>
                                                                         <th>Shopify store URL</th>
+                                                                        <th>Subscription Status</th>
+                                                                        <th>Subscription Date</th>
                                                                         <th>Status </th>
                                                                         <th>Action</th>
                                                                     </tr>
@@ -55,12 +56,14 @@
                                                                 @foreach($getdata as $key=>$list)
                                                                     <tr>
                                                                         <td>{{++$key}}</td>
-                                                                        <td>{{$list['name']}}</td>
-                                                                        <td>{{$list['last_name']}}</td>
+                                                                        
+                                                                        <td>{{$list['name'].' '.$list['last_name']}}</td>
                                                                      {{--   <td>{{$list['bussiness_name']}}</td>--}}
                                                                         <td>{{$list['email']}}</td>
                                                                         <td>{{$list['number']}}</td>
                                                                         <td>{{$list['shopify_url']}}</td>
+                                                                        <td>{{$list['subscription_status'].' ('.$list['plan_name'].')'}}</td>
+                                                                        <td>{{$list['subscription_date']}}</td>
                                                                         <td><input type="checkbox" data-status="{{$list['id']}}"class="statusSwitchUser"@if($list['status']==1) checked @endif id="statusSwitchUser{{$list['id']}}"></td>
                                                                         <td class="d-flex">
                                                                       

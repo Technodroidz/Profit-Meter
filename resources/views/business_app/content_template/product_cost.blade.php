@@ -104,9 +104,9 @@
                                                 <th scope="col">Price</th>
                                                 <th scope="col">SKU</th>
                                                 <th scope="col">Created At</th>
-                                                <th scope="col">Product Cst</th>
-                                                <th scope="col">Shipping Cst</th>
-                                                <th scope="col">Handling Cst</th>
+                                                <th scope="col">Product Cost</th>
+                                                <th scope="col">Shipping Cost</th>
+                                                <th scope="col">Handling Cost</th>
                                             </tr>
                                         </thead>
                                         @csrf

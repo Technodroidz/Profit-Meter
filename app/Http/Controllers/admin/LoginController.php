@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Model\EmailTemplate;
+use App\Model\UserSubscription;
 use Illuminate\Support\Str;
 use Config;
 
@@ -35,8 +36,44 @@ class LoginController extends Controller
 
     public function userList(){
  
-       $getdata = User::all();
-       
+       $getdata = User::where('deleted_at',null)->get();
+       foreach ($getdata as $key => &$value) {
+            $trial_subscription = UserSubscription::getTrialSubscription($value->id);
+            $paid_subscription  = UserSubscription::getPaidSubscription($value->id);
+            $user_subscribed    = 'Subscribed';
+            $plan_name          = '';
+            $subscription_date  = '';
+
+            if(empty($paid_subscription) && empty($trial_subscription)){
+                $user_subscribed    = 'Unsubscribed';
+            }else{
+                if(empty($paid_subscription) && !empty($trial_subscription)){
+                    
+                    $expire = strtotime($trial_subscription->expiry_date);
+                    $today  = strtotime("today midnight");
+
+                    $plan_name        = $trial_subscription->plan_name;
+
+                    if($today > $expire){
+                        $user_subscribed  = 'Trial Expired';
+                        $subscription_date  = $trial_subscription->created_at;
+                    }else{
+                        $user_subscribed    = 'On Trial';
+                        $subscription_date  = $trial_subscription->created_at;
+                    }
+                }
+            }
+
+            if(!empty($paid_subscription)){
+                $plan_name = $paid_subscription->plan_name;
+                $subscription_date  = $paid_subscription->created_at;
+
+            }
+            $value->plan_name = $plan_name;
+            $value->subscription_status = $user_subscribed;
+            $value->subscription_date   = $subscription_date;
+
+       }
        return view('admin.super-admin.user-file.user-list',compact('getdata'));
 
     }
