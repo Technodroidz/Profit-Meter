@@ -96,8 +96,9 @@
                         <div class="input-group mb-3">
                             <select class="custom-select mb-3 frequency_name" name="payment_gateway">
                                 <option value="">Select a gateway</option>
-                                <option value="paypal">Paypal</option>
-                                <option value="stripe">Stripe</option>
+                                @foreach($payment_gateway_list as $key => $value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <label for="basic-url">Percentage Fee</label>

@@ -328,6 +328,7 @@ class ExpenseController extends Controller
     {
         $data = ['current_link' => 'transaction_cost'];
         $data['transaction_cost'] = TransactionCost::where('deleted_at',null)->get();
+        $data['payment_gateway_list'] = payment_gateway_list();
         return view('business_app/content_template/transaction_cost',$data);
     }
 

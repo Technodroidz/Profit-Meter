@@ -17,7 +17,7 @@
                             </div> -->
                     <div class="alert" role="alert">
                         <h6>Vat Tax</h6>
-                        <p>Tax paid by the merchant.</p>
+                        <p>Tax paid by the merchant on the sales revenue (for example VAT)</p>
 <!--                         <ul style="font-size: 24px; margin-left: 20px; color:#2795fb">
                             <li  style="list-style-type: circle;">
                                 <p>If an end customer uses Shopify Pyments for checking out, then Shopify takes a % fee and a fixed amount in USD based on the merchant's Shopify plan.</p>
