@@ -260,7 +260,9 @@ class StripeSubscriptionController extends Controller
 
                     // OLD CODE/
                     
-                    session()->put('success', 'Subscription Payment Successful for Your Plan '.$subscription_plan->package_name);
+                    session()->flash('success', 'Subscription Payment Successful for Your Plan '.$subscription_plan->package_name);
+                    session()->put('user_subscribed',true);
+                    session()->forget('error');
                     $json_array = ['close_modal' => true,'reload'=>true];
                     return response()->data($json_array,'Subscription Payment Successful for Your Plan '.$subscription_plan->package_name);
                 }

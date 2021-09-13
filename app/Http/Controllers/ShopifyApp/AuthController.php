@@ -42,11 +42,35 @@ class AuthController extends Controller
             if($validator->fails()){
                 return back()->with('error', $validation_message);       
             }else{
-                
                 $credentials = $request->only('email', 'password');
                 if(Auth::attempt($credentials)){
                     
-                    return redirect()->route('home');
+                    $trial_subscription = UserSubscription::getTrialSubscription(Auth::User()->id);
+                    $paid_subscription  = UserSubscription::getPaidSubscription(Auth::User()->id);
+                    $user_subscribed    = true;
+
+                    if(empty($paid_subscription) && empty($trial_subscription)){
+                        $user_subscribed    = false;
+                    }else{
+                        if(empty($paid_subscription) && !empty($trial_subscription)){
+                            
+                            $expire = strtotime($trial_subscription->expiry_date);
+                            $today  = strtotime("today midnight");
+
+                            if($today >= $expire){
+                                $user_subscribed  = false;
+                            }
+                        }
+                    }
+
+                    if($user_subscribed == true){
+                        session()->put('user_subscribed',true);
+                        return redirect()->route('home');
+                    }else{
+                        session()->put('user_subscribed',false);
+                        session()->put('error', '<p>You plan has been expired.<a style="color: blue" href ="'.route('business_setting_upgrade_plan').'" >Subscribe</a> to use our services</p>');
+                        return redirect()->route('business_setting_account');
+                    }
                 }else{
                     return back()->with('error', 'Invalid Login Credentials.');       
                 }
@@ -225,6 +249,20 @@ class AuthController extends Controller
                 }
 
                 if(Auth::attempt($credentials)){
+
+                    $trial_plan = SubscriptionPlan::getTrialPlan();
+                    $insert_array = [
+                        'user_id'       => $user_id,
+                        'plan_name'     => $trial_plan->package_name,
+                        'plan_amount'   => $trial_plan->package_amount,
+                        'plan_duration' => $trial_plan->package_duration,
+                        'expiry_date'   => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). ' + '.$trial_plan->package_duration.' days')),
+                        'is_trial'      => 1,
+                        'created_at'    => date('Y-m-d H:i:s'),
+                    ];
+
+                    UserSubscription::insert($insert_array);
+
                     return redirect()->route('connect_shopify_account');
                 }else{
                     return back()->with('error', 'Invalid Login Credentials.');       
@@ -411,7 +449,7 @@ class AuthController extends Controller
                     'created_at'    => date('Y-m-d H:i:s'),
                 ];
 
-                UserSubscription::insertUserSubscription($insert_array);
+                UserSubscription::insertOrUpdate(['user_id'=>$user_id],$insert_array);
                 return redirect()->route('home');
             }
         }
@@ -421,6 +459,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        session()->flush();
         Auth::logout();
         return redirect()->route('login');
     }

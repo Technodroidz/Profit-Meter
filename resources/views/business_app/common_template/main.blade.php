@@ -68,6 +68,7 @@
         </div>
     </div>
     <ul id="sidebar_menu">
+        @if(session()->get('user_subscribed') == true)
         <li class="">
             <a href="{{route('home')}}" aria-expanded="false" data-link="home">
                 <div class="nav_icon_small">
@@ -164,6 +165,7 @@
             
         </li>
 
+        @endif
         <li class="">
             <a class="has-arrow" href="javascript:void(0);" aria-expanded="false" data-link="setting">
                 <div class="nav_icon_small">
@@ -174,10 +176,11 @@
                 </div>
             </a>
             <ul>
-              <li><a href="{{route('business_setting_rules')}}" data-link="rules">Rules</a></li>
-              <li><a href="{{route('business_setting_sync_status')}}" data-link="sync_status">Sync Status</a></li>
-              <li><a href="{{route('business_setting_account')}}" data-link="account">Account</a></li>
-          
+                <li><a href="{{route('business_setting_rules')}}" data-link="rules">Rules</a></li>
+                @if(session()->get('user_subscribed') == true)
+                    <li><a href="{{route('business_setting_sync_status')}}" data-link="sync_status">Sync Status</a></li>
+                @endif
+                <li><a href="{{route('business_setting_account')}}" data-link="account">Account</a></li>
             </ul>
         </li>
     </ul>
@@ -332,7 +335,7 @@
         @endif
         @if(session()->has('error'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>{{ session()->get('error') }}</strong>
+              <strong>{!! session()->get('error') !!}</strong>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

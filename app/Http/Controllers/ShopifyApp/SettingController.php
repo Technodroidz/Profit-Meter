@@ -92,6 +92,7 @@ class SettingController extends Controller
         $trial_subscription = UserSubscription::getTrialSubscription(Auth::User()->id);
         $paid_subscription = UserSubscription::getPaidSubscription(Auth::User()->id);
         $data       = ['current_link' => 'account','getUserData' => $getUserData,'trial_subscription' => $trial_subscription,'paid_subscription' => $paid_subscription];
+        // pp(session()->all());
         return view('business_app/content_template/account',$data);
     }
 

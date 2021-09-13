@@ -10,7 +10,7 @@
                                             <div class="col-lg-8">
                                                 <div class="page-header-title">
                                                     <div class="d-inline">
-                                                        <h4>Reoprt</h4>
+                                                        <h4>Report</h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -20,7 +20,7 @@
                                                         <li class="breadcrumb-item" style="float: left;">
                                                             <a href="index.php"> <i class="feather icon-home"></i> </a>
                                                         </li>
-                                                        <li class="breadcrumb-item" style="float: left;"><a href="#!">Reoprt</a>
+                                                        <li class="breadcrumb-item" style="float: left;"><a href="#!">Report</a>
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -19,6 +19,5 @@ class UserSubscriptionController extends Controller
             'getReportData' => $getReportData,
         ];
         return view('admin.super-admin.main-report.index', $result);
-    
     }
 }

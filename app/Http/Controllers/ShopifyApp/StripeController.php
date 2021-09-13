@@ -23,7 +23,7 @@ class StripeController extends Controller
     {
         
         $user = Socialite::driver('stripe')->user();
-        
+        // pp($user);
         $access_token_response_body = $user->accessTokenResponseBody;
         $insert_array = [
             'user_id'                   => Auth::User()->id,
