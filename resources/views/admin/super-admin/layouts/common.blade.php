@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Profit Meter | Super admin</title>
+    <title>Profitrack | Super admin</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -79,7 +79,7 @@
                             <i class="feather icon-menu"></i>
                         </a>  
                         <a href="{{asset('admin-panel')}}">
-                            <span>Profit Meter</span>
+                            <span>Profitrack</span>
                              <!--  @if(isset($getbasic['getcompany']['0']['logo']) && !empty($getbasic['getcompany']['0']['logo']))
                             <img src="{{asset('images/'.$getbasic['getcompany']['0']['logo'])}}" class="img-circle" height="150" width="50" alt="User Image" style="height:auto;">
                             @else

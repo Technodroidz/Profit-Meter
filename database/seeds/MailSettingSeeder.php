@@ -53,7 +53,7 @@ class MailSettingSeeder extends Seeder
             ],[
                 'input_type'   => 'text',
                 'option_name'  => 'MAIL_FROM_NAME',
-                'option_value' => 'Profit Meter',
+                'option_value' => 'Profitrack',
                 'setting_type' => 'MAIL',
             ]
         ];

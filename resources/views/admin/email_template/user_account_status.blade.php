@@ -14,13 +14,13 @@
                    $status="Inactive";
                    }
                   ?>
-                   Thanks for trying Profit Meter. I'm Idriss Tiam, President of Profit Meter, and I noticed you recently {{$status}} your account.
+                   Thanks for trying Profitrack. I'm Idriss Tiam, President of Profitrack, and I noticed you recently {{$status}} your account.
                  
-                    We love your feedback and are more than happy to develope new features to make Profit Meter a better fit for your business.
+                    We love your feedback and are more than happy to develope new features to make Profitrack a better fit for your business.
                     Hit reply and let me know what’s on your mind.
                     <br>
                     Thanks!
-                    Idriss (Founder/Owner of  <a href="{{url('')}}">Profit Meter</a>)
+                    Idriss (Founder/Owner of  <a href="{{url('')}}">Profitrack</a>)
                     
                 </div>
            

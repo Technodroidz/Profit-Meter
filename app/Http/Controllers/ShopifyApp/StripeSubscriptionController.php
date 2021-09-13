@@ -133,7 +133,7 @@ class StripeSubscriptionController extends Controller
 
                     if(empty($stripe_product)){
                         $product = \Stripe\Product::create(array( 
-                          'name' => 'Profit Meter',
+                          'name' => 'Profitrack',
                           'description' => 'Shopify External App(SAAS)'
                         )); 
 

@@ -72,7 +72,7 @@ class PaypalSubscriptionController extends Controller
 
                 if(empty($paypal_product)){
                     $create_product_array = [
-                        'name'       => 'Profit Meter SAAS',
+                        'name'       => 'Profitrack SAAS',
                         'description'=> 'Shopify External App',
                         'type'       => 'SERVICE',
                         'category'   => 'SOFTWARE',
@@ -215,7 +215,7 @@ class PaypalSubscriptionController extends Controller
                         ]
                     ],
                     "application_context"  => [
-                        "brand_name"         => "Profit Meter",
+                        "brand_name"         => "Profitrack",
                         "locale"             => "en-US",
                         "shipping_preference"=> "SET_PROVIDED_ADDRESS",
                         "user_action"        => "SUBSCRIBE_NOW",
