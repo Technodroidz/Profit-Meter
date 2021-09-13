@@ -349,7 +349,9 @@ class ExpenseController extends Controller
             $validation_attributes = [ 
             ];
 
-            $validation_message = [];
+            $validation_message = [
+                'fixed_fee.regex' => 'Upto 4 digits before and 2 digits after decimal are allowed (xxxx.xx or xxxx).'
+            ];
             
             $validator = Validator::make($request->all(), $validation_array,$validation_message,$validation_attributes);
             $validation_message   = get_message_from_validator_object($validator->errors());
