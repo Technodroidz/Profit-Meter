@@ -21,6 +21,8 @@
             border-radius: 6px;
             border: 1px solid #ced4da;
         }
+        .small_blue_btn{height: 38px;padding: 11px 16px;}
+        .dataTables_wrapper .dataTables_filter input{height: 38px;}
     </style>
 
     <div class="container-fluid p-0 ">
@@ -94,7 +96,7 @@
                                 <div class="QA_table mb_30">
                                    
                                     <!-- table-responsive -->
-                                    <table id="shopify_products" class="table ">
+                                    <table id="shopify_products" class="table table-responsive">
                                         <thead>
                                             <tr style="background: #f2f2f2;">
                                                 <th scope="col">Product ID</th>

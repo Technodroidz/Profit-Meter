@@ -18,7 +18,24 @@ body {
   position: relative;
   background: #F9F9F9;
 }
-
+button.dt-button.buttons-excel.buttons-html5 {
+    background: #373063;
+    color: #fff;
+    margin-left: 20px;
+    border: none;
+    height: 38px;
+    border-radius: 4px;
+    padding: 9px 16px;
+}
+button.country {
+    background: #373063;
+    color: #fff;
+    margin-left: 20px;
+    border: none;
+    height: 38px;
+    border-radius: 4px;
+    padding: 9px 16px;
+}
 .card {
   margin-bottom: 1rem;
 }
