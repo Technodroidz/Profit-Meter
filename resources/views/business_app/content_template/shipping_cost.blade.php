@@ -10,12 +10,17 @@
         .inlineitem p, .inlineitem li label {
             display: inline-block;
         }
+        .inlineitem {
+            display: flex;
+            align-items: center;
+        }
         .inlineitem li {
             display: inline-block;
         }
         .inlineitem h4 {
             display: inline-block;
         }
+        input{margin-bottom: 0px;}
     </style>
 
     <div class="container-fluid p-0 ">
@@ -108,7 +113,7 @@
                             <button id = "shipping_cost_form_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
                               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                               <span class="sr-only">Loading...</span>
-                            </button>
+                            </button><br/>
                             <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=shipping_cost_setting]" data-show_error="#shipping_setting_error" data-disable_element_class=".disable_btn_class" data-loader="#shipping_cost_form_loader" >Save</button>
                         </div>
                     </form>

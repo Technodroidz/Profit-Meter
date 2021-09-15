@@ -1,6 +1,10 @@
 @extends('business_app/common_template/main')
 
 @section('content')
+<style>
+    form .modal-body, form .modal-footer{padding:1rem 0px;}
+    .modal-footer>*{margin: 0px}
+</style>
 
     <div class="container-fluid p-0 ">
         <div class="row">

@@ -1,6 +1,17 @@
 @extends('business_app/common_template/main')
 
 @section('content')
+<style>
+    button.small_blue_btn.active {
+        background: #373063;
+        color: #fff;
+        margin-left: 20px;
+        border: none;
+        height: 38px;
+        border-radius: 4px;
+        padding: 9px 16px;
+    }
+</style>
 
     <div class="container-fluid p-0 ">
         <div class="row">
@@ -29,10 +40,10 @@
                         <br>
 
                         <a href="" style="color: #7b7b7b;"><u>See Shopify Payment Pricing</u></a><br><br><br>
-                        <p>Current plan based on your data<br> Shopify Transaction costs (Shopify payments 0% + 0 USD, other 0%)<a href="#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
+                        <p>Current plan based on your data<br> Shopify Transaction costs (Shopify payments 0% + 0 USD, other 0%)<!-- <a href="#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a> -->
                         </p>
 
-                        <button style="float:right;margin-right: 61px;" class="small_blue_btn active" data-toggle="modal" data-target="#TransactionCostModal">Add Gateway</button>
+                        <button style="float:right;" class="small_blue_btn active" data-toggle="modal" data-target="#TransactionCostModal">Add Gateway</button>
 
 
                         <table class="table lms_table_active3 dataTable no-footer dtr-inline" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info" style="width: 1140px;">
