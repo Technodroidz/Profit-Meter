@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page_title_left  mb_30">
-                    <h3 class="mb-0" >Shipping Cost <a class="white_btn mb_10" data-toggle="modal" data-target="#confirm-mail">Learn</a></h3>
+                    <h3 class="mb-0" >Shipping Costs <a class="white_btn mb_10" data-toggle="modal" data-target="#confirm-mail">Learn</a></h3>
                            
                 </div>
                 <div class="white_box">
@@ -69,18 +69,42 @@
                                 </label><p class="mb-0 "> Multiply the Handling Cost by the quantity of products purchased.</p>
                             </div>
                             <hr>
-                            <div class="inlineitem">  <input type="checkbox" aria-label=""  name="shipping_fee_together" value="1" {{ isset($shipping_cost_setting['shipping_fee_together']) && $shipping_cost_setting['shipping_fee_together'] == 1 ? 'checked':'' }}>&nbsp; &nbsp;
-                                <p class="mb-0 ">Add shipping fees together in orders with multiple items.</p>
+
+                            <div class="inlineitem">  <label class="lms_checkbox_1" for="course_5">
+                                <input type="checkbox" id="course_5" name="shipping_fee_together" value="1" {{ isset($shipping_cost_setting['shipping_fee_together']) && $shipping_cost_setting['shipping_fee_together'] == 1 ? 'checked':'' }} >
+                                <div class="slider-check round"></div>
+                                </label><p class="mb-0 "> Add shipping fees together in orders with multiple items.</p>
                             </div>
+                            <hr>
+
+                            <div class="inlineitem">  <label class="lms_checkbox_1" for="course_6">
+                                <input type="checkbox" id="course_6" name="highest_shipping_fee" value="1" {{ isset($shipping_cost_setting['highest_shipping_fee']) && $shipping_cost_setting['highest_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_shipping_fee]" onchange="checkUncheck($(this));">
+                                <div class="slider-check round"></div>
+                                </label><p class="mb-0 "> Use the highest shipping fee only in orders with multiple items.</p>
+                            </div>
+                            <hr>
+
+                            <div class="inlineitem">  <label class="lms_checkbox_1" for="course_7">
+                                <input type="checkbox" id="course_7" name="highest_handling_fee" value="1" {{ isset($shipping_cost_setting['highest_handling_fee']) && $shipping_cost_setting['highest_handling_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_handling_fee]" onchange="checkUncheck($(this));">
+                                <div class="slider-check round"></div>
+                                </label><p class="mb-0 "> Use the highest Handling fee only in orders with multiple items.</p>
+                            </div>
+                            <hr>
+
+                            <!-- <div class="inlineitem">  <input type="checkbox" aria-label=""  name="shipping_fee_together" value="1" {{ isset($shipping_cost_setting['shipping_fee_together']) && $shipping_cost_setting['shipping_fee_together'] == 1 ? 'checked':'' }}>&nbsp; &nbsp;
+                                <p class="mb-0 ">Add shipping fees together in orders with multiple items.</p>
+                            </div> -->
 
                                
-                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_shipping_fee" value="1" {{ isset($shipping_cost_setting['highest_shipping_fee']) && $shipping_cost_setting['highest_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_shipping_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
+                            <!-- <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_shipping_fee" value="1" {{ isset($shipping_cost_setting['highest_shipping_fee']) && $shipping_cost_setting['highest_shipping_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_shipping_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
                                 <p class="mb-0 ">Use the highest shipping fee only in orders with multiple items. </p>
-                            </div>
+                            </div> -->
 
-                            <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_handling_fee" value="1" {{ isset($shipping_cost_setting['highest_handling_fee']) && $shipping_cost_setting['highest_handling_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_handling_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
+                            
+
+                            <!-- <div class="inlineitem">  <input type="checkbox" aria-label="" name="highest_handling_fee" value="1" {{ isset($shipping_cost_setting['highest_handling_fee']) && $shipping_cost_setting['highest_handling_fee'] == 1 ? 'checked':'' }} data-target="input[name=multiply_handling_fee]" onchange="checkUncheck($(this));">&nbsp; &nbsp;
                                 <p class="mb-0 ">Use the highest Handling fee only in orders with multiple items. </p>
-                            </div>
+                            </div> -->
                             <button id = "shipping_cost_form_loader" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
                               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                               <span class="sr-only">Loading...</span>

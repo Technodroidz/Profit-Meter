@@ -94,14 +94,14 @@ class ExpenseController extends Controller
 
             $row = [];
             $row[]  = $value->product_id;
+            $row[]  = $value->variant_id;
             $row[]  = $value->product_title;
             $row[]  = $value->title;
-            $row[]  = $value->product_type;
             $row[]  = $value->price;
             $row[]  = $value->sku;
             $row[]  = $value->shopify_created_at;
-            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'"><span aria-hidden="true">&plus;</span></button>';
-            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'" data-records_populated="no"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'" data-records_populated="no"><span aria-hidden="true">&plus;</span></button>';
             $row[]  = '<p id="handling_cost_'.$value->id.'">'.$value->profitrack_handling_cost.'</p><button type="button" class="add_prftrck_hnd_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#handlingCostModal"><span aria-hidden="true">&plus;</span></button>';
             $data[] = $row;
         }
@@ -487,7 +487,7 @@ class ExpenseController extends Controller
             $userDelete->update(['deleted_at'=>date('Y-m-d H:i:s')]);
         }catch(\Exception $e) {}
 
-        return back()->with('success', 'Category deleted successfully');
+        return back()->with('success', 'Custom Cost deleted successfully');
     }
 
     public function syncShopifyData(Request $request)

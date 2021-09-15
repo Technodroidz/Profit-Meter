@@ -17,6 +17,14 @@ $('.form_modal').on('hide.bs.modal', function () {
     $(this).find('.error_div').css('display','none');
 });
 
+$('.modal').on('show.bs.modal', function () {
+    
+    $(this).find('button').attr('disabled',false);
+    $(this).find('.ajax_loader').css('display','none');
+    $(this).find('form')[0].reset();
+    $(this).find('.error_div').css('display','none');
+});
+
 $(document).on('click','[data-request="web-ajax-submit"]',function(){
     /*REMOVING PREVIOUS ALERT AND ERROR CLASS*/
     // $('.popup').show();  $('.alert').remove(); $(".has-error").removeClass('has-error'); $('.help-block').remove();

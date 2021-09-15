@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page_title_left  mb_30">
-                    <h3 class="mb-0">Transaction Cost <a class="white_btn mb_10" data-toggle="modal" data-target="#confirm-mail">Learn</a></h3>
+                    <h3 class="mb-0">Transaction Costs <a class="white_btn mb_10" data-toggle="modal" data-target="#confirm-mail">Learn</a></h3>
                                
                 </div>
                 <div class="white_box">

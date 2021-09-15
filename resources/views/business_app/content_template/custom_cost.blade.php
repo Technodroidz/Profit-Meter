@@ -20,21 +20,22 @@
            
             <div class="col-md-8"><p>0 total Custom costs</p></div>
             <div class="col-md-6">
-            <input type="text" class="search form-control" name="" placeholder="Search by product name, SKU, Variant" /></div>
+                <!-- <input type="text" class="search form-control" name="" placeholder="Search by product name, SKU, Variant" /> -->
+            </div>
             <div class="col-md-3">
-                <label>Show 
+                <!-- <label>Show 
                     <select name="example_length" aria-controls="example" class="">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                         <option value="-1">All</option>
                     </select> entries
-                </label>
+                </label> -->
             </div>
             <div class="col-md-3">
-               <div class="view_btns">
+               <div class="view_btns" style="text-align: right;">
                         
-                    <button  class="mr_5 mb_10  small_blue_btn active" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Custom Cost</button>
+                    <button  class="mr_5 mb_10  small_blue_btn active "  data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Custom Cost</button>
                   
                    
                     <!--  <a href="#" class="mr_5 mb_10  small_blue_btn">Monthly</a>  -->

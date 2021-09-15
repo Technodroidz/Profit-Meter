@@ -38,9 +38,9 @@
                 </div>
                 <!-- <div class="col-md-4"><p style="float: right;"> <a href="#">Download an example CSV file</a></p>
                 </div> -->
-                <div class="col-md-6"> <i class="fa fa-search"></i>
+                <!-- <div class="col-md-6"> <i class="fa fa-search"></i>
                     <input type="text" class="search form-control" name="" placeholder="Search by product name, SKU, Variant" />
-                </div>
+                </div> -->
                 <!-- <div class="col-md-3"><label>Show 
                     <select name="example_length" aria-controls="example" class="">
                         <option value="10">10</option>
@@ -49,7 +49,7 @@
                         <option value="-1">All</option>
                     </select> entries</label>
                 </div> -->
-                <div class="col-md-3">
+                <div class="col-md-3" style="text-align: right;">
                    <div class="view_btns">
                             
                         <!-- <a href="#" class="mr_5 mb_10  small_blue_btn active">Export to CSV</a> -->
@@ -98,9 +98,9 @@
                                         <thead>
                                             <tr style="background: #f2f2f2;">
                                                 <th scope="col">Product ID</th>
+                                                <th scope="col">Variant ID</th>
                                                 <th scope="col">Product</th>
                                                 <th scope="col">Variant</th>
-                                                <th scope="col">Product Type</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">SKU</th>
                                                 <th scope="col">Created At</th>
@@ -263,7 +263,7 @@
         </div>
     </div>
 
-    <div class="modal fade exampleModalCenter"  id="importProductsModal" tabindex="-1" role="dialog" aria-labelledby="importProductsModalTitle" aria-hidden="true">
+    <div class="form_modal modal fade exampleModalCenter"  id="importProductsModal" tabindex="-1" role="dialog" aria-labelledby="importProductsModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -393,26 +393,34 @@
             $('input[name="variant_id"]').val(variant_id);
         });
 
-        $(document).on('click','.add_prftrck_prdct_cst',function(){
+        $(document).on('click','body .add_prftrck_prdct_cst',function(){
             let variant_id              = $(this).data('variant_id');
             $('input[name="variant_id"]').val(variant_id);
-            let saved_product_json      = $(this).data('saved_product_json');
+            var records_populated = $(this).attr('data-records_populated');
 
-            let saved_product_cost_html = savedProductHtml(decodeURIComponent(saved_product_json));
-            $('#append_added_product_row').find('.saved_product_cost_list').remove();
-            $('#append_added_product_row').prepend(saved_product_cost_html);
+            if(records_populated === 'no'){
+                let saved_product_json      = $(this).data('saved_product_json');
+                let saved_product_cost_html = savedProductHtml(decodeURIComponent(saved_product_json));
+                $('#append_added_product_row').find('.saved_product_cost_list').remove();
+                $('#append_added_product_row').prepend(saved_product_cost_html);
+                $(this).attr('data-records_populated','yes');
+            }
 
         });
 
         $(document).on('click','.add_prftrck_shp_cst',function(){
             let variant_id              = $(this).data('variant_id');
             $('input[name="variant_id"]').val(variant_id);
+            var records_populated = $(this).attr('data-records_populated');
 
-            let saved_shipping_json      = $(this).data('saved_product_json');
-            let saved_shipping_cost_html = savedShippingCostHtml(decodeURIComponent(saved_shipping_json));
-            console.log(saved_shipping_cost_html);
-            $('#append_added_shipping_row').find('.saved_shipping_cost_list').remove();
-            $('#append_added_shipping_row').prepend(saved_shipping_cost_html);
+            if(records_populated === 'no'){
+                let saved_shipping_json      = $(this).data('saved_product_json');
+                let saved_shipping_cost_html = savedShippingCostHtml(decodeURIComponent(saved_shipping_json));
+                console.log(saved_shipping_cost_html);
+                $('#append_added_shipping_row').find('.saved_shipping_cost_list').remove();
+                $('#append_added_shipping_row').prepend(saved_shipping_cost_html);
+                $(this).attr('data-records_populated','yes');
+            }
 
         });
 
