@@ -4499,6 +4499,7 @@ table.dataTable {
 /* line 47, G:/admin_project/10 admin/cryptocurrency/scss/_sidebar.scss */
 .sidebar .logo .large_logo img {
   width: 100%;
+  min-width: 160px;
 }
 
 @media (max-width: 991px) {
@@ -15750,3 +15751,19 @@ span.angle {
 .auth-box.card-block {
     padding: 16px;
 }
+.inlineitem {
+    display: flex;
+    align-items: baseline;
+}
+input#inlineitem,input.statusSwitch {
+    width: auto;
+}
+label.error {
+    width: 100%;
+    color: #ff0000;
+}
+h3.he {
+    font-size: 13px;
+    margin: 16px 0px;
+}
+#productCostModal .modal-dialog{max-width: 670px}

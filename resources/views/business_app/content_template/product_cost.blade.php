@@ -134,18 +134,34 @@
                     </button>
                 </div>
                 <div id="append_added_product_row" class="modal-body">
+                    <p class="hh">Product costs can very over time. To keep your analitics calculations currect, update product costs period.</p>
+                    <h3 class="he">VANS | AUTHENTIC | LO PRO | BURGANDY/WHITE - [VN-01-burgandy-4]</h3>
                     <form role="product_cost_form" action="{{ route('add_product_cost') }}" method="post">
                         @csrf
                         <input type="hidden" name="variant_id">
                         <div class="row">
                             <div class="col-md-3">
-                                <input type="text" name="product_cost" placeholder="Product Cost">
+                                <label>Product Costs</label>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="start_datepicker" name="start_date" placeholder="Start Date" readonly="readonly">
+                                <label>Start Date (Optional)</label>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="end_datepicker" name="end_date" placeholder="End Date" readonly="readonly">
+                                <label>End Date (Optional)</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text"  class="form-control" name="product_cost" placeholder="Product Cost">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="start_datepicker form-control" name="start_date" placeholder="Start Date" readonly="readonly">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="end_datepicker form-control" name="end_date" placeholder="End Date" readonly="readonly">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=product_cost_form]" data-add_more_append_element="#append_added_product_row">Add</button>
                             </div>
                         </div>
                         <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
@@ -160,7 +176,7 @@
                                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                   <span class="sr-only">Loading...</span>
                                 </button>
-                                <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=product_cost_form]" data-add_more_append_element="#append_added_product_row">Add</button>
+                                
                             </div>
                         </div>
                     </form>

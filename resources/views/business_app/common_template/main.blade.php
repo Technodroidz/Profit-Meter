@@ -61,8 +61,8 @@
 <!-- sidebar  -->
 <nav class="sidebar dark_sidebar" data-current_link="{{isset($current_link) ? $current_link : ''}}" >
     <div class="logo d-flex justify-content-between">
-        <a class="large_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini_logo.png" alt="Profitrack"></a>
-        <a class="small_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini_logo.png" alt="Profitrack"></a>
+        <a class="large_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini.png" alt="Profitrack"></a>
+        <a class="small_logo" href="{{route('home')}}"><img src="{{asset('business_app')}}/img/mini.png" alt="Profitrack"></a>
         <div class="sidebar_close_icon d-lg-none">
             <i class="ti-close"></i>
         </div>
