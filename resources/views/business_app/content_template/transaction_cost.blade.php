@@ -39,9 +39,9 @@
                         </ul>
                         <br>
 
-                        <a href="" style="color: #7b7b7b;"><u>See Shopify Payment Pricing</u></a><br><br><br>
-                        <p>Current plan based on your data<br> Shopify Transaction costs (Shopify payments 0% + 0 USD, other 0%)<!-- <a href="#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a> -->
-                        </p>
+                        <!-- <a href="" style="color: #7b7b7b;"><u>See Shopify Payment Pricing</u></a><br><br><br>
+                        <p>Current plan based on your data<br> Shopify Transaction costs (Shopify payments 0% + 0 USD, other 0%) --><!-- <a href="#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a> -->
+                        <!-- </p> -->
 
                         <button style="float:right;" class="small_blue_btn active" data-toggle="modal" data-target="#TransactionCostModal">Add Gateway</button>
 
