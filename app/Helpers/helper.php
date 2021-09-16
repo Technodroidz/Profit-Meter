@@ -216,7 +216,18 @@ use Illuminate\Support\Facades\Schema;
             'other'=>'Other',
             'payflow'=>'Payflow',
             'paypal'=>'PayPal',
-            'paytrail'=>'Paytrail'
+            'paytrail'=>'Paytrail',
+            'payu'=>'PayU',
+            'quadpay'=>'QuadPay',
+            'quickpay'=>'QuickPay',
+            'sagepay'=>'SagePay',
+            'sezzle'=>'Sezzle',
+            'shopify_payments'=>'Shopify Payments',
+            'spring'=>'Spring',
+            'stripe'=>'Stripe',
+            'viabill'=>'ViaBill',
+            'visa'=>'Visa',
+            'wanelo'=>'Wanelo',
         ];
 
         if(!empty($gateway_alias)){
