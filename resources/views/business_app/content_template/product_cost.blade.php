@@ -357,7 +357,7 @@
                                     '<button id = "product_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
                                         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
                                     '</button>'+
-                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_product_cost') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="product_cost_id" data-product_cost_id="'+item.id+'" data-show_error="#product_cost_error" data-disable_element_class=".product_cst_btn_'+item.id+'" data-loader="#product_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete." data-remove_element="#product_cost_'+item.id+'">'+
+                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_product_cost') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="product_cost_id" data-product_cost_id="'+item.id+'" data-show_error="#product_cost_error" data-disable_element_class=".product_cst_btn_'+item.id+'" data-loader="#product_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete?" data-remove_element="#product_cost_'+item.id+'">'+
                                       '<span aria-hidden="true"><i class="fa fa-trash"></i></span>'+
                                     '</button>'+
                                 '</div>'+
@@ -384,7 +384,7 @@
                                     '<button id = "shipping_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
                                         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
                                     '</button>'+
-                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_shipping_cost_per_product') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="shipping_cost_id" data-shipping_cost_id="'+item.id+'" data-show_error="#shipping_cost_error" data-disable_element_class=".shipping_cst_btn_'+item.id+'" data-loader="#shipping_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete." data-remove_element="#shipping_cost_'+item.id+'">'+
+                                    '<button type="button" class="close" aria-label="Close" data-url="'+'{{ route('delete_shipping_cost_per_product') }}'+'" data-request="inline-post-ajax" data-method="post" data-variable="shipping_cost_id" data-shipping_cost_id="'+item.id+'" data-show_error="#shipping_cost_error" data-disable_element_class=".shipping_cst_btn_'+item.id+'" data-loader="#shipping_cost_loader_'+item.id+'" data-swal_message="Are You Sure to Delete?" data-remove_element="#shipping_cost_'+item.id+'">'+
                                       '<span aria-hidden="true"><i class="fa fa-trash"></i></span>'+
                                     '</button>'+
                                 '</div>'+
