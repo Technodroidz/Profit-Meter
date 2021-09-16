@@ -133,23 +133,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <p class="hh">Product costs can vary over time. To keep your analitics calculations correct, update product costs period.</p>
+                    <h3 class="he product_detail">VANS | AUTHENTIC | LO PRO | BURGANDY/WHITE - [VN-01-burgandy-4]</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Product Costs</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Start Date</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>End Date (Optional)</label>
+                        </div>
+                    </div>
+                </div>
                 <div id="append_added_product_row" class="modal-body">
-                    <p class="hh">Product costs can very over time. To keep your analitics calculations currect, update product costs period.</p>
-                    <h3 class="he">VANS | AUTHENTIC | LO PRO | BURGANDY/WHITE - [VN-01-burgandy-4]</h3>
                     <form role="product_cost_form" action="{{ route('add_product_cost') }}" method="post">
                         @csrf
                         <input type="hidden" name="variant_id">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Product Costs</label>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Start Date (Optional)</label>
-                            </div>
-                            <div class="col-md-3">
-                                <label>End Date (Optional)</label>
-                            </div>
-                        </div>
+                        
                         <div class="row">
                             <div class="col-md-3">
                                 <input type="text"  class="form-control" name="product_cost" placeholder="Product Cost">
@@ -157,10 +160,14 @@
                             <div class="col-md-3">
                                 <input type="text" class="start_datepicker form-control" name="start_date" placeholder="Start Date" readonly="readonly">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <input type="text" class="end_datepicker form-control" name="end_date" placeholder="End Date" readonly="readonly">
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
+                                <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                  <span class="sr-only">Loading...</span>
+                                </button>
                                 <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=product_cost_form]" data-add_more_append_element="#append_added_product_row">Add</button>
                             </div>
                         </div>
@@ -169,15 +176,6 @@
                           <button type="button" class="close dismiss_alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
-                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                  <span class="sr-only">Loading...</span>
-                                </button>
-                                
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -197,6 +195,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <p class="hh">Shipping costs can vary over region. To keep your analitics calculations correct, update shipping costs region.</p>
+                    <h3 class="he product_detail">VANS | AUTHENTIC | LO PRO | BURGANDY/WHITE - [VN-01-burgandy-4]</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Country Region</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Shipping Cost</label>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="append_added_shipping_row" class="modal-body">
                     <form role="shipping_cost_form" action="{{ route('add_shipping_cost_per_product') }}" method="post">
@@ -204,7 +214,7 @@
                         <input type="hidden" name="variant_id">
                         <div class="row">
                             <div class="col-md-6">
-                                <select class="custom-select mb-3 frequency_name" name="country">
+                                <select class="custom-select mb-3 frequency_name form-control" name="country">
                                     <option value="">Please Select One</option>
                                     @foreach($country_list as $country)
                                         <option value="{{$country}}">{{$country}}</option>
@@ -212,7 +222,14 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" name="shipping_cost" placeholder="shipping Cost">
+                                <input type="text" class="form-control" name="shipping_cost" placeholder="shipping Cost">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
+                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                  <span class="sr-only">Loading...</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=shipping_cost_form]" data-add_more_append_element="#append_added_shipping_row">Add</button>
                             </div>
                         </div>
                         <div class="alert alert-primary alert-dismissible fade show error_div" role="alert" style="display:none;">
@@ -221,15 +238,7 @@
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
-                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                  <span class="sr-only">Loading...</span>
-                                </button>
-                                <button type="button" class="btn btn-secondary disable_btn_class" data-request="web-ajax-submit" data-target="[role=shipping_cost_form]" data-add_more_append_element="#append_added_shipping_row">Add</button>
-                            </div>
-                        </div>
+                        
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -333,15 +342,16 @@
         var saved_product_html = '';
         jQuery.each(saved_product_cost.product_json, function(index, item) {
             // do something with `item` (or `this` is also `item` if you like)
+            
             saved_product_html +=  '<div id="product_cost_'+item.id+'" class="row saved_product_cost_list">'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" name="product_cost" value="'+item.profitrack_product_cost+'" readonly>'+
+                                    '<input type="text" class="form-control" name="product_cost" value="'+item.profitrack_product_cost+'" readonly>'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" name="start_date" value="'+item.start_date+'" readonly="readonly">'+
+                                    '<input type="text" class="form-control" name="start_date" value="'+item.start_date+'" readonly="readonly">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" name="end_date" value="'+item.end_date+'" readonly="readonly">'+
+                                    '<input type="text" class="form-control" name="end_date" value="'+item.end_date+'" readonly="readonly">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
                                     '<button id = "product_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
@@ -365,10 +375,10 @@
             // do something with `item` (or `this` is also `item` if you like)
             saved_shipping_html +=  '<div id="shipping_cost_'+item.id+'" class="row saved_shipping_cost_list">'+
                                 '<div class="col-md-6">'+
-                                    '<input type="text" name="country" value="'+item.country+'" readonly="readonly">'+
+                                    '<input type="text" class="form-control" name="country" value="'+item.country+'" readonly="readonly">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" name="shipping_cost" value="'+item.shipping_cost+'" readonly>'+
+                                    '<input type="text" class="form-control" name="shipping_cost" value="'+item.shipping_cost+'" readonly>'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
                                     '<button id = "shipping_cost_loader_'+item.id+'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">'+
@@ -415,6 +425,8 @@
             let variant_id              = $(this).data('variant_id');
             $('input[name="variant_id"]').val(variant_id);
             var records_populated = $(this).attr('data-records_populated');
+            var product_detail = $(this).attr('data-product_detail');
+            $('.product_detail').html(product_detail);
 
             if(records_populated === 'no'){
                 let saved_product_json      = $(this).data('saved_product_json');
@@ -429,7 +441,9 @@
         $(document).on('click','.add_prftrck_shp_cst',function(){
             let variant_id              = $(this).data('variant_id');
             $('input[name="variant_id"]').val(variant_id);
-            var records_populated = $(this).attr('data-records_populated');
+            var records_populated   = $(this).attr('data-records_populated');
+            var product_detail      = $(this).attr('data-product_detail');
+            $('.product_detail').html(product_detail);
 
             if(records_populated === 'no'){
                 let saved_shipping_json      = $(this).data('saved_product_json');

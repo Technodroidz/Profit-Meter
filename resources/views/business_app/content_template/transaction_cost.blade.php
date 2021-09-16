@@ -49,7 +49,8 @@
                         <table class="table lms_table_active3 dataTable no-footer dtr-inline" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info" style="width: 1140px;">
                             <thead>
                                 <tr role="row">
-                                    <th scope="col" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" style="width: 60%;"><b>Name</b></th>
+                                    <th scope="col" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" style="width: 40%;"><b>Name</b></th>
+                                    <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Shopify Percentage Fee</b></th>
                                     <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Percentage Fee</b></th>
                                     <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Fixed Fee</b></th>
                                     <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1"><b>Action</b></th>
@@ -60,6 +61,7 @@
                                 @foreach($transaction_cost as $list) 
                                     <tr id="transaction_cost_{{$list->id}}">
                                         <td>{{ $list->payment_gateway }}</td>
+                                        <td>{{$list->shopify_percentage_fee}}</td>
                                         <td>{{$list->percentage_fee}}</td>
                                         <td>{{$list->fixed_fee}}</td>
                                         <td>
@@ -112,6 +114,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <label for="basic-url">Shopify Percentage Fee</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">%</span>
+                            </div>
+                            <input type="text" class="form-control cost" value="" name="shopify_percentage_fee" aria-describedby="basic-addon3">
+                        </div>
                         <label for="basic-url">Percentage Fee</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -121,7 +130,7 @@
                         </div>
                         <label for="basic-url">Fixed Fee</label>
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
+                            <div class="input-group-prepend"> 
                                 <span class="input-group-text">$</span>
                             </div>
                             <input type="text" class="form-control cost" value="" name="fixed_fee" aria-describedby="basic-addon3">

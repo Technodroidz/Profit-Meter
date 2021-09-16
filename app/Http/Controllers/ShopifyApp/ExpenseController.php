@@ -100,8 +100,11 @@ class ExpenseController extends Controller
             $row[]  = $value->price;
             $row[]  = $value->sku;
             $row[]  = $value->shopify_created_at;
-            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'" data-records_populated="no"><span aria-hidden="true">&plus;</span></button>';
-            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'" data-records_populated="no"><span aria-hidden="true">&plus;</span></button>';
+
+            $product_detail = $value->product_title.' | '.$value->title.' - [ '.$value->sku.' ]';
+
+            $row[]  = '<button type="button" class="add_prftrck_prdct_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#productCostModal" data-saved_product_json="'.$profitrack_product_json.'" data-records_populated="no" data-product_detail="'.$product_detail.'"><span aria-hidden="true">&plus;</span></button>';
+            $row[]  = '<button type="button" class="add_prftrck_shp_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#shippingCostModal" data-saved_product_json="'.$profitrack_shipping_json.'" data-records_populated="no" data-product_detail="'.$product_detail.'"><span aria-hidden="true">&plus;</span></button>';
             $row[]  = '<p id="handling_cost_'.$value->id.'">'.$value->profitrack_handling_cost.'</p><button type="button" class="add_prftrck_hnd_cst close" data-variant_id="'.$value->id.'" data-toggle="modal" data-target="#handlingCostModal"><span aria-hidden="true">&plus;</span></button>';
             $data[] = $row;
         }
@@ -342,6 +345,7 @@ class ExpenseController extends Controller
         if($request->isMethod('post')){
             $validation_array = [
                 'payment_gateway'     => 'required',
+                'shopify_percentage_fee'      => 'required|between:0,99.99',
                 'percentage_fee'      => 'required|between:0,99.99',
                 'fixed_fee'           => 'required|numeric|gt:0|regex:/^\d{0,4}(\.\d{0,2})?$/i',
             ];
@@ -365,6 +369,7 @@ class ExpenseController extends Controller
                 }
                 $insert_array = [
                     'payment_gateway'   => $request->payment_gateway, 
+                    'shopify_percentage_fee'    => $request->shopify_percentage_fee, 
                     'percentage_fee'    => $request->percentage_fee, 
                     'fixed_fee'         => $request->fixed_fee
                 ];
@@ -378,7 +383,7 @@ class ExpenseController extends Controller
                                               <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                                             </button>';
 
-                $json_array = ['datatable_row' => [ucfirst($request->payment_gateway),$request->percentage_fee,$request->fixed_fee,$delete_button],'close_modal'=>true,];
+                $json_array = ['datatable_row' => [ucfirst($request->payment_gateway),$request->shopify_percentage_fee,$request->percentage_fee,$request->fixed_fee,$delete_button],'close_modal'=>true,];
                 return response()->data($json_array,'Transaction Cost Updated.');
             }
         }
@@ -504,7 +509,7 @@ class ExpenseController extends Controller
             $validation_array = [
                 'product_cost' => ['required','numeric','gt:0', 'regex:/^\d{0,4}(\.\d{0,2})?$/i'], 
                 'start_date'   => 'required', 
-                'end_date'     => 'required', 
+                'end_date'     => '', 
             ];
 
             $validation_attributes = [
@@ -524,7 +529,7 @@ class ExpenseController extends Controller
                     'variant_id'                => $request->variant_id,
                     'profitrack_product_cost'   => $request->product_cost,
                     'start_date'                => date('Y-m-d',strtotime($request->start_date)),
-                    'end_date'                  => date('Y-m-d',strtotime($request->end_date)),
+                    'end_date'                  => isset($request->end_date) ? date('Y-m-d',strtotime($request->end_date)) : null,
                     'created_at'                => date('Y-m-d H:i:s')
                 ];
 
@@ -532,13 +537,13 @@ class ExpenseController extends Controller
 
                 $json_array = ['append_html' => '<div id="product_cost_'.$id.'" class="row">
                         <div class="col-md-3">
-                            <input type="text" name="product_cost" value="'.$request->product_cost.'" readonly>
+                            <input type="text" class="form-control" name="product_cost" value="'.$request->product_cost.'" readonly>
                         </div>
                         <div class="col-md-3">
-                            <input type="text" name="start_date" value="'.$request->start_date.'" readonly="readonly">
+                            <input type="text" class="form-control" name="start_date" value="'.$request->start_date.'" readonly="readonly">
                         </div>
                         <div class="col-md-3">
-                            <input type="text" name="end_date" value="'.$request->end_date.'" readonly="readonly">
+                            <input type="text" class="form-control" name="end_date" value="'.$request->end_date.'" readonly="readonly">
                         </div>
                         <div class="col-md-3">
                             <button id = "product_cost_loader_'.$id.'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
@@ -616,10 +621,10 @@ class ExpenseController extends Controller
 
                 $json_array = ['append_html' => '<div id="shipping_cost_'.$id.'" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="country" value="'.$request->country.'" readonly="readonly">
+                            <input type="text" class="form-control" name="country" value="'.$request->country.'" readonly="readonly">
                         </div>
                         <div class="col-md-3">
-                            <input type="text" name="shipping_cost" value="'.$request->shipping_cost.'" readonly>
+                            <input type="text" class="form-control" name="shipping_cost" value="'.$request->shipping_cost.'" readonly>
                         </div>
                         <div class="col-md-3">
                             <button id = "shipping_cost_loader_'.$id.'" class="btn btn-primary ajax_loader" type="button" disabled style="display: none;">
