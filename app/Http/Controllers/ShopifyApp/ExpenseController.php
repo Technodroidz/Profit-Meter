@@ -508,7 +508,7 @@ class ExpenseController extends Controller
         if($request->isMethod('post')){
             $validation_array = [
                 'product_cost' => ['required','numeric','gt:0', 'regex:/^\d{0,4}(\.\d{0,2})?$/i'], 
-                'start_date'   => 'required', 
+                'start_date'   => '', 
                 'end_date'     => '', 
             ];
 

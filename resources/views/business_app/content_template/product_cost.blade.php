@@ -141,7 +141,7 @@
                             <label>Product Costs</label>
                         </div>
                         <div class="col-md-3">
-                            <label>Start Date</label>
+                            <label>Start Date (Optional)</label>
                         </div>
                         <div class="col-md-3">
                             <label>End Date (Optional)</label>
