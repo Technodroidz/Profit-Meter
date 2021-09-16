@@ -211,6 +211,12 @@ use Illuminate\Support\Facades\Schema;
             'klama'=> 'Klama',
             'laybuy'=> 'Laybuy',
             'mercado_pago'=> 'Mercado Pago',
+            'mollie'=>'Mollie',
+            'nmi'=>'NMI',
+            'other'=>'Other',
+            'payflow'=>'Payflow',
+            'paypal'=>'PayPal',
+            'paytrail'=>'Paytrail'
         ];
 
         if(!empty($gateway_alias)){
