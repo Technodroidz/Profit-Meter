@@ -437,21 +437,16 @@ class ExpenseController extends Controller
             // 'category_id' => 'required',
             'cost' => 'required',
             'start_date' => 'required',
-            'end_date' => 'required',
+            'end_date' => '',
             
         ]);
-       
-        if($request->inlineitem==='on'){
+        
+
+        if(isset($request->inlineitem) && $request->inlineitem == 1){
             $status=1;
         }
-        else if(empty($request->inlineitem)){
-            $status=2;
-        } 
-        if($request->inlineitem==='2'){
-            $status=1;
-        }
-        if($request->inlineitem==='1'){
-            $status=2;
+        else{
+            $status=0;
         }
 
         $currentPackegName=Str::slug($request['name']);

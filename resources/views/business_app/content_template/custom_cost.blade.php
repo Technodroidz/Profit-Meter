@@ -81,7 +81,7 @@
                                                 <td>{{$list['end_date']}} </td>
                                                
                                                 <td>{{$list['frequency']}} </td>
-                                                <td><input type="checkbox" class="statusSwitch" @if($list['accept_include_marketing']==1) checked @endif  readonly > </td>
+                                                <td><input type="checkbox" class="statusSwitch" @if($list['accept_include_marketing']==1) checked @endif  readonly data-status="{{$list['id']}}"> </td>
                                                 <td>{{$list['cost']}} </td>
                                                 <td>
                                                 <a href="#" class="greenBtn data_edit" data-value="{{$list}}"><i class="fa fa-edit"></i></a>
@@ -159,7 +159,8 @@
                         <input type="date" class="form-control end_date datetimepicker1 " name="end_date" id="end_date" aria-describedby="basic-addon3">
                     </div>
                     <input type="hidden" name="inlineitem"  value="" >
-                    <div class="inlineitem">  <input type="checkbox" name="inlineitem" id="inlineitem" value="" aria-label="" >&nbsp; &nbsp;
+                    <div class="inlineitem">  
+                        <input type="checkbox" name="inlineitem" id="inlineitem" value="1">&nbsp; &nbsp;
                         <p class="mb-0 ">Include in marketing & CAC</p>
                     </div>
                     <p>Check to Include cost in marketing & CAC</p>
@@ -256,7 +257,7 @@
                     required: true, 
                 },
                 end_date:{
-                    required: true, 
+                    required: false, 
                 },
                 category_id:{
                     required: true, 
