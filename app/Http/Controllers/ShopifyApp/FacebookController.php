@@ -48,7 +48,8 @@ class FacebookController extends Controller
         ];
 
         UserFacebookAccount::updateOrInsert(['user_id'=>Auth::User()->id],$insert_array);
-        return redirect()->route('facebook_ads_api_list');
+        return redirect()->route('business_integration')->with('success','Facebook Account added Successfully.');
+        // return redirect()->route('facebook_ads_api_list');
     }
 
     public function facebookApiList()
