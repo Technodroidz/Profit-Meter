@@ -169,6 +169,7 @@ class FacebookController extends Controller
 
         curl_close($curl);
         $response = json_decode($response,1);
+        pp($response);
         return view('business_app\content_template\facebook_ad_account_list',$response);
 
     }
