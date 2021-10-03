@@ -155,7 +155,7 @@ class FacebookController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://graph.facebook.com/v11.0/me/adaccounts?access_token='.$facebook_account->token,
+          CURLOPT_URL => 'https://graph.facebook.com/v12.0/me/adaccounts?access_token='.$facebook_account->token,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
