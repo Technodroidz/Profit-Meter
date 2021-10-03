@@ -166,8 +166,9 @@ class SnapchatController extends Controller
         return view('business_app/content_template/snapchat_api_list');
     }
 
-    public function snapchatApiDetail($api_url)
+    public function snapchatApiDetail(Request $request)
     {
+        $api_url = $request->api_url;
         $snapchat_account = UserSnapchatAccount::where('user_id',Auth::User()->id)->first();
         if(isset($snapchat_account->access_token) && isset($snapchat_account->refresh_token)){
             $curl = curl_init();
@@ -219,6 +220,7 @@ class SnapchatController extends Controller
             }else{
                 $response = json_decode($response,1);
             }
+            pp($response);
             return $response;
         }else{
             return redirect()->route('snapchat_api_list')->with('error','Snapchat User not added');
@@ -248,7 +250,8 @@ class SnapchatController extends Controller
     public function adAccountInvoiceList(Request $request,$ad_account_id)
     {
         $api_url    = 'https://adsapi.snapchat.com/v1/adaccounts/'.$ad_account_id.'/invoices';
-        $response   = $this->snapchatApiDetail($api_url);
+        $response   = $this->snapchatApiDetail($request);
+        pp($response);
         return view('business_app/content_template/snapchat_ad_account_invoice_list',$response);
         
     }

@@ -39,5 +39,6 @@ class SyncShopifyOrders implements ShouldQueue
         );
         $shopify= new \PHPShopify\ShopifySDK($config);
         $orders = $shopify->Order->get();
+        pp($orders);
     }
 }

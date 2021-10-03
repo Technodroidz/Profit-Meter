@@ -55,6 +55,7 @@ class StripeController extends Controller
         );
         // $disputes = $stripe->issuing->disputes->all(['limit' => 3]);
         $disputes = $stripe->disputes->all();
-        dd($disputes);
+        $response['disputes'] = $disputes->data;
+        return view('business_app/content_template/stripe_disputes_list',$response);
     }
 }

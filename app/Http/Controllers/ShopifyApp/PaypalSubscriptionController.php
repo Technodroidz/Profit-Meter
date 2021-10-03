@@ -50,6 +50,7 @@ class PaypalSubscriptionController extends Controller
 
                 $provider = new PayPalClient;
                 $provider = \PayPal::setProvider();
+                
                 $config = [
                     'mode'             => 'sandbox',
                     'sandbox'          => [
